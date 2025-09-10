@@ -12,7 +12,6 @@ import { Bounded } from "@/components/Bounded";
 import Button from "@/components/Button";
 import { TextSplitter } from "@/components/TextSplitter";
 import Scene from "./Scene";
-import { Bubbles } from "./Bubbles";
 import { useStore } from "@/hooks/useStore";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 
@@ -110,7 +109,6 @@ const Hero = ({ slice }: HeroProps): JSX.Element => {
       {isDesktop && (
         <View className="hero-scene pointer-events-none sticky top-0 z-50 -mt-[100vh] hidden h-screen w-screen md:block">
           <Scene />
-          <Bubbles count={300} speed={2} repeat={true} />
         </View>
       )}
 
