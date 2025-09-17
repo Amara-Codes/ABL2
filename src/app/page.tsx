@@ -6,11 +6,13 @@ import * as prismic from "@prismicio/client";
 import { createClient } from "@/prismicio";
 import { components } from "@/slices";
 
-// This component renders your homepage.
-//
-// Use Next's generateMetadata function to render page metadata.
-//
-// Use the SliceZone to render the content of the page.
+import Hero from "@/components/content/Hero";
+import SkyDive from "@/components/content/SkyDive";
+import BigText from "@/components/content/BigText";
+import Carousel from "@/components/content/Carousel";
+import { sampleHeroContent, sampleSkyDivingContent, sampleBigTextContent, sampleCarouselContent } from "@/lib/sample-data";
+
+
 
 export async function generateMetadata(): Promise<Metadata> {
   const client = createClient();
@@ -26,10 +28,20 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
+
 export default async function Index() {
   // The client queries content from the Prismic API
   const client = createClient();
   const home = await client.getByUID("page", "home");
   console.log(home)
-  return <SliceZone slices={home.data.slices} components={components} />;
+  console.log(home.data)
+  console.log(JSON.stringify(home.data.slices, null, 2))
+  return (
+    <div>
+      <Hero content={sampleHeroContent.content} />
+      <SkyDive content={sampleSkyDivingContent.content} />
+      <BigText content={sampleBigTextContent.content} />
+      <Carousel content={sampleCarouselContent.content} />
+    </div>
+  );
 }

@@ -5,6 +5,12 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ["var(--font-alpino)", "sans-serif"],
+        fatboy: ['Fatboy', 'sans-serif'],
+      },
+      colors: {
+        primary: "#FA4700", 
+        secondary: "#FF850E",
+        tertiary: "#DD9F00",
       },
       keyframes: {
         "slide-left": {

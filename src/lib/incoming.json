@@ -1,0 +1,188 @@
+ [
+   {
+     "variation": "default",
+     "version": "initial",
+     "items": [],
+     "primary": {
+       "heading": [
+         {
+           "type": "heading1",
+           "text": "Live Gutsy",
+           "spans": [],
+           "direction": "ltr"
+         }
+       ],
+       "subheading": [
+         {
+           "type": "paragraph",
+           "text": "Soda Perfected",
+           "spans": [],
+           "direction": "ltr"
+         }
+       ],
+       "body": [
+         {
+           "type": "paragraph",
+           "text": "3-5g sugar. 9g fiber. 5 delicious flavors.",
+           "spans": [],
+           "direction": "ltr"
+         }
+       ],
+       "button_text": "Shop Now",
+       "button_link": {
+         "link_type": "Web",
+         "key": "f0752f8b-0a30-4f45-80da-d97a980df4d7",
+         "url": "https://prismic.io",
+         "target": ""
+       },
+       "cans_image": {
+         "dimensions": {
+           "width": 1603,
+           "height": 1791
+         },
+         "alt": "All of the Fizzi Flavors",
+         "copyright": null,
+         "url": "https://images.prismic.io/fizzi/ZswEvEaF0TcGJYaB_all-cans-bunched.png?auto=format,compress",
+         "id": "ZswEvEaF0TcGJYaB",
+         "edit": {
+           "x": 0,
+           "y": 0,
+           "zoom": 1,
+           "background": "transparent"
+         }
+       },
+       "second_heading": [
+         {
+           "type": "heading2",
+           "text": "Try all five flavors",
+           "spans": [],
+           "direction": "ltr"
+         }
+       ],
+       "second_body": [
+         {
+           "type": "paragraph",
+           "text": "Our soda is made with real fruit juice and a touch of cane sugar. We never use artificial sweeteners or high fructose corn syrup. Try all five flavors and find your favorite!",
+           "spans": [],
+           "direction": "ltr"
+         }
+       ]
+     },
+     "id": "hero$4bcb82fd-31d8-4d94-8229-dffa4ded688b",
+     "slice_type": "hero",
+     "slice_label": null
+   },
+   {
+     "variation": "default",
+     "version": "initial",
+     "items": [],
+     "primary": {
+       "sentence": "Dive into better health",
+       "flavor": "blackCherry"
+     },
+     "id": "sky_dive$25b9fdeb-d534-43cf-83c9-a41660c35524",
+     "slice_type": "sky_dive",
+     "slice_label": null
+   },
+   {
+     "variation": "default",
+     "version": "initial",
+     "items": [],
+     "primary": {
+       "heading": [
+         {
+           "type": "heading2",
+           "text": "Choose Your Flavor",
+           "spans": [],
+           "direction": "ltr"
+         }
+       ],
+       "price_copy": [
+         {
+           "type": "paragraph",
+           "text": "12 cans - $35.99",
+           "spans": [],
+           "direction": "ltr"
+         }
+       ]
+     },
+     "id": "carousel$9c790a08-40cf-402c-8772-ae886b556b27",
+     "slice_type": "carousel",
+     "slice_label": null
+   },
+   {
+     "variation": "default",
+     "version": "initial",
+     "items": [],
+     "primary": {
+       "text_group": [
+         {
+           "heading": [
+             {
+               "type": "heading2",
+               "text": "Gut-Friendly Goodness",
+               "spans": [],
+               "direction": "ltr"
+             }
+           ],
+           "body": [
+             {
+               "type": "paragraph",
+               "text": "Our soda is packed with prebiotics and 1 billion probiotics, giving your gut the love it deserves. Say goodbye to bloating and hello to a happy, healthy digestive system with every sip.",
+               "spans": [],
+               "direction": "ltr"
+             }
+           ]
+         },
+         {
+           "heading": [
+             {
+               "type": "heading2",
+               "text": "Light Calories, Big Flavor",
+               "spans": [],
+               "direction": "ltr"
+             }
+           ],
+           "body": [
+             {
+               "type": "paragraph",
+               "text": "Indulge in bold, refreshing taste without the guilt. At just 20 calories per can, you can enjoy all the flavor you crave with none of the compromise.",
+               "spans": [],
+               "direction": "ltr"
+             }
+           ]
+         },
+         {
+           "heading": [
+             {
+               "type": "heading2",
+               "text": "Naturally Refreshing",
+               "spans": [],
+               "direction": "ltr"
+             }
+           ],
+           "body": [
+             {
+               "type": "paragraph",
+               "text": "Made with only the best natural ingredients, our soda is free from artificial sweeteners and flavors. It’s a crisp, clean taste that feels as good as it tastes, giving you a boost of real, natural refreshment.",
+               "spans": [],
+               "direction": "ltr"
+             }
+           ]
+         }
+       ]
+     },
+     "id": "alternating_text$b3cda313-9f5b-496e-ac31-85256ab3d353",
+     "slice_type": "alternating_text",
+     "slice_label": null
+   },
+   {
+     "variation": "default",
+     "version": "initial",
+     "items": [],
+     "primary": {},
+     "id": "big_text$cb090962-6a8a-4ec3-a18b-9a3abbe69eeb",
+     "slice_type": "big_text",
+     "slice_label": null
+   }
+ ]

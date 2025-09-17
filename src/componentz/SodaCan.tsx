@@ -15,7 +15,7 @@ const flavorTextures = {
 
 const metalMaterial = new THREE.MeshStandardMaterial({
   roughness: 0.3,
-  metalness: .5,
+  metalness: 1,
   color: "#bbbbbb",
 });
 

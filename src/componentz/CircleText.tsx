@@ -1,14 +1,12 @@
 import clsx from "clsx";
 
 type Props = {
-  text?: string;
   textColor?: string;
   backgroundColor?: string;
   className?: string;
 };
 
 export default function CircleText({
-  text = "A B L  S O D A  C O M P A N Y",
   textColor = "#1A871D",
   backgroundColor = "#FFFCFA",
   className,
@@ -21,7 +19,7 @@ export default function CircleText({
       className={clsx("circle-text", className)}
       aria-labelledby="circle-text"
     >
-      <title id="circle-text">{text}</title>
+      <title id="circle-text">Love your gut. Love your life.</title>
       <path
         fill={backgroundColor}
         d="M122 61.5a61 61 0 11-122 0 61 61 0 01122 0z"
