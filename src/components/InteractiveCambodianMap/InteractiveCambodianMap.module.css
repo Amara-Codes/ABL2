@@ -1,0 +1,58 @@
+/* components/InteractiveCambodianMap/InteractiveCambodianMap.module.css */
+
+.mapContainer {
+  position: relative;
+  width: 100%;
+  max-width: 800px; /* Puoi aggiustare la grandezza massima della mappa */
+  cursor: grab;
+}
+
+/* Stile base per TUTTE le regioni */
+.region {
+  fill: rgba(209, 250, 229, .2); /* Grigio di default per le province */
+  stroke: #d1fae5;
+  stroke-width: 1.5px;
+  transition: fill 0.2s ease-in-out;
+}
+
+/* Stile per le regioni ATTIVE (quelle con ingredienti) */
+.highlight {
+  fill: #34d399; /* Verde chiaro per le regioni interattive */
+  cursor: pointer;
+}
+
+/* Stile per l'HOVER sulle regioni attive */
+.highlight:hover {
+  fill: #059669; /* Verde più scuro quando il mouse è sopra */
+}
+
+/* Stile per il popup */
+.popup {
+  position: fixed; /* Usa 'fixed' per posizionarlo rispetto alla finestra */
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.85);
+  color: white;
+  padding: 15px;
+  border-radius: 8px;
+  pointer-events: none; /* Cruciale: impedisce al popup di bloccare gli eventi del mouse sulla mappa */
+  transform: translate(20px, -40px); /* Sposta il popup in modo che non sia direttamente sotto il cursore */
+  min-width: 250px;
+  max-width: 300px;
+  font-size: 1.2rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  border: 1px solid #34d399;
+  transition: opacity 0.2s ease-in-out; /* Aggiunge una transizione fluida */
+}
+
+.popup h3 {
+  margin-top: 0;
+  color: #34d399; /* Verde chiaro per il titolo, come le regioni */
+  font-size: 1.5rem;
+  border-bottom: 1px solid #555;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+
+.popup p {
+  margin: 8px 0;
+}

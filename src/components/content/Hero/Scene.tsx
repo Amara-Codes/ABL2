@@ -46,10 +46,10 @@ export default function Scene({}: Props) {
     isReady();
 
     // Set can starting location
-    gsap.set(can1Ref.current.position, { x: -1.5 });
+    gsap.set(can1Ref.current.position, { x: -2.5 });
     gsap.set(can1Ref.current.rotation, { z: -0.5 });
 
-    gsap.set(can2Ref.current.position, { x: 1.5 });
+    gsap.set(can2Ref.current.position, { x: 2 });
     gsap.set(can2Ref.current.rotation, { z: 0.5 });
 
     gsap.set(can3Ref.current.position, { y: 5, z: 2 });
@@ -139,7 +139,6 @@ export default function Scene({}: Props) {
       />
 
       <FloatingCan ref={can5Ref} flavor="watermelon" floatSpeed={FLOAT_SPEED} />
-
       {/* <OrbitControls /> */}
       <Environment files="/hdr/lobby.hdr" environmentIntensity={1.5} />
     </group>

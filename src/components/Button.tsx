@@ -1,13 +1,15 @@
 import Link from "next/link";
 import clsx from "clsx";
+import internal from "stream";
 
 type Props = {
   buttonLink: string | null;
   buttonText: string | null;
   className?: string;
+  type: "ext" | "int";
 };
 
-export default function Button({ buttonLink, buttonText, className }: Props) {
+export default function Button({ buttonLink, buttonText, className, type = "int" }: Props) {
   return (
     <Link
       className={clsx(
@@ -15,6 +17,8 @@ export default function Button({ buttonLink, buttonText, className }: Props) {
         className,
       )}
       href={buttonLink ?? "#"}
+      target={type === "ext" ? "_blank" : "_self"}
+      rel={type === "ext" ? "noopener noreferrer" : undefined}
     >
       {buttonText}
     </Link>

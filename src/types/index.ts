@@ -7,9 +7,9 @@ export interface RichTextNode {
 
 // Defines the structure for a link field.
 export interface LinkField {
-  link_type: 'Web' | 'Internal' | string;
+  label: string;
+  type: 'int' | 'ext' | string;
   url: string;
-  target: string;
 }
 
 // Defines the structure for an image field.
@@ -29,8 +29,7 @@ export interface HeroContent {
         heading: RichTextNode[];
         subheading: RichTextNode[];
         body: RichTextNode[];
-        button_text: string;
-        button_link: LinkField;
+        button: LinkField;
         cans_image: ImageField;
         second_heading: RichTextNode[];
         second_body: RichTextNode[];
@@ -69,6 +68,39 @@ export interface BigTextContent {
   content : {
     bgColorClass: string;
     textColorClass: string;
-    sentence: string
+    sentence: string;
+    maxWidth: number,
+    factor: number
   }
+}
+
+export interface CtaContent {
+    content: {
+      ctaClasses?: string;
+      titleClasses?: string;
+      paragraphClasses?: string;
+        title: RichTextNode;
+        paragraph: RichTextNode;
+        button: LinkField;
+        background_image: ImageField;
+        image: ImageField;
+        layout: 'centered' | 'imageLeft' | 'imageRight';
+    }
+}
+
+export type RegionID = `KH${number}`;
+
+export interface RegionInfo {
+  name: string;
+  ingredient: string;
+  usage: string;
+  beers: string[];
+}
+
+export interface InteractiveCambodianMapContent {
+    content: {
+        title: RichTextNode[];
+        paragraph: RichTextNode[];
+        regionData: Record<RegionID, RegionInfo>;
+    }
 }

@@ -10,7 +10,8 @@ import Hero from "@/components/content/Hero";
 import SkyDive from "@/components/content/SkyDive";
 import BigText from "@/components/content/BigText";
 import Carousel from "@/components/content/Carousel";
-import { sampleHeroContent, sampleSkyDivingContent, sampleBigTextContent, sampleCarouselContent } from "@/lib/sample-data";
+import Cta from "@/components/content/Cta";
+import { sampleHeroContent, sampleSkyDivingContent, sampleBigTextContent, sampleCarouselContent, sampleCtaContent } from "@/lib/sample-data";
 
 
 
@@ -40,7 +41,11 @@ export default async function Index() {
     <div>
       <Hero content={sampleHeroContent.content} />
       <SkyDive content={sampleSkyDivingContent.content} />
+      <Cta content={sampleCtaContent.content} />
+      <div className="text-center">
+
       <BigText content={sampleBigTextContent.content} />
+      </div>
       <Carousel content={sampleCarouselContent.content} />
     </div>
   );

@@ -116,7 +116,6 @@ const Carousel = ({ content }: CarouselSlideContent): JSX.Element => {
           </div>
         </div>
       </Link>
-   <p className="text-2xl text-primary text-bold ">{paragraph[0]?.text || ""}</p>
     </section>
   );
 };

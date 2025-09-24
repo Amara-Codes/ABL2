@@ -1,16 +1,23 @@
 import { SVGProps } from "react";
-import clsx from "clsx";
 
-export function ABLLogo(props: SVGProps<SVGSVGElement>) {
+export type ABLLogoProps = {
+  logoColor?: string;
+  bgColorClass?: string;
+};
+
+export function ABLLogo(props: ABLLogoProps) {
+  const { logoColor , bgColorClass } = props;
   return (
+    <div className={`flex justify-center items-center h-auto`}>
+      <div className={`${bgColorClass ?? 'bg-white'}`}>
+
     <svg
       width="120"
-      height="80"
+      height="100%"
       viewBox="0 0 164.92239 99.733482"
       version="1.1"
-      fill="#000000"
+      fill={logoColor ?? '#000000'}
       strokeWidth="0.52646"
-      className={clsx("h-20 w-auto", props.className)}
     >
       <defs
         id="defs1" />
@@ -22,5 +29,7 @@ export function ABLLogo(props: SVGProps<SVGSVGElement>) {
           id="path1" />
       </g>
     </svg>
+      </div>
+    </div>
   );
 }

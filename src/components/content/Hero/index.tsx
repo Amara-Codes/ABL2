@@ -33,8 +33,7 @@ const Hero = ({ content }: HeroProps): JSX.Element => {
     heading,
     subheading,
     body,
-    button_text,
-    button_link,
+    button,
     cans_image,
     second_heading,
     second_body,
@@ -106,11 +105,7 @@ const Hero = ({ content }: HeroProps): JSX.Element => {
             </div>
             {/* The buttonLink prop in your Button component might expect a string, not an object.
                 If it expects just the URL, this is correct. If it expects the whole object, change it to buttonLink={button_link} */}
-            <Button
-              buttonLink={button_link.url}
-              buttonText={button_text}
-              className="hero-button mt-12"
-            />
+
           </div>
         </div>
 
@@ -129,6 +124,16 @@ const Hero = ({ content }: HeroProps): JSX.Element => {
             <div className="text-side-body mt-4 max-w-xl text-balance text-xl font-normal text-sky-950">
               <span className="text-sky-950">{second_body[0]?.text}</span>
             </div>
+
+<div className="mt-16 py-8">
+
+                        <Button
+              buttonLink={button.url}
+              buttonText={button.label}
+              className="hero-button mt-12"
+              type={button.type === "ext" ? "ext" : "int"}
+            />
+</div>
           </div>
         </div>
       </div>
