@@ -22,16 +22,16 @@ export default function Lab() {
             <div >
                 <BigText content={hero} />
                 <div className="bg-secondary grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 h-screen">
-                    <Link href="/activities" className="border-2 border-black rounded-lg m-8 flex flex-col justify-between items-center">
+                    <Link href="/blog/activities" className="border-2 border-black rounded-lg m-8 flex flex-col justify-between items-center">
                         <h3 className="font-fatboy text-2xl text-center pt-4">Activities</h3>
                     </Link>
-                    <Link href="/news" className="border-2 border-black rounded-lg m-8 flex flex-col justify-between items-center">
+                    <Link href="/blog/news" className="border-2 border-black rounded-lg m-8 flex flex-col justify-between items-center">
                         <h3 className="font-fatboy text-2xl text-center pt-4">News</h3>
                     </Link>
-                    <Link href="/articles" className="border-2 border-black rounded-lg m-8 flex flex-col justify-between items-center">
+                    <Link href="/blog/articles" className="border-2 border-black rounded-lg m-8 flex flex-col justify-between items-center">
                         <h3 className="font-fatboy text-2xl text-center pt-4">Articles</h3>
                     </Link>
-                    <Link href="/gallery" className="border-2 border-black rounded-lg m-8 flex flex-col justify-between items-center">
+                    <Link href="/blog/gallery" className="border-2 border-black rounded-lg m-8 flex flex-col justify-between items-center">
                         <h3 className="font-fatboy text-2xl text-center pt-4">Gallery</h3>
                     </Link>
                 </div>

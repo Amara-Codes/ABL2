@@ -1,6 +1,5 @@
 "use client";
 
-import { Content } from "@prismicio/client";
 import { Cloud, Clouds, Environment, Text } from "@react-three/drei";
 import { useRef } from "react";
 import * as THREE from "three";
@@ -104,7 +103,7 @@ export default function Scene({ sentence, flavor }: SkyDiveProps) {
 
     scrollTl
       .to("body", {
-        backgroundColor: "#C0F0F5",
+        backgroundColor: "#6ad3de",
         overwrite: "auto",
         duration: 0.1,
       })
@@ -135,6 +134,8 @@ export default function Scene({ sentence, flavor }: SkyDiveProps) {
   });
 
   return (
+
+
     <group ref={groupRef}>
       {/* Can */}
       <group rotation={[0, 0, 0.5]}>
@@ -145,25 +146,26 @@ export default function Scene({ sentence, flavor }: SkyDiveProps) {
           floatIntensity={3}
           floatSpeed={3}
         >
-          <pointLight intensity={30} color="#8C0413" decay={0.6} />
+          <pointLight intensity={30} color="#ffffff" decay={0.6} />
         </FloatingCan>
       </group>
 
       {/* Clouds */}
       <Clouds ref={cloudsRef}>
-        <Cloud ref={cloud1Ref} bounds={[10, 10, 2]} />
+        <Cloud ref={cloud1Ref} bounds={[10, 20, 2]} opacity={1}/>
         <Cloud ref={cloud2Ref} bounds={[10, 10, 2]} />
       </Clouds>
 
       {/* Text */}
       <group ref={wordsRef}>
-        {sentence && <ThreeText sentence={sentence} color="#FF850E" />}
+        {sentence && <ThreeText sentence={sentence} color="#FA4700" />}
       </group>
 
       {/* Lights */}
-      <ambientLight intensity={2} color="#9DDEFA" />
-      <Environment files="/hdr/field.hdr" environmentIntensity={1.5} />
+      <ambientLight intensity={1} color="#ffffff" />
+      <Environment files="/hdr/field.hdr" environmentIntensity={.8} />
     </group>
+
   );
 }
 

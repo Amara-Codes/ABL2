@@ -1,7 +1,10 @@
 import { Metadata } from "next";
-import { div } from "three/webgpu";
-
 import Button from "@/components/Button";
+
+export const metadata: Metadata = {
+    title: "Brewery in Siem Reap - Amara Beer Lab | Contacts",
+    description: "Get in touch with Amara Beer Lab! Find our social media links, send your inquiries, or visit us in Siem Reap. Follow our journey and stay updated—great beer and exciting stories await!",
+}
 
 export default function Contacts() {
     return (

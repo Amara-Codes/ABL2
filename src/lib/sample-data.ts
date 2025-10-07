@@ -203,18 +203,18 @@ export const sampleCtaContent: CtaContent = {
     paragraphClasses: "custom-paragraph-class",
     title: {
       type: "heading2",
-      text: "Join Our Newsletter",
+      text: "Stay updated about what's happening in the Lab",
       direction: "ltr",
     },
     paragraph: {
       type: "paragraph",
-      text: "Stay updated with the latest news and exclusive offers from Amara Beer Lab.",
+      text: "what's fermenting, when are our next worksops, which ingrendients are we using....",
       direction: "ltr",
     },
     button: {
-      label: "Subscribe Now",
-      type: "ext",
-      url: "https://example.com/subscribe",
+      label: "Discover more...",
+      type: "int",
+      url: "/lab",
     },
     background_image: {
       dimensions: {
@@ -223,7 +223,7 @@ export const sampleCtaContent: CtaContent = {
         height: 1080,
       },
       alt: "Newsletter Background",
-      url: "https://images.prismic.io/fizzi/newsletter-background.jpg?auto=format,compress",
+      url: "https://images.newscientist.com/wp-content/uploads/2023/11/08134121/SEI_179306087.jpg",
       id: "newsletter-bg-001",
     },
     image: {

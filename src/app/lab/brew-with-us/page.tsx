@@ -4,6 +4,7 @@ import { Metadata } from "next";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 import { Calendar28 } from "@/components/Calendar";
 import {
   RadioGroup,
@@ -23,23 +24,23 @@ export default function LabBrewWithUs() {
     <div className="min-h-screen mt-24 lg:mt-16">
       <div className="h-screen mt-16 flex flex-col justify-center items-center">
 
-                <h1 className="font-fatboy text-8xl text-primary h-1/2 flex items-end">Book a visit</h1>
-                <p className="text-2xl text-white">Come and visit our brewhouse, it's free. you can also join our worhshops, where you can learn how we brew our beer amd nuch more</p>
-            </div>
+        <h1 className="font-fatboy text-8xl text-primary h-1/2 flex items-end">Book a visit</h1>
+        <p className="text-2xl text-white">Come and visit our brewhouse, it's free. you can also join our worhshops, where you can learn how we brew our beer amd nuch more</p>
+      </div>
       <div className="flex px-16">
         <div className="w-1/2">
-        <h3 className="text-primary font-medium text-4xl">Our next Workshops will be:</h3> 
-        <ul className="list-disc text-white ps-4">
-          <li>
-            <p className="text-white text-lg">today</p>
-          </li>
-          <li>
-            <p className="text-white text-lg">tomorrow</p>
-          </li>
-          <li>
-            <p className="text-white text-lg">never</p>
-          </li>
-        </ul>
+          <h3 className="text-primary font-medium text-4xl">Our next Workshops will be:</h3>
+          <ul className="list-disc text-white ps-4">
+            <li>
+              <p className="text-white text-lg">today</p>
+            </li>
+            <li>
+              <p className="text-white text-lg">tomorrow</p>
+            </li>
+            <li>
+              <p className="text-white text-lg">never</p>
+            </li>
+          </ul>
         </div>
         <div className="w-1/2 flex flex-col gap-y-8">
           <div >
@@ -92,6 +93,10 @@ export default function LabBrewWithUs() {
               </RadioGroup>
             </div>
           </div>
+
+          <Button size="lg"  >Book now</Button>
+
+          <em className="text-white text-center">If not during the workshops, the visit is free!!1</em>
         </div>
       </div>
 

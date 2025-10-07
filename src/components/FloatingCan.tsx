@@ -3,11 +3,11 @@
 import { forwardRef, ReactNode } from "react";
 import { Float } from "@react-three/drei";
 
-import { SodaCan, SodaCanProps } from "@/components/SodaCan";
+import { BeerCan, BeerCanProps } from "@/components/BeerCan";
 import { Group } from "three";
 
 type FloatingCanProps = {
-  flavor?: SodaCanProps["flavor"];
+  imageUrl?: string;
   floatSpeed?: number;
   rotationIntensity?: number;
   floatIntensity?: number;
@@ -18,7 +18,6 @@ type FloatingCanProps = {
 const FloatingCan = forwardRef<Group, FloatingCanProps>(
   (
     {
-      flavor = "blackCherry",
       floatSpeed = 1.5,
       rotationIntensity = 1,
       floatIntensity = 1,
@@ -37,7 +36,7 @@ const FloatingCan = forwardRef<Group, FloatingCanProps>(
           floatingRange={floatingRange}
         >
           {children}
-          <SodaCan flavor={flavor} />
+          <BeerCan labelRotation={0.25}   />
         </Float>
       </group>
     );

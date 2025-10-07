@@ -1,116 +1,122 @@
 "use client";
-
-import { useGLTF, useTexture, Html } from "@react-three/drei";
+import { useMemo } from "react";
+import { useGLTF, useTexture } from "@react-three/drei";
 import * as THREE from "three";
-import { Canvas } from "@react-three/fiber";
-import { Float } from "@react-three/drei";
-import { useRef, useEffect } from "react";
-import { Group } from "three";
-import { GLTF } from "three-stdlib";
 
-type GLTFResult = GLTF & {
-  scene: THREE.Group;
-  nodes: {
-    "soda-can-a": THREE.Mesh;
-    "soda-can-b": THREE.Mesh;
-    "soda-can-001": THREE.Group;
-  };
-  materials: {
-    "Metal": THREE.MeshStandardMaterial;
-    "Can Body": THREE.MeshStandardMaterial;
-    "Can Label": THREE.MeshStandardMaterial;
-  };
-};
+// ... (useGLTF.preload e flavorTextures rimangono invariati)
+useGLTF.preload("/can.gltf");
 
-export type BeerSwaggerProps = {
-  urlImg?: string;
+const placeHolder = "/labels/placeholder.png"
+
+// Materiale standard per il corpo della lattina (opaco)
+const bodyMaterial = new THREE.MeshStandardMaterial({
+  roughness: 0.45,
+  metalness: 0.5,
+  color: "#ffffff",
+});
+
+// NUOVO: Materiale effetto vetro
+const glassMaterial = new THREE.MeshPhysicalMaterial({
+  roughness: 0.2,
+  metalness: 0.0,
+  transmission: .85, // 1.0 = completamente trasparente
+  ior: 10,          // Indice di rifrazione (tipico per il vetro)
+  thickness: 4,      // Spessore per la rifrazione
+  transparent: true,
+});
+
+const lidMaterial = new THREE.MeshStandardMaterial({
+  roughness: 0.1,
+  metalness: 0.9,
+  color: "#ffffff",
+});
+
+const roughBodyMaterial = new THREE.MeshStandardMaterial({
+  roughness: 0.4,
+  metalness: 0.4,
+  color: "#f2f2f2",
+});
+
+
+// --- PROPS DEL COMPONENTE ---
+
+export type BeerCanProps = {
+  imageUrl?: string;
   scale?: number;
+  labelRotation?: number;
+  isBodyTransparent?: boolean; // <-- NUOVA PROP OPZIONALE
 };
 
 
+// --- COMPONENTE ---
 
-export function BeerSwagger({ urlImg, scale = 10 }: BeerSwaggerProps) {
-  return (
-      <Html>
-    <div
-      className="w-full  rounded-lg bg-transparent contrast-[1.45] saturate-[1.3] brightness-[1.05] top-16 md:top-8"
-      style={{
-        height: "calc(100dvh - 105px)", 
-        overflow: "hidden",
-        pointerEvents: "auto",
-      }}
-    >
-      <Canvas
-        style={{
-          aspectRatio: "1/1",
-        }}
-        shadows
-        dpr={[1, 1.5]}
-        gl={{ antialias: true }}
-        camera={{
-          fov: 30,
-        }}
-      >
-        <ambientLight intensity={10} color={"#ffffff"} />
-        <directionalLight position={[8, -8, 8]} intensity={10} />
-        <directionalLight position={[-5, 5, 5]} intensity={10} />
+export function BeerCan({
+  imageUrl = placeHolder,
+  scale = 2,
+  labelRotation = 0,
+  isBodyTransparent = false, // <-- Default a 'false'
+  ...props
+}: BeerCanProps) {
+  const { nodes } = useGLTF("/can.gltf");
+  const texturizedLabel = useTexture(imageUrl);
 
-          <Scene urlImg={urlImg} scale={scale} />
+  // Sceglie il materiale per il corpo in base alla nuova prop
+  const currentBodyMaterial = isBodyTransparent ? glassMaterial : bodyMaterial;
 
-      </Canvas>
-    </div>
-      </Html>
-  );
-}
-
-type SceneProps = {
-  urlImg?: string;
-  scale: number;
-};
-
-function Scene({ urlImg, scale }: SceneProps) {
-  const { scene, materials } = useGLTF("/Beer-Can.gltf") as GLTFResult;
-  const label = useTexture(
-    urlImg ?? "/labels/cherry.png"
-  );
-  const aspect = 778 / 1440;
-  label.flipY = false;
-  label.center.set(0.5, 0.5);
-  label.rotation = Math.PI / 2;
-  const canAspect = 1.1;
-  const repeatY = canAspect / aspect;
-
-  label.repeat.set(1, repeatY);
-  label.offset.set(0, (1 - repeatY) / 2);
-
-  const groupRef = useRef<Group>(null);
-
-
-  useEffect(() => {
-    if (materials["Can Label"]) {
-      materials["Can Label"].map = label;
-      materials["Can Label"].needsUpdate = true;
-    }
-  }, [materials, label]);
-
-
+  const label = useMemo(() => {
+    // ... (la logica per l'etichetta rimane invariata)
+    const clonedTexture = texturizedLabel.clone();
+    clonedTexture.flipY = false;
+    clonedTexture.offset.x = labelRotation;
+    clonedTexture.wrapS = THREE.RepeatWrapping;
+    clonedTexture.needsUpdate = true;
+    return clonedTexture;
+  }, [texturizedLabel, labelRotation]);
 
   return (
-    <Float
-      speed={2}
-      rotationIntensity={1.5}
-      floatIntensity={0.5}
-      floatingRange={[-0.05, 0.05]}
-    >
-      <group
-        ref={groupRef}
-        dispose={null}
-        scale={scale}
-        rotation={[0, -Math.PI, 0]}
-        position={[0, -0.5, 0]}
+    <group {...props} dispose={null} scale={scale} rotation={[0, -Math.PI, 0]}>
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={(nodes.bottom as THREE.Mesh).geometry}
+        material={currentBodyMaterial}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={(nodes.bodybottom as THREE.Mesh).geometry}
+        material={currentBodyMaterial} // <-- APPLICA MATERIALE CONDIZIONALE
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={(nodes.label as THREE.Mesh).geometry}
       >
-        <primitive object={scene} />
-      </group>
-    </Float>
+        <meshStandardMaterial
+          roughness={0.9}
+          metalness={0.3}
+          map={label}
+        />
+      </mesh>
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={(nodes.bodytop as THREE.Mesh).geometry}
+        material={currentBodyMaterial} // <-- APPLICA MATERIALE CONDIZIONALE
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={(nodes.top as THREE.Mesh).geometry}
+        material={roughBodyMaterial}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={(nodes.lid as THREE.Mesh).geometry}
+        material={lidMaterial}
+      />
+      
+    </group>
   );
 }

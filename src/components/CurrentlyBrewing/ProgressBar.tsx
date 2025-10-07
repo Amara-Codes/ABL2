@@ -12,7 +12,7 @@ export default function ProgressBar({ textColor, barColor, progressAmount }: Pro
                 <span className="text-base font-medium" style={{ color: `${textColor}` }}>Progress</span>
                 <span className="text-base font-medium" style={{ color: `${textColor}` }}>{progressAmount}%</span>
             </div>
-            <div className="w-full bg-gray-200 rounded-full h-2.5">
+            <div className="w-full bg-gray-900 rounded-full h-2.5">
                 <div className="h-2.5 rounded-full" style={{ backgroundColor: `${barColor}`, width: `${progressAmount}%` }}></div>
             </div>
         </div>

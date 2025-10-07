@@ -1,0 +1,17 @@
+import { Metadata } from "next";
+import GenericWrapper from "@/components/blog/GenericWrapper"
+
+
+export const metadata: Metadata = {
+  title: "Brewery in Siem Reap - Amara Beer Lab | Blog and Stories",
+  description: "Discover the social initiatives of our brewery, from community engagement to sustainability projects.",
+}
+
+
+export default function BlogPage() {
+  return (
+    <div>
+      <GenericWrapper articlesPerPage={3} contentType="blog"/>
+    </div>
+  );
+}

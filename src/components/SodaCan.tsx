@@ -3,7 +3,8 @@ import { useMemo } from "react";
 import { useGLTF, useTexture } from "@react-three/drei";
 import * as THREE from "three";
 
-useGLTF.preload("/Soda-can.gltf");
+// ... (useGLTF.preload e flavorTextures rimangono invariati)
+useGLTF.preload("/can.gltf");
 
 const flavorTextures = {
   lemonLime: "/labels/lemon-lime.png",
@@ -11,107 +12,115 @@ const flavorTextures = {
   blackCherry: "/labels/cherry.png",
   strawberryLemonade: "/labels/strawberry.png",
   watermelon: "/labels/watermelon.png",
+  amritaFlamingo: "/labels/flamingo.png",
+  amritaMatsunekaNoAwa: "/labels/matsuneka-no-awa.png",
+  amritaTaeuyKnao: "/labels/taeuy-knao.png",
+  amritaRedVelvet: "labels/red-velvet.png"
 };
 
+
+// --- MATERIALI ---
+
+// Materiale standard per il corpo della lattina (opaco)
 const bodyMaterial = new THREE.MeshStandardMaterial({
-  roughness: 0.3,
-  metalness: 0.7,
-  color: "#bbbbbb",
+  roughness: 0.45,
+  metalness: 0.5,
+  color: "#ffffff",
+});
+
+// NUOVO: Materiale effetto vetro
+const glassMaterial = new THREE.MeshPhysicalMaterial({
+  roughness: 0.2,
+  metalness: 0.0,
+  transmission: .85, // 1.0 = completamente trasparente
+  ior: 10,          // Indice di rifrazione (tipico per il vetro)
+  thickness: 4,      // Spessore per la rifrazione
+  transparent: true,
 });
 
 const lidMaterial = new THREE.MeshStandardMaterial({
-  roughness: 0.25,
-  metalness: 0.8,
-  color: "#bbbbbb",
+  roughness: 0.1,
+  metalness: 0.9,
+  color: "#ffffff",
 });
 
 const roughBodyMaterial = new THREE.MeshStandardMaterial({
-  roughness: 0.8,
-  metalness: 0.6,
-  color: "#aeaeae",
+  roughness: 0.4,
+  metalness: 0.4,
+  color: "#f2f2f2",
 });
 
 
+// --- PROPS DEL COMPONENTE ---
 
 export type SodaCanProps = {
   flavor?: keyof typeof flavorTextures;
   scale?: number;
+  labelRotation?: number;
+  isBodyTransparent?: boolean; // <-- NUOVA PROP OPZIONALE
 };
+
+
+// --- COMPONENTE ---
 
 export function SodaCan({
   flavor = "blackCherry",
   scale = 2,
+  labelRotation = 0,
+  isBodyTransparent = false, // <-- Default a 'false'
   ...props
 }: SodaCanProps) {
-
   const { nodes } = useGLTF("/can.gltf");
-
   const labels = useTexture(flavorTextures);
 
-  // Fixes upside down labels
-  labels.strawberryLemonade.flipY = false;
-  labels.blackCherry.flipY = false;
-  labels.watermelon.flipY = false;
-  labels.grape.flipY = false;
-  labels.lemonLime.flipY = false;
+  // Sceglie il materiale per il corpo in base alla nuova prop
+  const currentBodyMaterial = isBodyTransparent ? glassMaterial : bodyMaterial;
 
-  const label = labels[flavor];
-
-   const activeLabel = useMemo(() => {
-    const texture = labels[flavor].clone();
-    texture.needsUpdate = true; // Importante quando si clona
-
-    // Fix per le texture capovolte
-    texture.flipY = false;
-    
-    // --- QUI PUOI FARE I TUOI ESPERIMENTI ---
-    
-    // Esempio: Se la texture è troppo "stretta", puoi scalarla sull'asse X
-     texture.repeat.set(1, 1.15); // Ripete la texture 0.8 volte in X (la allarga) e 1 volta in Y
-    
-    // Esempio: Se la texture è spostata, puoi correggerne l'offset
-    texture.offset.set(0, -0.15); // Sposta il punto di inizio della texture
-    
-    // Per evitare che la texture si ripeta ai bordi (se la scali < 1)
-    texture.wrapS = THREE.ClampToEdgeWrapping;
-    texture.wrapT = THREE.ClampToEdgeWrapping;
-
-    return texture;
-  }, [labels, flavor]);
+  const label = useMemo(() => {
+    // ... (la logica per l'etichetta rimane invariata)
+    const clonedTexture = labels[flavor].clone();
+    clonedTexture.flipY = false;
+    clonedTexture.offset.x = labelRotation;
+    clonedTexture.wrapS = THREE.RepeatWrapping;
+    clonedTexture.needsUpdate = true;
+    return clonedTexture;
+  }, [labels, flavor, labelRotation]);
 
   return (
     <group {...props} dispose={null} scale={scale} rotation={[0, -Math.PI, 0]}>
       <mesh
         castShadow
         receiveShadow
-        geometry={(nodes.roughDownBody as THREE.Mesh).geometry}
-        material={roughBodyMaterial}
+        geometry={(nodes.bottom as THREE.Mesh).geometry}
+        material={currentBodyMaterial}
       />
-            <mesh
+      <mesh
         castShadow
         receiveShadow
-        geometry={(nodes.downerBody as THREE.Mesh).geometry}
-        material={bodyMaterial}
+        geometry={(nodes.bodybottom as THREE.Mesh).geometry}
+        material={currentBodyMaterial} // <-- APPLICA MATERIALE CONDIZIONALE
       />
       <mesh
         castShadow
         receiveShadow
         geometry={(nodes.label as THREE.Mesh).geometry}
       >
-        <meshStandardMaterial roughness={0.9} metalness={0.3} map={activeLabel} />
+        <meshStandardMaterial
+          roughness={0.9}
+          metalness={0.3}
+          map={label}
+        />
       </mesh>
-           
-            <mesh
+      <mesh
         castShadow
         receiveShadow
-        geometry={(nodes.upperBody as THREE.Mesh).geometry}
-        material={bodyMaterial}
+        geometry={(nodes.bodytop as THREE.Mesh).geometry}
+        material={currentBodyMaterial} // <-- APPLICA MATERIALE CONDIZIONALE
       />
-           
-            <mesh
+      <mesh
         castShadow
         receiveShadow
-        geometry={(nodes.roughTopBody as THREE.Mesh).geometry}
+        geometry={(nodes.top as THREE.Mesh).geometry}
         material={roughBodyMaterial}
       />
       <mesh
@@ -120,6 +129,7 @@ export function SodaCan({
         geometry={(nodes.lid as THREE.Mesh).geometry}
         material={lidMaterial}
       />
+      
     </group>
   );
 }

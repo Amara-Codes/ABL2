@@ -93,10 +93,10 @@ const Carousel = ({ content }: CarouselSlideContent): JSX.Element => {
 
           <Environment
             files="/hdr/lobby.hdr"
-            environmentIntensity={0.6}
+            environmentIntensity={0.5}
             environmentRotation={[0, 3, 0]}
           />
-          <directionalLight intensity={6} position={[0, 1, 1]} />
+          <directionalLight intensity={0.5} position={[0, 1, 1]} />
         </View>
         {/* Right */}
         <ArrowButton

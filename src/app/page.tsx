@@ -1,52 +1,69 @@
 import { Metadata } from "next";
 
-import { SliceZone } from "@prismicio/react";
-import * as prismic from "@prismicio/client";
 
-import { createClient } from "@/prismicio";
-import { components } from "@/slices";
 
 import Hero from "@/components/content/Hero";
 import SkyDive from "@/components/content/SkyDive";
 import BigText from "@/components/content/BigText";
 import Carousel from "@/components/content/Carousel";
+import { CtaContent } from "@/types";
 import Cta from "@/components/content/Cta";
-import { sampleHeroContent, sampleSkyDivingContent, sampleBigTextContent, sampleCarouselContent, sampleCtaContent } from "@/lib/sample-data";
+import { sampleHeroContent, sampleSkyDivingContent, sampleBigTextContent, sampleCarouselContent} from "@/lib/sample-data";
 
 
-
-export async function generateMetadata(): Promise<Metadata> {
-  const client = createClient();
-  const home = await client.getByUID("page", "home");
-
-  return {
-    title: prismic.asText(home.data.title),
-    description: home.data.meta_description,
-    openGraph: {
-      title: home.data.meta_title ?? undefined,
-      images: [{ url: home.data.meta_image.url ?? "" }],
-    },
-  };
+export const metadata: Metadata = {
+  title: "Brewery in Siem Reap - Amara Beer Lab | Craft Beers, Sustainability and Community Impact",
+  description:
+    "Discover Amara Beer Lab, a craft brewery based in Siem Reap, Cambodia, dedicated to sustainability and supporting local communities. With high-quality beers crafted using technical excellence and modern methods to offer carefully designed, contemporary flavors, Amara Beer Lab blends authentic taste with social responsibility.",
 }
+
+const cta: CtaContent = {
+  content: {
+    ctaClasses: "custom-cta-class bg-indigo-200 pb-8",
+    titleClasses: "custom-title-class",
+    paragraphClasses: "custom-paragraph-class",
+    title: {
+      type: "heading2",
+      text: "Stay updated about what's happening in the Lab",
+      direction: "ltr",
+    },
+    paragraph: {
+      type: "paragraph",
+      text: "what's fermenting, when are our next worksops, which ingrendients are we using....",
+      direction: "ltr",
+    },
+    button: {
+      label: "Discover more...",
+      type: "int",
+      url: "/lab",
+    },
+    background_image: {
+      dimensions: {
+        width: 1920,
+
+        height: 1080,
+      },
+      alt: "Lab Background",
+      url: "/images/home/cta-1.jpeg",
+      id: "cta-bg-001",
+    },
+
+    layout: "imageLeft", // Options: 'centered', 'imageLeft', 'imageRight'
+  },
+};
+
 
 
 export default async function Index() {
-  // The client queries content from the Prismic API
-  const client = createClient();
-  const home = await client.getByUID("page", "home");
-  console.log(home)
-  console.log(home.data)
-  console.log(JSON.stringify(home.data.slices, null, 2))
   return (
-    <div>
+    <div className="">
       <Hero content={sampleHeroContent.content} />
       <SkyDive content={sampleSkyDivingContent.content} />
-      <Cta content={sampleCtaContent.content} />
-      <div className="text-center">
-
+      <div className="flex flex-col">
+      <Cta content={cta.content} />
       <BigText content={sampleBigTextContent.content} />
-      </div>
       <Carousel content={sampleCarouselContent.content} />
+      </div>
     </div>
   );
 }

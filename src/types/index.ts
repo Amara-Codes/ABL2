@@ -82,8 +82,8 @@ export interface CtaContent {
         title: RichTextNode;
         paragraph: RichTextNode;
         button: LinkField;
-        background_image: ImageField;
-        image: ImageField;
+        background_image?: ImageField;
+        image?: ImageField;
         layout: 'centered' | 'imageLeft' | 'imageRight';
     }
 }
@@ -104,3 +104,13 @@ export interface InteractiveCambodianMapContent {
         regionData: Record<RegionID, RegionInfo>;
     }
 }
+
+export type IconProps = {
+  color?: string
+  size?: string | number
+} & React.SVGAttributes<SVGElement>
+
+export type GenericWrapperProps = {
+  contentType: 'blog' | 'news' | 'activities'
+  articlesPerPage: number
+} 
