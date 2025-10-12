@@ -87,7 +87,7 @@ const Hero = ({ content }: HeroProps): JSX.Element => {
         </View>
       )}
 
-      <div className="grid mt-32">
+      <div className="grid">
         <div className="grid h-screen place-items-center">
           <div className="grid auto-rows-min place-items-center text-center">
             <h1 className="hero-header text-7xl font-black uppercase leading-[.8] text-primary md:text-[9rem] lg:text-[13rem]">
@@ -97,11 +97,11 @@ const Hero = ({ content }: HeroProps): JSX.Element => {
                 className="hero-header-word font-fatboy"
               />
             </h1>
-            <div className="hero-subheading mt-12 text-5xl font-semibold text-sky-950 lg:text-6xl">
-              <span className="text-sky-950">{subheading[0]?.text}</span>
+            <div className="hero-subheading mt-12 text-5xl font-semibold text-[#0B3848] lg:text-6xl">
+              <span className="text-[#0B3848]">{subheading[0]?.text}</span>
             </div>
-            <div className="hero-body text-2xl font-normal text-sky-950">
-              <span className="text-sky-950">{body[0]?.text}</span>
+            <div className="hero-body text-2xl font-normal text-[#0B3848]">
+              <span className="text-[#0B3848]">{body[0]?.text}</span>
             </div>
             {/* The buttonLink prop in your Button component might expect a string, not an object.
                 If it expects just the URL, this is correct. If it expects the whole object, change it to buttonLink={button_link} */}
@@ -118,11 +118,11 @@ const Hero = ({ content }: HeroProps): JSX.Element => {
             height={600}
           />
           <div>
-            <h2 className="text-side-heading text-balance text-6xl font-black uppercase text-sky-950 lg:text-8xl">
+            <h2 className="text-side-heading text-balance text-6xl font-black uppercase text-[#0B3848] lg:text-8xl">
               <TextSplitter text={second_heading[0]?.text || ""} />
             </h2>
-            <div className="text-side-body mt-4 max-w-xl text-balance text-xl font-normal text-sky-950">
-              <span className="text-sky-950">{second_body[0]?.text}</span>
+            <div className="text-side-body mt-4 max-w-xl text-balance text-xl font-normal text-[#0B3848]">
+              <span className="text-[#0B3848]">{second_body[0]?.text}</span>
             </div>
 
 <div className="mt-16 py-8">

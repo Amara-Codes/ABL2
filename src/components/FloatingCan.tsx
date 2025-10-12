@@ -1,13 +1,14 @@
 "use client";
 
 import { forwardRef, ReactNode } from "react";
-import { Float } from "@react-three/drei";
+// 1. Importa 'Html' da drei
+import { Float, Html } from "@react-three/drei";
 
-import { BeerCan, BeerCanProps } from "@/components/BeerCan";
+import { BeerCan } from "@/components/BeerCan";
 import { Group } from "three";
 
 type FloatingCanProps = {
-  imageUrl?: string;
+  textureUrl?: string; // Prop per l'URL della texture
   floatSpeed?: number;
   rotationIntensity?: number;
   floatIntensity?: number;
@@ -22,6 +23,7 @@ const FloatingCan = forwardRef<Group, FloatingCanProps>(
       rotationIntensity = 1,
       floatIntensity = 1,
       floatingRange = [-0.1, 0.1],
+      textureUrl,
       children,
       ...props
     },
@@ -36,7 +38,9 @@ const FloatingCan = forwardRef<Group, FloatingCanProps>(
           floatingRange={floatingRange}
         >
           {children}
-          <BeerCan labelRotation={0.25}   />
+
+
+          <BeerCan labelRotation={0.25} imageUrl={textureUrl} />
         </Float>
       </group>
     );

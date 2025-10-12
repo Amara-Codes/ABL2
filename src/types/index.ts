@@ -40,12 +40,12 @@ export interface SkyDivingContent {
     content: {
         sentence: RichTextNode[];
         can_image: ImageField;
-        flavour: RichTextNode[];
+      textureUrl: string | null;
     }
 }
 
 export interface CarouselSlideElement {
-        can_image: ImageField;
+        textureUrl: ImageField;
         flavour: RichTextNode[];
         name: string;
         link: string;
@@ -114,3 +114,19 @@ export type GenericWrapperProps = {
   contentType: 'blog' | 'news' | 'activities'
   articlesPerPage: number
 } 
+
+
+export type BeerData = {
+  id: number;
+  imageUrl: string;
+  name: string;
+};
+
+export type DropData = {
+  id: number;
+  name: string;
+  description: string;
+  beers: BeerData[];
+  metaTitle: string;
+  metaDescription: string;
+};

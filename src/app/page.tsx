@@ -19,9 +19,9 @@ export const metadata: Metadata = {
 
 const cta: CtaContent = {
   content: {
-    ctaClasses: "custom-cta-class bg-indigo-200 pb-8",
+    ctaClasses: "custom-cta-class bg-indigo-200 pb-8 text-white",
     titleClasses: "custom-title-class",
-    paragraphClasses: "custom-paragraph-class",
+    paragraphClasses: "custom-paragraph-class font-medium",
     title: {
       type: "heading2",
       text: "Stay updated about what's happening in the Lab",
@@ -29,7 +29,7 @@ const cta: CtaContent = {
     },
     paragraph: {
       type: "paragraph",
-      text: "what's fermenting, when are our next worksops, which ingrendients are we using....",
+      text: "What's fermenting, when are our next Worksops, which Ingrendients are we using....???",
       direction: "ltr",
     },
     button: {
@@ -60,9 +60,9 @@ export default async function Index() {
       <Hero content={sampleHeroContent.content} />
       <SkyDive content={sampleSkyDivingContent.content} />
       <div className="flex flex-col">
-      <Cta content={cta.content} />
       <BigText content={sampleBigTextContent.content} />
       <Carousel content={sampleCarouselContent.content} />
+      <Cta content={cta.content} />
       </div>
     </div>
   );

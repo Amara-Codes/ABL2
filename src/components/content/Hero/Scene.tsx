@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef } from "react";
-import { Environment, OrbitControls } from "@react-three/drei";
+import { useRef, useState, useEffect } from "react";
+import { Environment } from "@react-three/drei";
 import { Group } from "three";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -12,135 +12,210 @@ import { useStore } from "@/hooks/useStore";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-type Props = {};
+const STRAPI_URL = process.env.NEXT_PUBLIC_AMARA_STRAPI_URL || "http://127.0.0.1:1337";
 
-export default function Scene({}: Props) {
+// Definiamo le posizioni dell'animazione per mantenere il layout artistico
+const animationConfigs = [
+  // Config per la Lattina 1
+  {
+    set: { position: { x: -2.5 }, rotation: { z: -0.5 } },
+    to: {
+      position: { x: -0.2, y: -0.7, z: -2 },
+      rotation: { z: 0.3 },
+    },
+  },
+  // Config per la Lattina 2
+  {
+    set: { position: { x: 2 }, rotation: { z: 0.5 } },
+    to: {
+      position: { x: 1, y: -0.2, z: -1 },
+      rotation: { z: 0 },
+    },
+  },
+  // Config per la Lattina 3
+  {
+    set: { position: { y: 5, z: 2 }, rotation: { z: 0 } },
+    to: {
+      position: { x: -0.3, y: 0.5, z: -1 },
+      rotation: { z: -0.1 },
+    },
+  },
+  // Config per la Lattina 4
+  {
+    set: { position: { x: 2, y: 4, z: 2 }, rotation: { z: 0 } },
+    to: {
+      position: { x: 0, y: -0.3, z: 0.5 },
+      rotation: { z: 0.3 },
+    },
+  },
+  // Config per la Lattina 5
+  {
+    set: { position: { y: -5 }, rotation: { z: 0 } },
+    to: {
+      position: { x: 0.3, y: 0.5, z: -0.5 },
+      rotation: { z: -0.25 },
+    },
+  },
+];
+
+
+export default function Scene() {
   const isReady = useStore((state) => state.isReady);
+  const [labelUrls, setLabelUrls] = useState<string[]>([]);
 
-  const can1Ref = useRef<Group>(null);
-  const can2Ref = useRef<Group>(null);
-  const can3Ref = useRef<Group>(null);
-  const can4Ref = useRef<Group>(null);
-  const can5Ref = useRef<Group>(null);
+  // Un unico ref per contenere l'array di tutte le lattine
+  const canRefs = useRef<(Group | null)[]>([]);
 
   const can1GroupRef = useRef<Group>(null);
   const can2GroupRef = useRef<Group>(null);
-
   const groupRef = useRef<Group>(null);
 
   const FLOAT_SPEED = 1.5;
 
+  // useEffect per caricare i dati dall'API
+  useEffect(() => {
+    const fetchLatestDrop = async () => {
+      try {
+        const response = await fetch(
+          `${STRAPI_URL}/api/drops?sort=createdAt:desc&pagination[limit]=1&populate[beers][populate]=label`
+        );
+        const data = await response.json();
+
+        if (data.data && data.data.length > 0) {
+          const latestDrop = data.data[0];
+          const beers = latestDrop.attributes.beers.data;
+
+          const urls = beers
+            .map((beer: any) => {
+              const labelData = beer.attributes.label.data;
+              if (labelData) {
+                return `${labelData.attributes.url}`;
+              }
+              return null;
+            })
+            .filter(Boolean) // Rimuove eventuali null
+            .slice(0, 5); // Limita a un massimo di 5 lattine
+
+          setLabelUrls(urls);
+          console.log("Fetched label URLs:", urls);
+          console.log("Latest drop data:", latestDrop);
+          console.log(labelUrls)
+        }
+      } catch (error) {
+        console.error("Failed to fetch beer labels:", error);
+      }
+    };
+
+    fetchLatestDrop();
+  }, []); // L'array vuoto assicura che venga eseguito solo una volta
+
   useGSAP(() => {
-    if (
-      !can1Ref.current ||
-      !can2Ref.current ||
-      !can3Ref.current ||
-      !can4Ref.current ||
-      !can5Ref.current ||
-      !can1GroupRef.current ||
-      !can2GroupRef.current ||
-      !groupRef.current
-    )
-      return;
+      // Aspettiamo che le lattine siano state renderizzate e i ref popolati
+      if (
+        !groupRef.current ||
+        !can1GroupRef.current ||
+        !can2GroupRef.current ||
+        canRefs.current.length !== labelUrls.length ||
+        labelUrls.length === 0
+      ) {
+        return;
+      }
 
-    isReady();
+      isReady();
 
-    // Set can starting location
-    gsap.set(can1Ref.current.position, { x: -2.5 });
-    gsap.set(can1Ref.current.rotation, { z: -0.5 });
+      const introTl = gsap.timeline({
+        defaults: {
+          duration: 3,
+          ease: "back.out(1.4)",
+        },
+      });
 
-    gsap.set(can2Ref.current.position, { x: 2 });
-    gsap.set(can2Ref.current.rotation, { z: 0.5 });
+      if (window.scrollY < 20) {
+        introTl
+          .from(can1GroupRef.current.position, { y: -5, x: 1 }, 0)
+          .from(can1GroupRef.current.rotation, { z: 3 }, 0)
+          .from(can2GroupRef.current.position, { y: 5, x: 1 }, 0)
+          .from(can2GroupRef.current.rotation, { z: 3 }, 0);
+      }
 
-    gsap.set(can3Ref.current.position, { y: 5, z: 2 });
-    gsap.set(can4Ref.current.position, { x: 2, y: 4, z: 2 });
-    gsap.set(can5Ref.current.position, { y: -5 });
+      const scrollTl = gsap.timeline({
+        defaults: {
+          duration: 2,
+        },
+        scrollTrigger: {
+          trigger: ".hero",
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 1.5,
+        },
+      });
 
-    const introTl = gsap.timeline({
-      defaults: {
-        duration: 3,
-        ease: "back.out(1.4)",
-      },
-    });
+      // Animazione del gruppo principale
+      scrollTl.to(groupRef.current.rotation, { y: Math.PI * 2 });
 
-    if (window.scrollY < 20) {
-      introTl
-        .from(can1GroupRef.current.position, { y: -5, x: 1 }, 0)
-        .from(can1GroupRef.current.rotation, { z: 3 }, 0)
-        .from(can2GroupRef.current.position, { y: 5, x: 1 }, 0)
-        .from(can2GroupRef.current.rotation, { z: 3 }, 0);
-    }
+      // Applica animazioni a ciascuna lattina in modo dinamico
+      canRefs.current.forEach((can, index) => {
+        if (can && animationConfigs[index]) {
+          const config = animationConfigs[index];
 
-    const scrollTl = gsap.timeline({
-      defaults: {
-        duration: 2,
-      },
-      scrollTrigger: {
-        trigger: ".hero",
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 1.5,
-      },
-    });
+          // Imposta posizione e rotazione iniziale
+          gsap.set(can.position, config.set.position);
+          gsap.set(can.rotation, config.set.rotation);
 
-    scrollTl
-      // Rotate can group
-      .to(groupRef.current.rotation, { y: Math.PI * 2 })
+          // Aggiungi le animazioni alla timeline dello scroll
+          scrollTl
+            .to(can.position, config.to.position, 0)
+            .to(can.rotation, config.to.rotation, 0);
+        }
+      });
+      
+      // Animazione finale del gruppo
+      scrollTl.to(
+          groupRef.current.position,
+          { x: 1, duration: 3, ease: "sine.inOut" },
+          1.3,
+        );
 
-      // Can 1 - black cherry
-      .to(can1Ref.current.position, { x: -0.2, y: -0.7, z: -2 }, 0)
-      .to(can1Ref.current.rotation, { z: 0.3 }, 0)
-
-      // Can 2 - Lemon Lime
-      .to(can2Ref.current.position, { x: 1, y: -0.2, z: -1 }, 0)
-      .to(can2Ref.current.rotation, { z: 0 }, 0)
-
-      // Can 3 - Grape
-      .to(can3Ref.current.position, { x: -0.3, y: 0.5, z: -1 }, 0)
-      .to(can3Ref.current.rotation, { z: -0.1 }, 0)
-
-      // Can 4 - Strawberry Lemonade
-      .to(can4Ref.current.position, { x: 0, y: -0.3, z: 0.5 }, 0)
-      .to(can4Ref.current.rotation, { z: 0.3 }, 0)
-
-      // Can 5 -Watermelon
-      .to(can5Ref.current.position, { x: 0.3, y: 0.5, z: -0.5 }, 0)
-      .to(can5Ref.current.rotation, { z: -0.25 }, 0)
-      .to(
-        groupRef.current.position,
-        { x: 1, duration: 3, ease: "sine.inOut" },
-        1.3,
-      );
-  });
+    }, [labelUrls]); // Rilancia le animazioni quando labelUrls cambia
 
   return (
     <group ref={groupRef}>
-      <group ref={can1GroupRef}>
-        <FloatingCan
-          ref={can1Ref}
-          flavor="blackCherry"
-          floatSpeed={FLOAT_SPEED}
-        />
-      </group>
-      <group ref={can2GroupRef}>
-        <FloatingCan
-          ref={can2Ref}
-          flavor="lemonLime"
-          floatSpeed={FLOAT_SPEED}
-        />
-      </group>
+      {labelUrls.map((url, index) => {
+        // Le prime due lattine vanno in gruppi separati per l'animazione di intro
+        if (index === 0) {
+          return (
+            <group key={index} ref={can1GroupRef}>
+              <FloatingCan
+                ref={(el) => { canRefs.current[index] = el; }}
+                textureUrl={url}
+                floatSpeed={FLOAT_SPEED}
+              />
+            </group>
+          );
+        }
+        if (index === 1) {
+          return (
+            <group key={index} ref={can2GroupRef}>
+              <FloatingCan
+                ref={(el) => { canRefs.current[index] = el; }}
+                textureUrl={url}
+                floatSpeed={FLOAT_SPEED}
+              />
+            </group>
+          );
+        }
+        // Le altre lattine vengono renderizzate direttamente
+        return (
+          <FloatingCan
+            key={index}
+            ref={(el) => { canRefs.current[index] = el; }}
+            textureUrl={url}
+            floatSpeed={FLOAT_SPEED}
+          />
+        );
+      })}
 
-      <FloatingCan ref={can3Ref} flavor="grape" floatSpeed={FLOAT_SPEED} />
-
-      <FloatingCan
-        ref={can4Ref}
-        flavor="strawberryLemonade"
-        floatSpeed={FLOAT_SPEED}
-      />
-
-      <FloatingCan ref={can5Ref} flavor="watermelon" floatSpeed={FLOAT_SPEED} />
-      {/* <OrbitControls /> */}
-      <Environment files="/hdr/lobby.hdr" environmentIntensity={.8} />
+      <Environment files="/hdr/lobby.hdr" environmentIntensity={0.8} />
     </group>
   );
 }

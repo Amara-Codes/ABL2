@@ -16,7 +16,7 @@ const hero = {
 
 const firstCta: CtaContent = {
   content: {
-    ctaClasses: "custom-cta-class bg-black",
+    ctaClasses: "custom-cta-class bg-black pb-8", 
     titleClasses: "custom-title-class text-white",
     paragraphClasses: "custom-paragraph-class text-white",
     title: {

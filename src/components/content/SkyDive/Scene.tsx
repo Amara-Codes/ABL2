@@ -15,10 +15,10 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 type SkyDiveProps = {
   sentence: string | null;
-  flavor: SodaCanProps["flavor"] | null;
+  textureUrl: string | null;
 };
 
-export default function Scene({ sentence, flavor }: SkyDiveProps) {
+export default function Scene({ sentence, textureUrl }: SkyDiveProps) {
   const groupRef = useRef<THREE.Group>(null);
   const canRef = useRef<THREE.Group>(null);
   const cloud1Ref = useRef<THREE.Group>(null);
@@ -141,7 +141,7 @@ export default function Scene({ sentence, flavor }: SkyDiveProps) {
       <group rotation={[0, 0, 0.5]}>
         <FloatingCan
           ref={canRef}
-          flavor={flavor ?? hardCodedFlavor}
+          textureUrl={textureUrl ?? undefined}
           rotationIntensity={0}
           floatIntensity={3}
           floatSpeed={3}
