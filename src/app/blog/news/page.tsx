@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import GenericWrapper from "@/components/blog/GenericWrapper"
+import GenericWrapper from "@/components/BlogGenericWrapper"
 
 export const metadata: Metadata = {
   title: "Brewery in Siem Reap - Amara Beer Lab | Activities: Engage & Explore",

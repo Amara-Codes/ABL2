@@ -1,14 +1,12 @@
 import { Metadata } from "next";
 
-
-
 import Hero from "@/components/content/Hero";
 import SkyDive from "@/components/content/SkyDive";
 import BigText from "@/components/content/BigText";
 import Carousel from "@/components/content/Carousel";
 import { CtaContent } from "@/types";
 import Cta from "@/components/content/Cta";
-import { sampleHeroContent, sampleSkyDivingContent, sampleBigTextContent, sampleCarouselContent} from "@/lib/sample-data";
+import { sampleHeroContent, sampleSkyDivingContent, sampleBigTextContent, sampleCarouselContent } from "@/lib/sample-data";
 
 
 export const metadata: Metadata = {
@@ -19,7 +17,7 @@ export const metadata: Metadata = {
 
 const cta: CtaContent = {
   content: {
-    ctaClasses: "custom-cta-class bg-indigo-200 pb-8 text-white",
+    ctaClasses: "custom-cta-class bg-indigo-200 text-white",
     titleClasses: "custom-title-class",
     paragraphClasses: "custom-paragraph-class font-medium",
     title: {
@@ -57,12 +55,16 @@ const cta: CtaContent = {
 export default async function Index() {
   return (
     <div className="">
+
+
       <Hero content={sampleHeroContent.content} />
       <SkyDive content={sampleSkyDivingContent.content} />
+ 
+
       <div className="flex flex-col">
-      <BigText content={sampleBigTextContent.content} />
-      <Carousel content={sampleCarouselContent.content} />
-      <Cta content={cta.content} />
+        <BigText content={sampleBigTextContent.content} />
+        <Carousel content={sampleCarouselContent.content} />
+        <Cta content={cta.content} />
       </div>
     </div>
   );

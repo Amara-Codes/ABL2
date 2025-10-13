@@ -2,9 +2,9 @@ import { Metadata } from "next";
 
 import Cta from "@/components/content/Cta";
 import { CtaContent } from "@/types";
-import CurrentlyBrewing from "@/components/CurrentlyBrewing";
+
 import BigText from "@/components/content/BigText";
-import { sampleLabCta1Content, sampleLabCta2Content } from "@/lib/sample-data";
+import MetaBalls from "@/components/MetaBalls";
 
 const hero = {
   bgColorClass: "bg-[#FE6334]",
@@ -16,7 +16,7 @@ const hero = {
 
 const firstCta: CtaContent = {
   content: {
-    ctaClasses: "custom-cta-class bg-black pb-8", 
+    ctaClasses: "custom-cta-class bg-black p-4 lg:p-12 rounded-lg border-secondary border-2",
     titleClasses: "custom-title-class text-white",
     paragraphClasses: "custom-paragraph-class text-white",
     title: {
@@ -44,12 +44,12 @@ const firstCta: CtaContent = {
       url: "/images/lab/cta-1.gif",
       id: "cta-bg-001",
     },
-   
+
     layout: "imageLeft", // Options: 'centered', 'imageLeft', 'imageRight'
   },
 };
 
-const secondCta : CtaContent = {
+const secondCta: CtaContent = {
   content: {
     ctaClasses: "custom-cta-class bg-indigo-200",
     titleClasses: "custom-title-class",
@@ -88,13 +88,59 @@ export default function Lab() {
   return (
     <div className="min-h-screen mt-16">
 
+
+
+      <div className="h-[50vh]">
+        <MetaBalls
+          color="#FE6334"
+          cursorBallColor="#ff850e"
+          cursorBallSize={0.5}
+          ballCount={30}
+          animationSize={10}
+          enableMouseInteraction={true}
+          enableTransparency={true}
+          hoverSmoothness={0.05}
+          clumpFactor={1.5}
+          speed={0.3}
+        />
+      </div>
+
       <div >
         <BigText content={hero} />
       </div>
 
-      <Cta content={firstCta.content} />
-      <div className="py-8 mt-32">
+      <div className="h-[30vh]">
+        <MetaBalls
+          color="#FE6334"
+          cursorBallColor="#ff850e"
+          cursorBallSize={0.5}
+          ballCount={40}
+          animationSize={12}
+          enableMouseInteraction={true}
+          enableTransparency={true}
+          hoverSmoothness={0.05}
+          clumpFactor={1.5}
+          speed={0.5}
+        />
+      </div>
 
+      <div className="max-w-6xl mx-auto px-4 lg:px-0">
+        <Cta content={firstCta.content} />
+      </div>
+
+      <div className="h-[80vh]">
+        <MetaBalls
+          color="#FE6334"
+          cursorBallColor="#ff850e"
+          cursorBallSize={0.5}
+          ballCount={50}
+          animationSize={20}
+          enableMouseInteraction={true}
+          enableTransparency={true}
+          hoverSmoothness={0.05}
+          clumpFactor={1.8}
+          speed={0.3}
+        />
       </div>
       <Cta content={secondCta.content} />
     </div>

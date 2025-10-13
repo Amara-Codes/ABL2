@@ -9,19 +9,19 @@ export const metadata: Metadata = {
 export default function Contacts() {
     return (
         <div>
-            <div className="h-screen mt-16 flex justify-center">
+            <div className="h-screen mt-16 hidden lg:flex justify-center">
 
                 <h1 className="font-fatboy text-8xl text-primary h-1/2 flex items-end">Contacts</h1>
             </div>
-            <div className="flex w-full justify-between px-16 gap-8 mb-16">
-                <div className="w-1/2 h-[500px] border-0 rounded-lg overflow-hidden">
+            <div className="flex flex-col lg:flex-row w-full justify-between lg:px-16 px-8 gap-8 mb-16">
+                <div className="w-full lg:w-1/2 h-[500px] border-0 rounded-lg overflow-hidden">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3881.8937814439364!2d103.8549970747992!3d13.356880306314844!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3110173824530e15%3A0x58989ffc8660d3b!2sAmara%20Beer%20Lab!5e0!3m2!1sit!2skh!4v1758276000174!5m2!1sit!2skh"
                         width="100%"
                         height="100%"
                         loading="lazy"
                         referrerPolicy="no-referrer-when-downgrade"></iframe>
                 </div>
-                <div className="w-1/2 h-[500px] bg-slate-800 p-8 rounded-lg">
+                <div className="w-full lg:w-1/2 lg:h-[500px] bg-slate-800 p-8 rounded-lg">
                     <h3 className="text-white text-4xl font-extrabold mb-8">Siem Reap's Taproom</h3>
                     <div className="text-white text-xl mb-2">
                         <span className="font-bold me-4">Phone: </span>

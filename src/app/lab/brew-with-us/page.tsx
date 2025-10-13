@@ -42,10 +42,10 @@ export default function LabBrewWithUs() {
             </li>
           </ul>
         </div>
-        <div className="w-1/2 flex flex-col gap-y-8">
-          <div >
+        <div className="w-1/2 flex flex-col gap-y-4">
+          <div className="flex flex-col gap-3">
 
-            <Label className="text-white" htmlFor="email">Email: </Label>
+            <Label className="text-white text-2xl" htmlFor="email">Email: </Label>
             <Input
               id="email"
               type="email"
@@ -55,9 +55,9 @@ export default function LabBrewWithUs() {
             />
           </div>
 
-          <div>
+          <div className="flex flex-col gap-3">
 
-            <Label className="text-white" htmlFor="phone">Phone: </Label>
+            <Label className="text-white text-2xl" htmlFor="phone">Phone: </Label>
             <Input
               id="phone"
               type="text"
@@ -67,7 +67,7 @@ export default function LabBrewWithUs() {
             />
           </div>
 
-          <div className="flex gap-8 mt-2">
+          <div className="flex gap-8 mt-2 items-center justify-between mb-8">
 
             <Calendar28
               selectedDate={visitDate}
@@ -76,18 +76,18 @@ export default function LabBrewWithUs() {
 
 
             <div className="flex flex-col gap-3 w-fit">
-              <Label className="text-white" htmlFor="preferredOption">Preferred Contact: </Label>
+              <Label className="text-white text-2xl" htmlFor="preferredOption">Preferred Contact: </Label>
               <RadioGroup className="h-full" id="preferredOption" defaultValue={preferredOption} value={preferredOption} onValueChange={setpreferredOption}>
                 <div className="flex items-center gap-3">
                   <RadioGroupItem className="text-orange-500 border-orange-500 [&_svg]:fill-amber-500" value="telephone" id="r1">
 
                   </RadioGroupItem>
-                  <Label className="text-white" htmlFor="r1">Phone</Label>
+                  <Label className="text-white text-xl" htmlFor="r1">Phone</Label>
 
                   <RadioGroupItem className="text-orange-500 border-orange-500 [&_svg]:fill-amber-500" value="email" id="r2">
 
                   </RadioGroupItem>
-                  <Label className="text-white" htmlFor="r2">Email</Label>
+                  <Label className="text-white text-xl" htmlFor="r2">Email</Label>
                 </div>
 
               </RadioGroup>

@@ -15,7 +15,7 @@ const BigText = ({ content }: BigTextContent): JSX.Element => {
   return (
     <section className={`min-h-full ${bgColorClass} ${textColorClass}`}>
       <h2
-        className="grid w-full gap-y-[1vw] py-10 text-center font-black uppercase leading-[.7] items-center my-24 px-4 lg:px-16"
+        className="grid w-full gap-y-[1vw] py-10 text-center font-black uppercase leading-[.7] items-center px-4 lg:px-16"
         style={{ maxWidth: `${maxWidth}%` }}
       >
         {sentence.split(" ").map((word, i) => {

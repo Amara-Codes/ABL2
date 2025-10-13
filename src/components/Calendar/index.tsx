@@ -57,7 +57,7 @@ export function Calendar28({ selectedDate, onDateChange }: CalendarProps) {
 
   return (
     <div className="flex flex-col gap-3 w-fit">
-      <Label htmlFor="date" className="px-1 text-white">
+      <Label htmlFor="date" className="px-1 text-white text-2xl">
         Visit Date:
       </Label>
       <div className="relative flex gap-2">

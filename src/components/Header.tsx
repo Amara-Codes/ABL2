@@ -3,6 +3,54 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
+
+import BubbleMenu from "./BubbleMenu";
+
+const DEFAULT_ITEMS = [
+  {
+    label: 'Home',
+    href: '/',
+    ariaLabel: 'Home',
+    rotation: -8,
+    hoverStyles: { bgColor: '#3b82f6', textColor: '#ffffff' }
+  },
+  {
+    label: 'Our Beers',
+    href: '/beers',
+    ariaLabel: 'Our Beers',
+    rotation: 8,
+    hoverStyles: { bgColor: '#10b981', textColor: '#ffffff' }
+  },
+  {
+    label: 'The Brewery',
+    href: '/brewery',
+    ariaLabel: 'The Brewery',
+    rotation: 8,
+    hoverStyles: { bgColor: '#f59e0b', textColor: '#ffffff' }
+  },
+  {
+    label: 'Blog',
+    href: '/blog',
+    ariaLabel: 'Blog',
+    rotation: 8,
+    hoverStyles: { bgColor: '#f59e0b', textColor: '#ffffff' }
+  },
+  {
+    label: 'The Lab',
+    href: '/lab',
+    ariaLabel: 'The Lab',
+    rotation: -8,
+    hoverStyles: { bgColor: '#8b5cf6', textColor: '#ffffff' }
+  },
+  {
+    label: 'Contacts',
+    href: '/contacts',
+    ariaLabel: 'Contacts',
+    rotation: 8,
+    hoverStyles: { bgColor: '#ef4444', textColor: '#ffffff' }
+  },
+];
+
 /**
  * A header component that hides on scroll down and reveals on scroll up.
  * This component is designed for client-side rendering in a Next.js environment.
@@ -47,25 +95,23 @@ export default function Header(): React.ReactElement {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-[90] flex items-center justify-between pt-8 px-8 transition-transform duration-500 ease-in-out ${isVisible ? "translate-y-0" : "-translate-y-full"
+      className={`fixed top-0 left-0 right-0 z-[90] flex items-center justify-between lg:px-8 transition-transform duration-500 ease-in-out ${isVisible ? "translate-y-0" : "translate-y-[-500%]"
         }`}
     >
-
-      <div className="">
-        <Link href="/" className="bg-primary">
-
-          <Image className="bg-primary rounded-full border-4 border-secondary" src="/images/logo-sm.png" width={80} height={80} alt="Small Amara Beer lab Logo" />
-        </Link>
+      <div className="w-full h-full relative mt-9 lg:mt-6">
+        <BubbleMenu
+          logo="/images/logo-sm.png"
+          items={DEFAULT_ITEMS}
+          menuAriaLabel="Toggle navigation"
+          menuBg="#ffffff"
+          menuContentColor="#111111"
+          useFixedPosition={false}
+          animationEase="back.out(1.5)"
+          animationDuration={0.5}
+          staggerDelay={0.12}
+        />
       </div>
 
-      <div className="flex justify-between gap-8 pt-4">
-        <Link className="font-fatboy text-xl text-white hover:text-primary hover:underline transition-colors duration-700" href="/">Home</Link>
-        <Link className="font-fatboy text-xl text-white hover:text-primary hover:underline transition-colors duration-700" href="/brewery">Brewery</Link>
-        <Link className="font-fatboy text-xl text-white hover:text-primary hover:underline transition-colors duration-700" href="/lab">Lab</Link>
-        <Link className="font-fatboy text-xl text-white hover:text-primary hover:underline transition-colors duration-700" href="/beers">Our Beers</Link>
-        <Link className="font-fatboy text-xl text-white hover:text-primary hover:underline transition-colors duration-700" href="/blog">Blog</Link>
-        <Link className="font-fatboy text-xl text-white hover:text-primary hover:underline transition-colors duration-700" href="/contacts">Contacts</Link>
-      </div>
     </header>
   );
 }

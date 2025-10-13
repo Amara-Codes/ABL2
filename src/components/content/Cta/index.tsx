@@ -14,7 +14,7 @@ const Cta = ({ content }: CtaContent): JSX.Element => {
     const { ctaClasses, title, titleClasses, paragraph, paragraphClasses, button, background_image, image, layout } = content;
     return (
         <section
-            className={`relative pt-12 px-6 overflow-hidden ${background_image?.url ? "bg-cover bg-center" : ""} ${ctaClasses}`}
+            className={`relative overflow-hidden ${background_image?.url ? "bg-cover bg-center" : ""} ${ctaClasses}`}
             style={background_image?.url ? { backgroundImage: `url(${background_image.url})` } : undefined}
         >
             <div className={`max-w-6xl mx-auto ${layoutClasses[layout]} gap-8`}>
@@ -27,7 +27,7 @@ const Cta = ({ content }: CtaContent): JSX.Element => {
                         className="rounded-lg object-cover"
                     />
                 ) : (
-                    <div className="gapper w-20 h-20 grow"></div>
+                    <div className="gapper w-20 h-20 grow hidden lg:block"></div>
                 )}
                 <div className="flex flex-col gap-4 max-w-lg  p-8 h-full w-full bg-purple-400 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-20">
                     <h2 className={`text-4xl font-bold ${titleClasses}`}>{title.text}</h2>

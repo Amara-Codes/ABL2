@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment } from "@react-three/drei";
-
+import BackButton from "@/components/BackButton";
 import { AnimatedBeerCan } from "@/components/AnimatedBeerCan"; // Assicurati che il percorso sia corretto
 
 const STRAPI_URL = process.env.NEXT_PUBLIC_AMARA_STRAPI_URL || "http://127.0.0.1:1337";
@@ -108,14 +108,15 @@ export default function BeerPage({ params }: { params: { name: string } }) {
     return (
         <main className="min-h-screen bg-gray-900 text-white p-8">
             <div className="max-w-6xl mx-auto">
-                <div className="flex justify-between items-center mb-16">
-                    <h1 className="text-5xl font-bold font-fatboy text-center">
+                <div className="flex flex-col lg:flex-row gap-y-4 justify-between lg:items-center lg:mb-16">
+                <BackButton />
+                    <h1 className="text-5xl font-bold font-fatboy text-center grow">
                        <span className="text-secondary"> {beer.attributes.name} - </span>
                         <span className="text-secondary">ABV: {beer.attributes.abv}%</span>
                     </h1>
-                    <p className="px-8 py-4 h-fit flex items-center rounded-md bg-primary/10 font-medium text-primary hover:bg-secondary/10 hover:text-secondary hover:ring-2 hover:ring-secondary transition-all duration-500">{beer.attributes.category.data.attributes.name}</p>
+                    <p className="px-8 py-4 h-fit w-fit mx-auto hidden lg:flex items-center rounded-md bg-primary/10 font-medium text-primary hover:bg-secondary/10 hover:text-secondary hover:ring-2 hover:ring-secondary transition-all duration-500">{beer.attributes.category.data.attributes.name}</p>
                 </div>
-                <div className="flex">
+                <div className="flex flex-col lg:flex-row">
 
                     <div className="h-[50vh] w-full my-8">
                         <Canvas shadows camera={{ position: [0, 0, 3.5], fov: 50 }}>
