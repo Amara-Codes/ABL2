@@ -23,7 +23,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({
       <Link
         className="w-full h-full relative text-white font-bold"
         href={{
-          pathname: `/${type}/${slug}`
+          pathname: `/blog/post/${slug}`
         }}
       >
         <div className="relative w-full h-full">
@@ -35,7 +35,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({
               className="object-cover rounded-md"
             />
           ) : (
-            <div className="bg-gradient-to-bl from-koiWhite via-koiOrange to-koiRed rounded-md w-full h-full"></div>
+            <div className="bg-gradient-to-bl from-cyan-950 via-rose-500 to-primary rounded-md w-full h-full"></div>
           )}
 
           <div className="absolute bottom-0 left-0 w-full backdrop-blur-sm bg-black/40 p-4 rounded-b-md h-60 max-h-60 flex flex-col">

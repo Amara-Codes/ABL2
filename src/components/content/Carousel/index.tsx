@@ -7,7 +7,7 @@ import { Group } from "three";
 import gsap from "gsap";
 import Link from "next/link";
 
-import FloatingCan from "@/components/FloatingCan";
+import FloatingCan from "@/components/3d/FloatingCan";
 import { ArrowIcon } from "./ArrowIcon";
 import { WavyCircles } from "./WavyCircles";
 import type { CarouselSlideContent } from "@/types";
@@ -295,8 +295,8 @@ const Carousel = ({ content }: CarouselSlideContent): JSX.Element => {
       <div className="background pointer-events-none absolute inset-0  opacity-50 bg-black"/>
       <WavyCircles className="absolute left-1/2 top-1/2 h-[120vmin] -translate-x-1/2 -translate-y-1/2" />
 
-      <h2 className="relative text-center text-5xl font-bold text-shadow-outline md:text-6xl lg:text-7xl px-8 py-4" style={{ backgroundColor: currentSlide.complementaryColor }}>
-        <span>{title[0]?.text || ""}</span>
+      <h2 className="relative text-center text-5xl font-bold text-shadow-outline md:text-6xl lg:text-7xl px-8 py-4">
+        <span>{title?.[0]?.text ?? "Our last drop"}</span>
       </h2>
 
       <div className="grid grid-cols-[auto,auto,auto] items-center">
@@ -316,7 +316,7 @@ const Carousel = ({ content }: CarouselSlideContent): JSX.Element => {
               textureUrl={currentSlide.textureUrl}
             />
           </Center>
-          <Environment files="/hdr/lobby.hdr" environmentIntensity={0.5} environmentRotation={[0, 3, 0]} />
+          <Environment preset="warehouse" />
           <directionalLight intensity={0.5} position={[0, 1, 1]} />
         </View>
 

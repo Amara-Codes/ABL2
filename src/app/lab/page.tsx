@@ -84,6 +84,11 @@ const secondCta: CtaContent = {
   },
 };
 
+export const metadata: Metadata = {
+  title: "Brewery in Siem Reap - Amara Beer Lab | The Beer Lab",
+  description: "Explore Amara Beer Lab, the craft brewery in Siem Reap. Discover how we use Khmer ingredients to create unique beers while promoting sustainability and community impact.",
+};
+
 export default function Lab() {
   return (
     <div className="min-h-screen mt-16">

@@ -1,12 +1,11 @@
 import localFont from "next/font/local";
 
-import { PrismicPreview } from "@prismicio/next";
-import { repositoryName } from "@/prismicio";
+
 
 import "./app.css";
-import Header from "@/components/Header";
-import ViewCanvas from "@/components/ViewCanvas";
-import Footer from "@/components/Footer";
+import Header from "@/components/layout/Header";
+import ViewCanvas from "@/components/layout/ViewCanvas";
+import Footer from "@/components/layout/Footer";
 
 const alpino = localFont({
   src: "../../public/fonts/Alpino-Variable.woff2",

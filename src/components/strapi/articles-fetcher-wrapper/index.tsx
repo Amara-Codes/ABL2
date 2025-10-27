@@ -69,8 +69,8 @@ export default function ArticlesFetcherWrapper({
   };
 
   return (
-    <div className="md:mx-8">
-      <div className="flex justify-end items-center mt-8">
+    <div className="flex flex-col gap-y-4">
+      <div className="hidden lg:flex justify-end items-center">
         {/* Sostituisci il pulsante di ordinamento con il componente Sorter */}
         <Sorter onSortChange={(value) => setSort(value)} />
       </div>

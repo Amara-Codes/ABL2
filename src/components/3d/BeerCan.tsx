@@ -11,8 +11,8 @@ const placeHolder = "/labels/placeholder.png"
 // Materiale standard per il corpo della lattina (opaco)
 const bodyMaterial = new THREE.MeshStandardMaterial({
   roughness: 0.45,
-  metalness: 0.5,
-  color: "#ffffff",
+  metalness: 0.85,
+  color: "#c6c6c6",
 });
 
 // NUOVO: Materiale effetto vetro
@@ -33,8 +33,8 @@ const lidMaterial = new THREE.MeshStandardMaterial({
 
 const roughBodyMaterial = new THREE.MeshStandardMaterial({
   roughness: 0.4,
-  metalness: 0.4,
-  color: "#f2f2f2",
+  metalness: 0.8,
+  color: "#cccccc",
 });
 
 

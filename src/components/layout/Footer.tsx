@@ -1,5 +1,5 @@
 import React from "react";
-import { ABLLogo } from "./ABLLogo";
+import { ABLLogo } from "@/components/ABLLogo";
 import Link from "next/link";
 
 
@@ -30,10 +30,10 @@ export default function Footer({ }: Props) {
             <Link href="/blog" className="text-center text-lg font-fatboy hover:underline text-primary hover:text-white transition-colors duration-700">
               Blog
             </Link>
-            <Link href="/news" className="text-center text-lg font-fatboy hover:underline text-primary hover:text-white transition-colors duration-700">
+            <Link href="/blog/news" className="text-center text-lg font-fatboy hover:underline text-primary hover:text-white transition-colors duration-700">
               News
             </Link>
-            <Link href="/activities" className="text-center text-lg font-fatboy hover:underline text-primary hover:text-white transition-colors duration-700">
+            <Link href="/blog/activities" className="text-center text-lg font-fatboy hover:underline text-primary hover:text-white transition-colors duration-700">
               Activities
             </Link>
             <Link href="/contacts" className="text-center text-lg font-fatboy hover:underline text-primary hover:text-white transition-colors duration-700">

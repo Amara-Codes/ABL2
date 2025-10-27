@@ -7,9 +7,9 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-import FloatingCan from "@/components/FloatingCan";
+import FloatingCan from "@/components/3d/FloatingCan";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
-import {  SodaCanProps } from "@/components/SodaCan";
+
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -25,7 +25,7 @@ export default function Scene({ sentence, textureUrl }: SkyDiveProps) {
   const cloud2Ref = useRef<THREE.Group>(null);
   const cloudsRef = useRef<THREE.Group>(null);
   const wordsRef = useRef<THREE.Group>(null);
-  const hardCodedFlavor: SodaCanProps["flavor"] = 'grape';
+
 
   const ANGLE = 75 * (Math.PI / 180);
 
@@ -152,7 +152,7 @@ export default function Scene({ sentence, textureUrl }: SkyDiveProps) {
 
       {/* Clouds */}
       <Clouds ref={cloudsRef}>
-        <Cloud ref={cloud1Ref} bounds={[10, 20, 2]} opacity={1}/>
+        <Cloud ref={cloud1Ref} bounds={[10, 20, 2]} opacity={1} />
         <Cloud ref={cloud2Ref} bounds={[10, 10, 2]} />
       </Clouds>
 
@@ -162,8 +162,8 @@ export default function Scene({ sentence, textureUrl }: SkyDiveProps) {
       </group>
 
       {/* Lights */}
-      <ambientLight intensity={1} color="#ffffff" />
-      <Environment files="/hdr/field.hdr" environmentIntensity={.8} />
+      <Environment preset="warehouse" />
+      <directionalLight intensity={0.5} position={[0, 1, 1]} />
     </group>
 
   );

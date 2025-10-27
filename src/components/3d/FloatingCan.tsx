@@ -4,7 +4,7 @@ import { forwardRef, ReactNode } from "react";
 // 1. Importa 'Html' da drei
 import { Float, Html } from "@react-three/drei";
 
-import { BeerCan } from "@/components/BeerCan";
+import { BeerCan } from "@/components/3d/BeerCan";
 import { Group } from "three";
 
 type FloatingCanProps = {

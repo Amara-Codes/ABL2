@@ -1,10 +1,12 @@
+// src/components/3d/BeerShowcase.tsx
+
 "use client";
 
 import { useState } from "react";
 // ✅ 1. IMPORT useRouter from next/navigation
 import { useRouter } from "next/navigation";
 
-import { AnimatedBeerCan } from "@/components/AnimatedBeerCan";
+import { AnimatedBeerCan } from "@/components/3d/AnimatedBeerCan";
 import type { BeerData } from "@/types";
 
 type BeerShowcaseProps = {
@@ -16,10 +18,19 @@ export default function BeerShowcase({ beers }: BeerShowcaseProps) {
   // ✅ 2. INITIALIZE the router
   const router = useRouter();
 
+  // ✅ Definiamo uno spazio verticale (circa l'altezza di una lattina)
+  const verticalSpacing = 2.5;
+
   return (
     <>
       {beers.map((beer, index) => {
-        const xPos = (index - (beers.length - 1) / 2) * 2.5;
+        // ❌ Rimuoviamo xPos
+        // const xPos = (index - (beers.length - 1) / 2) * 2.5;
+
+        // ✅ Calcoliamo yPos per impilare le birre verticalmente
+        // Usiamo la stessa logica di centratura, ma sull'asse Y
+        // Il segno negativo fa sì che la birra con index 0 sia in alto
+        const yPos = (index - (beers.length - 1) / 2) * -verticalSpacing;
 
         // ✅ 3. CREATE the URL slug from the beer name
         const slug = beer.name.toLowerCase().replace(/\s+/g, "-");
@@ -28,7 +39,8 @@ export default function BeerShowcase({ beers }: BeerShowcaseProps) {
         return (
           <group
             key={beer.id}
-            position={[xPos, 1.5, 0]}
+            // ✅ Aggiorniamo la posizione: x è 0, y è dinamico
+            position={[0, yPos, 0]}
             onPointerOver={(e) => {
               e.stopPropagation();
               setHoveredCanId(beer.id);

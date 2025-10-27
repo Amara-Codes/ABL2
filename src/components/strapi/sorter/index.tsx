@@ -25,7 +25,7 @@ export function Sorter({ onSortChange }: SorterProps) {
   ];
 
   return (
-    <div className="w-[200px] mb-8">
+    <div className="w-[200px]">
       <Select onValueChange={(value) => onSortChange(value as "asc" | "desc")}>
 
         <SelectTrigger className="focus:ring-2 focus:ring-secondary">

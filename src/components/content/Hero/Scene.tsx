@@ -7,7 +7,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-import FloatingCan from "@/components/FloatingCan";
+import FloatingCan from "@/components/3d/FloatingCan";
 import { useStore } from "@/hooks/useStore";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
@@ -214,8 +214,8 @@ export default function Scene() {
           />
         );
       })}
-
-      <Environment files="/hdr/lobby.hdr" environmentIntensity={0.8} />
+   <Environment preset="sunset"/>
+   
     </group>
   );
 }

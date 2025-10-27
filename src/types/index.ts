@@ -58,9 +58,9 @@ export interface CarouselSlideElement {
 
 export interface CarouselSlideContent {
   content : {
-    title: RichTextNode[];
-    paragraph: RichTextNode[];
-    slides: CarouselSlideElement[]
+    title?: RichTextNode[];
+    paragraph?: RichTextNode[];
+    slides?: CarouselSlideElement[]
   }
 }
 
@@ -130,3 +130,52 @@ export type DropData = {
   metaTitle: string;
   metaDescription: string;
 };
+
+export interface BlogPostButtonElement {
+    ButtonLabel?: string;
+    ButtonCssClasses?: string;
+    ButtonLink?: string;
+    ButtonType?: string;
+  }
+
+  export interface BlogPostCarouselElement {
+    CarouselTitle?: string;
+    CarouselSubtitle?: string;
+    CarouselCssClasses?: string;
+    CarouselImgs?: string[];
+  }
+
+  export interface BlogPostCtaElement {
+    CtaTitle?: string;
+    CtaCaption?: string;
+    CtaCssClasses?: string;
+    CtaType?: string;
+    CtaButton?: BlogPostButtonElement;
+    CtaBgImg?: string;
+  }
+
+  export interface BlogPostHeroElement {
+    HeroTitle?: string;
+    HeroSubtitle?: string;
+    HeroCssClasses?: string;
+    HeroButton?: BlogPostButtonElement;
+    HeroBgImg?: string;
+    HeroWrapperCssClasses?: string;
+    HeroWrapperBgImg?: string;
+  }
+
+  export interface BlogPostParagraphElement {
+    ParagraphContent: string; 
+    ParagraphCssClasses?: string; 
+    ParagraphImg?: string;
+    ParagraphImgPosition ?: string;
+  }
+  
+  export interface BlogPostQuoteElement {
+    QuoteContent?: string;
+    QuoteAuthor?: string;
+    QuoteCssClasses?: string;
+    QuoteAuthorDates?: string;
+    QuoteAuthorInfo?: string;
+  }
+  

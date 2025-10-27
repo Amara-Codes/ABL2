@@ -72,7 +72,7 @@ const Hero = ({ content }: HeroProps): JSX.Element => {
       });
 
       scrollTl
-        .fromTo("body", { backgroundColor: "#000000" }, { backgroundColor: "#FF850E", overwrite: "auto", }, 1)
+        .fromTo("body", { backgroundColor: "#FF850E" }, { backgroundColor: "#000000", overwrite: "auto", }, 1)
         .from(".text-side-heading .split-char", { scale: 1.3, y: 40, rotate: -25, opacity: 0, stagger: 0.1, ease: "back.out(3)", duration: 0.5, })
         .from(".text-side-body", { y: 20, opacity: 0, });
     },
@@ -98,10 +98,10 @@ const Hero = ({ content }: HeroProps): JSX.Element => {
               />
             </h1>
             <div className="hero-subheading mt-12 text-5xl font-semibold text-[#0B3848] lg:text-6xl">
-              <span className="text-[#0B3848]">{subheading[0]?.text}</span>
+              <span className="text-white">{subheading[0]?.text}</span>
             </div>
             <div className="hero-body text-2xl font-normal text-[#0B3848]">
-              <span className="text-[#0B3848]">{body[0]?.text}</span>
+              <span className="text-white">{body[0]?.text}</span>
             </div>
             {/* The buttonLink prop in your Button component might expect a string, not an object.
                 If it expects just the URL, this is correct. If it expects the whole object, change it to buttonLink={button_link} */}
@@ -118,22 +118,22 @@ const Hero = ({ content }: HeroProps): JSX.Element => {
             height={600}
           />
           <div>
-            <h2 className="text-side-heading text-balance text-6xl font-black uppercase text-[#0B3848] lg:text-8xl">
+            <h2 className="text-side-heading text-balance text-6xl font-black uppercase text-white lg:text-8xl">
               <TextSplitter text={second_heading[0]?.text || ""} />
             </h2>
-            <div className="text-side-body mt-4 max-w-xl text-balance text-xl font-normal text-[#0B3848]">
-              <span className="text-[#0B3848]">{second_body[0]?.text}</span>
+            <div className="text-side-body mt-4 max-w-xl text-balance text-xl font-normal text-white">
+              <span className="">{second_body[0]?.text}</span>
             </div>
 
-<div className="mt-16 py-8">
+            <div className="mt-16 py-8">
 
-                        <Button
-              buttonLink={button.url}
-              buttonText={button.label}
-              className="hero-button mt-12"
-              type={button.type === "ext" ? "ext" : "int"}
-            />
-</div>
+              <Button
+                buttonLink={button.url}
+                buttonText={button.label}
+                className="hero-button mt-12"
+                type={button.type === "ext" ? "ext" : "int"}
+              />
+            </div>
           </div>
         </div>
       </div>

@@ -105,7 +105,6 @@ export default function BubbleMenu({
     .join(' ');
 
   const handleToggle = () => {
-    console.log('Toggle menu');
     const nextState = !isMenuOpen;
     if (nextState) setShowOverlay(true);
     setIsMenuOpen(nextState);
@@ -172,6 +171,11 @@ export default function BubbleMenu({
     }
   }, [isMenuOpen, showOverlay, animationEase, animationDuration, staggerDelay]);
 
+  const forceMenuClose = () => () => {
+    setIsMenuOpen(false);
+    setShowOverlay(false);
+  }
+
   useEffect(() => {
     const handleResize = () => {
       if (isMenuOpen) {
@@ -197,7 +201,9 @@ export default function BubbleMenu({
       <nav className={containerClassName} style={style} aria-label="Main navigation">
         <div className="bubble bubble-logo logo-bubble" aria-label="Logo">
           <span className="logo-content">
-            {typeof logo === 'string' ? <Image width={80} height={80} src={logo} alt="Logo" className="bubble-logo" /> : logo}
+            <Link href="/" onClick={forceMenuClose()}>
+              {typeof logo === 'string' ? <Image width={80} height={80} src={logo} alt="Logo" className="bubble-logo" /> : logo}
+            </Link>
           </span>
         </div>
 

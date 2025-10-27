@@ -1,19 +1,29 @@
 import { Metadata } from "next";
 
-import Link from "next/link";
-import Cta from "@/components/content/Cta";
 import BigText from "@/components/content/BigText";
+
+import FlowingMenu from "@/components/FlowingMenu";
+
+const demoItems = [
+    { link: '/blog/articles', text: 'Articles', image: '/images/blog/1.jpg' },
+    { link: '/blog/news', text: 'News', image: '/images/blog/2.jpg' },
+    { link: '/blog/activities', text: 'Activities', image: '/images/blog/3.jpg' },
+    { link: '/blog/gallery', text: 'Gallery', image: '/images/blog/4.jpg' }
+];
 
 
 const hero = {
     bgColorClass: "bg-[#C0F0F5]",
-
     textColorClass: "text-[#FF850E]",
-
     sentence: "We have so many Things to say!!!",
     maxWidth: 100,
     factor: 1
 }
+
+export const metadata: Metadata = {
+    title: "Brewery in Siem Reap - Amara Beer Lab | Articles, News & Activities on Craft Beer and Sustainability",
+    description: "Stay updated with Amara Beer Lab's blog featuring articles, news, and activities about our craft beers, sustainability efforts, and community impact in Siem Reap, Cambodia. Explore our latest updates and insights into the world of craft brewing.",
+};
 
 export default function Lab() {
     return (
@@ -21,19 +31,10 @@ export default function Lab() {
 
             <div >
                 <BigText content={hero} />
-                <div className="bg-secondary grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 h-screen">
-                    <Link href="/blog/activities" className="border-2 border-black rounded-lg m-8 flex flex-col justify-between items-center">
-                        <h3 className="font-fatboy text-2xl text-center pt-4">Activities</h3>
-                    </Link>
-                    <Link href="/blog/news" className="border-2 border-black rounded-lg m-8 flex flex-col justify-between items-center">
-                        <h3 className="font-fatboy text-2xl text-center pt-4">News</h3>
-                    </Link>
-                    <Link href="/blog/articles" className="border-2 border-black rounded-lg m-8 flex flex-col justify-between items-center">
-                        <h3 className="font-fatboy text-2xl text-center pt-4">Articles</h3>
-                    </Link>
-                    <Link href="/blog/gallery" className="border-2 border-black rounded-lg m-8 flex flex-col justify-between items-center">
-                        <h3 className="font-fatboy text-2xl text-center pt-4">Gallery</h3>
-                    </Link>
+
+
+                <div className="relative h-[600px]">
+                    <FlowingMenu items={demoItems} backgroundColor="#FF850E"/>
                 </div>
             </div>
 

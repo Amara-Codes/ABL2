@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-import BubbleMenu from "./BubbleMenu";
+import BubbleMenu from "@/components/BubbleMenu";
 
 const DEFAULT_ITEMS = [
   {
@@ -12,42 +12,42 @@ const DEFAULT_ITEMS = [
     href: '/',
     ariaLabel: 'Home',
     rotation: -8,
-    hoverStyles: { bgColor: '#3b82f6', textColor: '#ffffff' }
+    hoverStyles: { bgColor: '#FF850E', textColor: '#ffffff' }
   },
   {
     label: 'Our Beers',
     href: '/beers',
     ariaLabel: 'Our Beers',
     rotation: 8,
-    hoverStyles: { bgColor: '#10b981', textColor: '#ffffff' }
+    hoverStyles: { bgColor: '#FF850E', textColor: '#ffffff' }
   },
   {
     label: 'The Brewery',
     href: '/brewery',
     ariaLabel: 'The Brewery',
     rotation: 8,
-    hoverStyles: { bgColor: '#f59e0b', textColor: '#ffffff' }
+    hoverStyles: { bgColor: '#FF850E', textColor: '#ffffff' }
   },
   {
     label: 'Blog',
     href: '/blog',
     ariaLabel: 'Blog',
     rotation: 8,
-    hoverStyles: { bgColor: '#f59e0b', textColor: '#ffffff' }
+    hoverStyles: { bgColor: '#FF850E', textColor: '#ffffff' }
   },
   {
     label: 'The Lab',
     href: '/lab',
     ariaLabel: 'The Lab',
     rotation: -8,
-    hoverStyles: { bgColor: '#8b5cf6', textColor: '#ffffff' }
+    hoverStyles: { bgColor: '#FF850E', textColor: '#ffffff' }
   },
   {
     label: 'Contacts',
     href: '/contacts',
     ariaLabel: 'Contacts',
     rotation: 8,
-    hoverStyles: { bgColor: '#ef4444', textColor: '#ffffff' }
+    hoverStyles: { bgColor: '#FF850E', textColor: '#ffffff' }
   },
 ];
 

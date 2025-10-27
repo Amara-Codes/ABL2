@@ -1,6 +1,10 @@
 "use client"
 
-export default function BackButton() {
+interface BackButtonProps {
+    destination?: string | null;
+}
+
+export default function BackButton({ destination }: BackButtonProps) {
     const handleSmoothBack = () => {
         // 1. Inizia lo scroll verso l'alto in modo fluido
         window.scrollTo({
@@ -11,13 +15,13 @@ export default function BackButton() {
         // 2. Attendi 500ms prima di eseguire il back(),
         //    per dare il tempo all'animazione di essere visibile.
         setTimeout(() => {
-            window.history.back();
+            destination ? window.location.href = destination : window.history.back();
         }, 500); // Puoi aggiustare questo valore se necessario
     };
 
     return (
         <button
-            className="bg-white text-center w-16 lg:w-32 rounded-sm lg:rounded-2xl h-7 lg:h-14 relative text-black text-sm lg:text-xl font-semibold group"
+            className="bg-white text-center w-20 lg:w-32 rounded-sm lg:rounded-2xl h-7 lg:h-14 relative text-black text-sm lg:text-xl font-semibold group"
             type="button"
             onClick={handleSmoothBack} // Usa la nuova funzione
         >
@@ -40,7 +44,7 @@ export default function BackButton() {
                     ></path>
                 </svg>
             </div>
-            <p className="translate-x-2 font-fatboy">Back</p>
+            <p className="translate-x-2 font-fatboy text-xs lg:text-lg">Back</p>
         </button>
     );
 }
