@@ -2,13 +2,13 @@
 
 import React, { useEffect, useState } from "react";
 import ArticlesFetcher from "../article-fetcher";
-import { Sorter } from "../sorter"; 
+import { Sorter } from "../sorter";
 import Paginator from "../paginator"
 import qs from "qs";
 
 // Definisci il tipo della risposta che ti aspetti da getPageInfos
 type PaginationInfo = {
-  pageCount: number ;
+  pageCount: number;
 };
 
 type Infos = {
@@ -23,7 +23,7 @@ export default function ArticlesFetcherWrapper({
   articlesPerPage?: number; // Definizione della nuova prop
 }) {
   // Stato per il sort e la pagina corrente
-  const [sort, setSort] = useState<"asc" | "desc">("desc");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const [currentPage, setCurrentPage] = useState(1);
 
   async function getPageInfos(
@@ -70,25 +70,28 @@ export default function ArticlesFetcherWrapper({
 
   return (
     <div className="flex flex-col gap-y-4">
-      <div className="hidden lg:flex justify-end items-center">
+      <div className="flex justify-end items-center">
         {/* Sostituisci il pulsante di ordinamento con il componente Sorter */}
-        <Sorter onSortChange={(value) => setSort(value)} />
+        <Sorter
+          currentSort={sortOrder}
+          onSortChange={setSortOrder}
+        />
       </div>
 
       <ArticlesFetcher
         articleCategory={initialCategory}
         limit={articlesPerPage} // Usa articlesPerPage come valore per limit
-        sort={sort}
+        sort={sortOrder}
         currentPage={currentPage}
       />
 
       {/* Aggiungi la paginazione solo se il pageCount è maggiore di 1 */}
-      { infos?.pagination?.pageCount && infos?.pagination?.pageCount > 1 && (
-  <Paginator
-  currentPage={currentPage}
-  pageCount={infos.pagination.pageCount}
-  onPageChange={handlePageChange}
-/>
+      {infos?.pagination?.pageCount && infos?.pagination?.pageCount > 1 && (
+        <Paginator
+          currentPage={currentPage}
+          pageCount={infos.pagination.pageCount}
+          onPageChange={handlePageChange}
+        />
       )}
     </div>
   );

@@ -43,8 +43,8 @@ const Hero: React.FC<BlogPostHeroElement> = ({
 
               <div className={`${HeroBgImg?.length ? 'absolute bottom-0 ' : ''} text-center w-full pb-4`}>
 
-                <h1 className="text-4xl font-bold mb-4 px-4 text-ui-fg-base">{HeroTitle}</h1>
-                <p className="text-lg px-4 text-koiYellow">{HeroSubtitle}</p>
+                <h1 className="text-4xl font-bold mb-4 px-4 text-white">{HeroTitle}</h1>
+                <p className="px-4 text-secondary text-xl font-medium">{HeroSubtitle}</p>
                 {HeroButton && (
 
                   <Link href={HeroButton.ButtonLink ?? "/"}

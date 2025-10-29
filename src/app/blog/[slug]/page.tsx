@@ -144,7 +144,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     }
 
     return {
-        title: article ? "Brewery in Siem Reap - Amara Beer Lab | Blog and Stories - " + article.Title : 'Blog and Stories',
+        title: article ? "Craft Beer Brewery in Siem Reap - Amara Beer Lab | Blog and Stories - " + article.Title : 'Blog and Stories',
         description: article?.Summary || 'Dive into our blog to uncover stories from our brewery in Siem Reap, Cambodia. Explore craft beer culture, sustainable brewing practices, and reflections on community and local traditions.',
     };
 }
@@ -169,13 +169,13 @@ const PostPage = async ({ params }: { params: { slug: string } }) => {
             {article ? (
                 <div className="w-full">
 
-                    <div className="mb-16 small:mx-12">
-                        <div className="mb-8">
-                            <BackButton destination={`/${article.Category}`} />
+                    <div className="mt-2 mb-16 small:mx-12">
+                        <div className="mb-8 max-w-6xl mx-auto hidden lg:block">
+                            <BackButton destination={`/blog/${article.Category === 'blog' ? 'articles' : article.Category}`} />
                         </div>
 
 
-                        <section>
+                        <section className="max-w-6xl px-4 lg:px-0 mx-auto">
                             {article.Content &&
                                 article.Content.map((contentItem: any, index: number) => {
                                     const Component = componentMapping[contentItem.Component];
@@ -193,7 +193,7 @@ const PostPage = async ({ params }: { params: { slug: string } }) => {
                         </section>
 
 
-                        <section>
+                        <section className="max-w-6xl px-4 lg:px-0 mx-auto">
                             {article.ArticleTags?.length &&
                                 <div>
                                     <RelatedArticlesFetcher tags={article.ArticleTags} currentArticleId={article.Id} />

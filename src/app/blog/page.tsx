@@ -21,7 +21,7 @@ const hero = {
 }
 
 export const metadata: Metadata = {
-    title: "Brewery in Siem Reap - Amara Beer Lab | Articles, News & Activities on Craft Beer and Sustainability",
+    title: "Craft Beer Brewery in Siem Reap - Amara Beer Lab | Articles, News & Activities on Craft Beer and Sustainability",
     description: "Stay updated with Amara Beer Lab's blog featuring articles, news, and activities about our craft beers, sustainability efforts, and community impact in Siem Reap, Cambodia. Explore our latest updates and insights into the world of craft brewing.",
 };
 

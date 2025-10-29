@@ -13,6 +13,7 @@ type TransformedDataItem = {
   ThumbnailUrl?: string;
   Content?: any[];
   Id?: string;
+  Completed: boolean;
 };
 
 type TransformedJson = {
@@ -38,6 +39,7 @@ function transformData(json: any): TransformedJson {
         ThumbnailUrl,
         Content,
         Id: item.id,
+        Completed: attributes.ActivityCompleted || false,
       };
     }),
   };
@@ -57,18 +59,33 @@ async function getArticles(
     populate: {
       Thumbnail: { fields: ["formats"] },
       Content: { fields: "*" },
-      ActivityCompleted: { fields: "*" },
+      ActivityCompleted: { fields: "*" }, // Assicurati che questo sia popolato
     },
     pagination: {
       page,
       pageSize: limit,
     },
-    sort: [`createdAt:${sort}`],
+    // 'sort' verrà aggiunto dinamicamente qui sotto
   };
 
   if (category !== "*") {
     query.filters = { Category: category };
   }
+
+  // --- MODIFICA PER L'ORDINAMENTO ---
+  // Definisci l'ordinamento primario (quello passato come argomento)
+  const primarySort = `createdAt:${sort}`;
+
+  if (category === "activities") {
+    // Se la categoria è 'activities', aggiungi 'ActivityCompleted:desc' come
+    // ordinamento *primario*, e 'createdAt' come secondario.
+    // 'desc' mette i valori 'true' prima dei 'false' in Strapi.
+    query.sort = [`ActivityCompleted:desc`, primarySort];
+  } else {
+    // Altrimenti, usa solo l'ordinamento primario
+    query.sort = [primarySort];
+  }
+  // --- FINE MODIFICA ---
 
   url.search = qs.stringify(query);
   const res = await fetch(url);
@@ -78,9 +95,10 @@ async function getArticles(
   }
 
   const data = await res.json();
+
+  console.log(JSON.stringify(data));
   return transformData(data);
 }
-
 interface ArticlesFetcherProps {
   articleCategory?: ArticleCategory;
   limit?: number;
@@ -110,9 +128,6 @@ export default function ArticlesFetcher({
       });
   }, [articleCategory, limit, sort, currentPage]);
 
-
-
-
   return (
     <div className="small:mx-12">
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-12'>
@@ -127,6 +142,7 @@ export default function ArticlesFetcher({
               thumbnailUrl={article.ThumbnailUrl}
               slug={article.Slug}
               type={article.Category}
+              completed={article.Completed}
             />
           ))
         )}

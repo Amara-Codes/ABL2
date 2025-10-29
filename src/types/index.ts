@@ -2,7 +2,7 @@
 export interface RichTextNode {
   type: 'heading1' | 'heading2' | 'paragraph';
   text: string;
-  direction: 'ltr' | 'rtl';
+  direction?: 'ltr' | 'rtl';
 }
 
 // Defines the structure for a link field.
@@ -10,6 +10,7 @@ export interface LinkField {
   label: string;
   type: 'int' | 'ext' | string;
   url: string;
+  classes?: string;
 }
 
 // Defines the structure for an image field.
@@ -20,7 +21,7 @@ export interface ImageField {
   };
   alt: string;
   url: string;
-  id: string;
+  id?: string;
 }
 
 // Defines the structure for the content of a Hero.

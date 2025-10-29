@@ -4,13 +4,21 @@ import InteractiveCambodianMap from "@/components/InteractiveCambodianMap";
 import BigText from "@/components/content/BigText";
 import { sampleInteractiveCambodianMapContent, sampleLabBigTextContent} from "@/lib/sample-data";
 
+export const metadata: Metadata = {
+  title: "Craft Beer Brewery in Siem Reap - Amara Beer Lab | The Lab Ingredients",
+  description: "Discover the unique local ingredients used in Amara Beer Lab's craft beers, sourced from around the world to create exceptional flavors in Siem Reap, Cambodia",
+};
+
 export default function LabIngredients() {
     return (
     <div className="min-h-screen mt-24 lg:mt-16">
+      <div className="w-full h-full px-4 lg:px-0">
+
       <InteractiveCambodianMap content={sampleInteractiveCambodianMapContent.content} />
+      </div>
       <div className="flex items-center flex-wrap flex-col lg:flex-row">
 
-      <div className="w-full lg:w-2/3">
+      <div className="w-full lg:w-2/3 mt-16 lg:mt-0">
       
           <BigText  content={sampleLabBigTextContent.content} />
     

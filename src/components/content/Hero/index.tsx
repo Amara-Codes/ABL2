@@ -97,10 +97,10 @@ const Hero = ({ content }: HeroProps): JSX.Element => {
                 className="hero-header-word font-fatboy"
               />
             </h1>
-            <div className="hero-subheading mt-12 text-5xl font-semibold text-[#0B3848] lg:text-6xl">
+            <div className="hero-subheading mt-16 text-5xl font-semibold text-[#0B3848] lg:text-6xl">
               <span className="text-white">{subheading[0]?.text}</span>
             </div>
-            <div className="hero-body text-2xl font-normal text-[#0B3848]">
+            <div className="mt-4 hero-body text-2xl font-normal text-[#0B3848]">
               <span className="text-white">{body[0]?.text}</span>
             </div>
             {/* The buttonLink prop in your Button component might expect a string, not an object.

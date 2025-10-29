@@ -3,7 +3,7 @@ import GenericWrapper from "@/components/BlogGenericWrapper"
 
 
 export const metadata: Metadata = {
-  title: "Brewery in Siem Reap - Amara Beer Lab | News and Insights",
+  title: "Craft Beer Brewery in Siem Reap - Amara Beer Lab | News and Insights",
   description: "Stay updated with the latest news and articles covering a wide range of topics.",
 }
 

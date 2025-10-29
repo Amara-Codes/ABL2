@@ -48,7 +48,10 @@ export default function BeerClient({ beer }: { beer: BeerApiResponse }) {
         <main className="min-h-screen bg-gray-900 text-white p-8">
             <div className="max-w-6xl mx-auto">
                 <div className="flex flex-col lg:flex-row gap-y-4 justify-between lg:items-center lg:mb-16">
-                    <BackButton destination='/beers' />
+                    <div className="hidden lg:block">
+
+                        <BackButton destination='/beers' />
+                    </div>
                     <h1 className="text-5xl my-8 lg:my-0 font-bold font-fatboy text-center grow">
                         <span className="text-secondary"> {beer.attributes?.name || "Unknown Beer"} - </span>
                         <span className="text-secondary">ABV: {beer.attributes?.abv || 0}%</span>

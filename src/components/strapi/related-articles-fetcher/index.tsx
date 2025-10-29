@@ -115,11 +115,11 @@ export default async function RelatedArticlesFetcher({
     }
 
     return (
-        <div className="mt-16">
+        <div className="mt-16 max-w-6xl mx-auto">
             {tags && articles.length > 0 && (
                 <div className="my-16">
                     <div className="text-center">
-                        <h3 className="capitalize text-koiRed text-4xl font-bold">
+                        <h3 className="capitalize text-primary text-4xl font-bold">
                             Related Articles
                         </h3>
                     </div>
@@ -134,6 +134,7 @@ export default async function RelatedArticlesFetcher({
                         thumbnailUrl={article.ThumbnailUrl}
                         slug={article.Slug}
                         type={article.Category}
+                        completed={false}
                     />
                 ))}
             </div>

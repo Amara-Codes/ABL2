@@ -11,7 +11,7 @@ import {  sampleSkyDivingContent, sampleBigTextContent, sampleCarouselContent } 
 
 
 export const metadata: Metadata = {
-  title: "Brewery in Siem Reap - Amara Beer Lab | Craft Beers, Sustainability and Community Impact",
+  title: "Craft Beer Brewery in Siem Reap - Amara Beer Lab | Craft Beers, Sustainability and Community Impact",
   description:
     "Discover Amara Beer Lab, a craft brewery based in Siem Reap, Cambodia, dedicated to sustainability and supporting local communities. With high-quality beers crafted using technical excellence and modern methods to offer carefully designed, contemporary flavors, Amara Beer Lab blends authentic taste with social responsibility.",
 }
@@ -109,7 +109,7 @@ const heroContent: HeroContent = {
 
 export default async function Index() {
   return (
-    <div className="">
+    <div className="abl">
       <Hero content={heroContent.content} />
       <SkyDive content={sampleSkyDivingContent.content} />
       <div className="flex flex-col">

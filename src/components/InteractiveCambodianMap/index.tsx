@@ -1,8 +1,6 @@
-// components/InteractiveCambodianMap/index.tsx
-
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './InteractiveCambodianMap.module.css';
 import type { RegionID, InteractiveCambodianMapContent } from '@/types';
 
@@ -11,55 +9,98 @@ type PopupInfo = {
   ingredient: string;
   usage: string;
   beers: string[];
-  x: number;
+  x: number; // Useremo x/y solo per desktop
   y: number;
 };
 
-
-const InteractiveCambodianMap = ({content}: InteractiveCambodianMapContent) => {
- const { title, paragraph, regionData } = content;
+const InteractiveCambodianMap = ({ content }: InteractiveCambodianMapContent) => {
+  const { title, paragraph, regionData } = content;
   const [popupInfo, setPopupInfo] = useState<PopupInfo | null>(null);
+  const [isMobile, setIsMobile] = useState(false); // Stato per rilevare mobile
 
-const handleRegionHover = (event: React.MouseEvent<SVGPathElement> | null, regionId: RegionID | null) => {
+  // 1. Rilevamento Mobile (eseguito solo lato client)
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768); // Esempio: breakpoint a 768px
+    };
+    checkMobile(); // Controlla subito
+    window.addEventListener('resize', checkMobile); // Ricontrolla al resize
+    return () => window.removeEventListener('resize', checkMobile); // Cleanup
+  }, []);
+
+  const handleRegionInteraction = (
+    event: React.MouseEvent<SVGPathElement> | React.TouchEvent<SVGPathElement> | null,
+    regionId: RegionID | null
+  ) => {
     if (regionId && regionData[regionId] && event) {
+      // Ottieni le coordinate solo se non siamo su mobile
+      const clientX = 'clientX' in event ? event.clientX : 0;
+      const clientY = 'clientY' in event ? event.clientY : 0;
+
       setPopupInfo({
         ...regionData[regionId],
-        x: event.clientX,
-        y: event.clientY,
+        x: isMobile ? 0 : clientX, // Ignora x/y su mobile per il posizionamento
+        y: isMobile ? 0 : clientY,
       });
     } else {
       setPopupInfo(null);
     }
-  }
+  };
 
+  // Solo per desktop: aggiorna posizione al movimento del mouse
   const handleMouseMove = (event: React.MouseEvent) => {
-    if (popupInfo) {
+    if (!isMobile && popupInfo) {
       setPopupInfo(prev => prev ? { ...prev, x: event.clientX, y: event.clientY } : null);
     }
   };
-  
+
+  // Chiudi popup (utile su mobile cliccando fuori o su un tasto X)
+  const closePopup = () => {
+    setPopupInfo(null);
+  };
+
   const activeRegions = Object.keys(regionData);
 
-  // Funzione helper per non ripetere il codice su ogni path
-  const getPathProps = (regionId: RegionID) => ({
+  // 2. Gestione Eventi Condizionale
+const getPathProps = (regionId: RegionID) => ({
     className: `${styles.region} ${activeRegions.includes(regionId) ? styles.highlight : regionId}`,
-    onMouseEnter: (e: React.MouseEvent<SVGPathElement>) => handleRegionHover(e, regionId),
-    onMouseLeave: () => handleRegionHover(null, null),
+    // Usa solo onClick su mobile
+    onClick: isMobile ? (e: React.MouseEvent<SVGPathElement>) => handleRegionInteraction(e, regionId) : undefined,
+    onMouseEnter: !isMobile ? (e: React.MouseEvent<SVGPathElement>) => handleRegionInteraction(e, regionId) : undefined,
+    onMouseLeave: !isMobile ? () => handleRegionInteraction(null, null) : undefined,
+    // Rimuovi onTouchStart per mobile
+    // onTouchStart: isMobile ? (e: React.TouchEvent<SVGPathElement>) => handleRegionInteraction(e, regionId) : undefined,
   });
 
+
   return (
-    <div className={`mx-auto px-8 ${styles.mapContainer}`} onMouseMove={handleMouseMove} onMouseLeave={() => setPopupInfo(null)}>
+    // Aggiungi onMouseLeave solo se non siamo su mobile
+    <div
+      className={`mx-auto lg:px-8 ${styles.mapContainer}`}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={!isMobile ? () => setPopupInfo(null) : undefined}
+    >
       <h1 className='text-6xl text-primary text-center font-bold'>{title[0].text}</h1>
-      <p className='text-lg text-secondary text-center mt-2'>{paragraph[0].text}</p>
+      <p className='text-2xl text-secondary text-center mt-2'>{paragraph[0].text}</p>
+
+      {/* Overlay per chiudere popup su mobile */}
+      {isMobile && popupInfo && (
+        <div className={styles.mobileOverlay} onClick={closePopup}></div>
+      )}
 
       {popupInfo && (
         <div
-          className={styles.popup}
-          style={{
+          // 3. Styling Condizionale
+          className={`${styles.popup} ${isMobile ? styles.popupMobile : ''}`}
+          style={!isMobile ? { // Applica stile inline solo su desktop
             top: `${popupInfo.y}px`,
             left: `${popupInfo.x}px`,
-          }}
+          } : {}} // Nessuno stile inline su mobile (gestito da CSS)
         >
+          {/* 4. Opzionale: Bottone chiusura per mobile */}
+          {isMobile && (
+             <button onClick={closePopup} className={styles.closeButton}>&times;</button>
+          )}
           <h3>{popupInfo.name}</h3>
           <p><strong>Ingredient:</strong> {popupInfo.ingredient}</p>
           <p><strong>Usage:</strong> {popupInfo.usage}</p>

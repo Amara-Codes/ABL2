@@ -138,6 +138,7 @@ export default async function ArticlePostFetcher({
                         thumbnailUrl={article.ThumbnailUrl}
                         slug={article.Slug}
                         type={article.Category}
+                        completed={false}
                     />
                 ))}
             </div>

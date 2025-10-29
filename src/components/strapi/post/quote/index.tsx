@@ -16,14 +16,14 @@ const Quote: React.FC<BlogPostQuoteElement> = ({
             </svg>
             <div>
                 <blockquote className='px-8'>
-                    <p className="font-medium text-xl md:text-2xl italic text-ui-fg-base text-center">&quot;{QuoteContent}&quot;</p>
+                    <p className="font-medium text-xl md:text-2xl italic text-white text-center">&quot;{QuoteContent}&quot;</p>
                 </blockquote>
 
                 <figcaption className="flex items-center justify-center mt-6">
                     <div className="flex flex-col justify-center">
-                        <cite className="font-bold text-ui-fg-base text-center">{QuoteAuthor}</cite>
+                        <cite className="font-bold text-primary text-center">{QuoteAuthor}</cite>
                         {(QuoteAuthorInfo?.length || QuoteAuthorDates?.length) && (
-                            <p className="font-regular text-sm text-ui-fg-base text-center">( {QuoteAuthorInfo}{QuoteAuthorInfo?.length && QuoteAuthorDates?.length ? ', ' : ''}{QuoteAuthorDates} )</p>
+                            <p className="font-regular text-sm text-secondary text-center">( {QuoteAuthorInfo}{QuoteAuthorInfo?.length && QuoteAuthorDates?.length ? ', ' : ''}{QuoteAuthorDates} )</p>
                         )}
                     </div>
                 </figcaption>

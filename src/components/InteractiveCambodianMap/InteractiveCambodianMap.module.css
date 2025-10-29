@@ -1,58 +1,114 @@
 /* components/InteractiveCambodianMap/InteractiveCambodianMap.module.css */
 
 .mapContainer {
-  position: relative;
+  position: relative; /* Necessario per posizionare elementi assoluti interni come l'overlay se non è 'fixed' */
   width: 100%;
-  max-width: 800px; /* Puoi aggiustare la grandezza massima della mappa */
-  cursor: grab;
+  max-width: 800px;
+  cursor: grab; /* Indica che la mappa è "afferrabile" */
 }
 
 /* Stile base per TUTTE le regioni */
 .region {
-  fill: rgba(209, 250, 229, .2); /* Grigio di default per le province */
-  stroke: #d1fae5;
+  fill: rgba(209, 250, 229, .2); /* Colore base regioni inattive */
+  stroke: #d1fae5; /* Bordo regioni */
   stroke-width: 1.5px;
   transition: fill 0.2s ease-in-out;
+  cursor: pointer; /* Cursore puntatore per tutte le regioni */
 }
 
 /* Stile per le regioni ATTIVE (quelle con ingredienti) */
 .highlight {
-  fill: #34d399; /* Verde chiaro per le regioni interattive */
-  cursor: pointer;
+  fill: #34d399; /* Verde chiaro per regioni interattive */
 }
 
-/* Stile per l'HOVER sulle regioni attive */
+/* Stile per l'HOVER sulle regioni attive (solo desktop) */
 .highlight:hover {
-  fill: #059669; /* Verde più scuro quando il mouse è sopra */
+  fill: #059669; /* Verde più scuro all'hover */
 }
 
-/* Stile per il popup */
+/* --- Stili Popup --- */
+
+/* Stile base/desktop per il popup (segue il mouse) */
 .popup {
-  position: fixed; /* Usa 'fixed' per posizionarlo rispetto alla finestra */
-  z-index: 1000;
-  background-color: rgba(0, 0, 0, 0.85);
+  position: absolute; /* Segue il mouse */
+  z-index: 50; /* Z-index alto per essere sopra la mappa */
+  background-color: rgba(0, 0, 0, 0.85); /* Sfondo semi-trasparente scuro */
   color: white;
   padding: 15px;
   border-radius: 8px;
-  pointer-events: none; /* Cruciale: impedisce al popup di bloccare gli eventi del mouse sulla mappa */
-  transform: translate(20px, -40px); /* Sposta il popup in modo che non sia direttamente sotto il cursore */
+  pointer-events: none; /* NON blocca gli eventi sulla mappa sottostante */
+  transform: translate(-45%, -45%); /* Offset dal cursore */
   min-width: 250px;
   max-width: 300px;
   font-size: 1.2rem;
   box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-  border: 1px solid #34d399;
-  transition: opacity 0.2s ease-in-out; /* Aggiunge una transizione fluida */
+  border: 1px solid #34d399; /* Bordo verde */
+  transition: opacity 0.2s ease-in-out;
+  white-space: nowrap; /* Impedisce al testo di andare a capo su desktop */
 }
 
+/* Stile specifico per il popup su MOBILE (centrato e modale) */
+.popupMobile {
+  position: fixed; /* Posizionamento fisso rispetto alla viewport */
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%); /* Centratura esatta */
+  width: 90%; /* Occupa gran parte dello schermo mobile */
+  max-width: 400px; /* Ma non troppo largo su schermi grandi */
+  z-index: 50; /* Sopra l'overlay */
+  pointer-events: auto; /* Permette interazione (es. scroll se necessario) */
+  white-space: normal; /* Permette al testo di andare a capo */
+  text-align: center; /* Centra il testo */
+  padding-top: 45px; /* Spazio extra in alto per il bottone di chiusura */
+  /* Eredita/sovrascrive da .popup: background, color, padding(laterale/basso), border-radius, box-shadow, border */
+}
+
+/* Overlay scuro per mobile (chiude il popup al click) */
+.mobileOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* Sfondo scuro semi-trasparente */
+  z-index: 40; /* Sotto il popup, sopra la mappa */
+  cursor: pointer;
+}
+
+/* Stile Titolo interno al Popup */
 .popup h3 {
   margin-top: 0;
-  color: #34d399; /* Verde chiaro per il titolo, come le regioni */
+  color: #34d399;
   font-size: 1.5rem;
   border-bottom: 1px solid #555;
   padding-bottom: 5px;
   margin-bottom: 10px;
 }
 
+/* Stile Paragrafi interni al Popup */
 .popup p {
   margin: 8px 0;
+  text-wrap: wrap;
+}
+
+/* Bottone di chiusura (visibile solo su mobile via JS/React) */
+.closeButton {
+  position: absolute;
+  top: 0; /* Distanza dall'alto del popup */
+  right: 12px; /* Distanza da destra del popup */
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 28px;
+  font-weight: bold;
+  line-height: 1;
+  padding: 5px; /* Area cliccabile leggermente più grande */
+  cursor: pointer;
+  z-index: 51; /* Sopra il contenuto del .popupMobile */
+  opacity: 0.7;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.closeButton:hover {
+  opacity: 1; /* Piena opacità all'hover */
 }

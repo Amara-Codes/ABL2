@@ -10,11 +10,11 @@ const Paragraph: React.FC<BlogPostParagraphElement> = ({
   ParagraphImgPosition = ''
 }) => {
   const isImagePositionated = ParagraphImgPosition?.length;
-  const imagePositioningClass = ParagraphImg?.length && isImagePositionated ? ParagraphImgPosition === 'left' ? 'flex-col small:flex-row gap-x-8' : 'flex-col small:flex-row-reverse gap-x-8' : 'flex-col items-center';
+  const imagePositioningClass = ParagraphImg?.length && isImagePositionated ? ParagraphImgPosition === 'left' ? 'flex-col lg:flex-row gap-x-8' : 'flex-col lg:flex-row-reverse gap-x-8' : 'flex-col items-center gap-y-4';
 
   return (
     <div
-      className={`prose w-full max-w-none py-6 ${ParagraphCssClasses ?? ''}`}
+      className={`prose w-full max-w-6xl mx-auto py-6 ${ParagraphCssClasses ?? ''}`}
     >
 
       <div
@@ -41,49 +41,49 @@ const Paragraph: React.FC<BlogPostParagraphElement> = ({
           </div>
         )}
         {ParagraphContent && (
-          <div className={`${ParagraphImg?.length && !isImagePositionated ? 'max-w-[960px]' : 'w-full'}`}>
+          <div className={`${ParagraphImg?.length && !isImagePositionated ? 'max-w-4xl' : 'w-full'}`}>
             <ReactMarkdown
               components={{
                 h1: ({ children, ...props }) => (
-                  <h1 className="text-4xl font-extrabold text-ui-fg-base" {...props}>
+                  <h1 className="text-4xl font-extrabold text-white" {...props}>
                     {children}
                   </h1>
                 ),
                 h2: ({ children, ...props }) => (
-                  <h2 className="text-3xl font-semibold text-ui-fg-base" {...props}>
+                  <h2 className="text-3xl font-semibold text-white text-center" {...props}>
                     {children}
                   </h2>
                 ),
                 h3: ({ children, ...props }) => (
-                  <h3 className="text-2xl font-bold text-koiRed" {...props}>
+                  <h3 className="text-2xl font-bold text-primary" {...props}>
                     {children}
                   </h3>
                 ),
                 h4: ({ children, ...props }) => (
-                  <h4 className="text-lg font-bold text-koiOrange" {...props}>
+                  <h4 className="text-lg font-bold text-secondary" {...props}>
                     {children}
                   </h4>
                 ),
                 p: ({ children, ...props }) => (
-                  <p className="text-base leading-relaxed text-ui-fg-base" {...props}>
+                  <p className="text-base leading-relaxed text-white" {...props}>
                     {children}
                   </p>
                 ),
                 strong: ({ children, ...props }) => (
                   <strong
-                    className="text-base leading-relaxed font-bold text-ui-fg-base"
+                    className="text-base leading-relaxed font-bold text-white"
                     {...props}
                   >
                     {children}
                   </strong>
                 ),
                 li: ({ children, ...props }) => (
-                  <li className="text-ui-fg-base" {...props}>
+                  <li className="text-white" {...props}>
                     {children}
                   </li>
                 ),
                 a: ({ children, ...props }) => ( // Aggiunto override per <a>
-                  <a className="text-koiOrange" {...props}>
+                  <a className="text-primary" {...props}>
                     {children}
                   </a>
                 )

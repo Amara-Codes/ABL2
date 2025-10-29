@@ -16,7 +16,7 @@ const hero = {
 
 const firstCta: CtaContent = {
   content: {
-    ctaClasses: "custom-cta-class bg-black p-4 lg:p-12 rounded-lg border-secondary border-2",
+    ctaClasses: "custom-cta-class bg-black p-4 lg:p-12 rounded-lg lg:border-secondary lg:border-2",
     titleClasses: "custom-title-class text-white",
     paragraphClasses: "custom-paragraph-class text-white",
     title: {
@@ -85,7 +85,7 @@ const secondCta: CtaContent = {
 };
 
 export const metadata: Metadata = {
-  title: "Brewery in Siem Reap - Amara Beer Lab | The Beer Lab",
+  title: "Craft Beer Brewery in Siem Reap - Amara Beer Lab | The Beer Lab",
   description: "Explore Amara Beer Lab, the craft brewery in Siem Reap. Discover how we use Khmer ingredients to create unique beers while promoting sustainability and community impact.",
 };
 
@@ -110,7 +110,7 @@ export default function Lab() {
         />
       </div>
 
-      <div >
+      <div className="">
         <BigText content={hero} />
       </div>
 
@@ -129,7 +129,7 @@ export default function Lab() {
         />
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 lg:px-0">
+      <div className="max-w-6xl mx-auto border-t-2 border-b-2 lg:border-none border-secondary">
         <Cta content={firstCta.content} />
       </div>
 

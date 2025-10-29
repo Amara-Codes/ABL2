@@ -55,7 +55,7 @@ async function fetchDrops(): Promise<DropData[]> {
 // Metadata (Now possible in a Server Component)
 // ============================================================================
 export const metadata: Metadata = {
-  title: "Brewery in Siem Reap - Amara Beer Lab | Our Craft Beers",
+  title: "Craft Beer Brewery in Siem Reap - Amara Beer Lab | Our Craft Beers",
   description: "Discover the latest Amara Beer Lab releases, the craft brewery in Siem Reap, dedicated to sustainability and community impact through high-quality craft beers.",
 };
 

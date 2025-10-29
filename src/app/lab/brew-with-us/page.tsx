@@ -3,11 +3,9 @@ import { Metadata } from "next";
 import BookAppointmentForm from "@/components/BookAppointmentForm";
 
 export const metadata: Metadata = {
-  title: "Brew With Us - Book a Visit | ABL Brewing Co",
-  description:
-    "Book a visit to ABL Brewing Co and explore our brewhouse. Join our workshops to learn about brewing and more. Free visits available!",
+  title: "Craft Beer Brewery in Siem Reap - Amara Beer Lab | Brew With Us",
+  description: "Join Amara Beer Lab's Brew With Us program in Siem Reap, Cambodia. Learn the art of craft beer brewing through hands-on workshops and brewery visits. Discover sustainable brewing practices and be part of our community-focused brewery experience.",
 };
-
 
 
 export default function LabBrewWithUs() {
