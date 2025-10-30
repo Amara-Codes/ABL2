@@ -72,9 +72,9 @@ export default function BeerClient({ beer }: { beer: BeerApiResponse }) {
                     </div>
                     <div className="flex flex-col lg:flex-row">
 
-                   
+
                         <View
-                            className="h-[50vh] w-full mt-12" // Manteniamo le tue classi
+                            className="h-[50vh] w-full mt-12 pointer-events-none lg:pointer-events-auto" // Manteniamo le tue classi
                             style={{ touchAction: 'pan-y' }} // Manteniamo il fix per lo scroll
                         >
                             {/* MODIFICA 3: <View> richiede una sua Camera */}
@@ -84,28 +84,28 @@ export default function BeerClient({ beer }: { beer: BeerApiResponse }) {
                                 imageUrl={fullImageUrl}
                                 isHovered={true}
                             />
-                       <OrbitControls
-                            makeDefault 
-                            enablePan={false}
-                            
-                            // 1. MODIFICA CHIAVE: DEVE ESSERE 'true'
-                            // Questo "sblocca" la gestione avanzata dei tocchi
-                            enableZoom={true} 
-                            
-                            enableRotate={true}
-                            touches={{
-                                // 2. 'ONE:' NON È DEFINITO
-                                // Questo permette al browser (con 'touch-action: pan-y')
-                                // di gestire lo scroll verticale.
-                                // OrbitControls gestirà solo lo scroll orizzontale (per ruotare).
+                            <OrbitControls
+                                makeDefault
+                                enablePan={false}
 
-                                // 3. USA 'DOLLY_ROTATE'
-                                // Questo è coerente con 'enableZoom={true}'
-                                TWO: THREE.TOUCH.DOLLY_ROTATE
-                            }}
-                            autoRotate
-                            autoRotateSpeed={2.5} 
-                        />
+                                // 1. MODIFICA CHIAVE: DEVE ESSERE 'true'
+                                // Questo "sblocca" la gestione avanzata dei tocchi
+                                enableZoom={true}
+
+                                enableRotate={true}
+                                touches={{
+                                    // 2. 'ONE:' NON È DEFINITO
+                                    // Questo permette al browser (con 'touch-action: pan-y')
+                                    // di gestire lo scroll verticale.
+                                    // OrbitControls gestirà solo lo scroll orizzontale (per ruotare).
+
+                                    // 3. USA 'DOLLY_ROTATE'
+                                    // Questo è coerente con 'enableZoom={true}'
+                                    TWO: THREE.TOUCH.DOLLY_ROTATE
+                                }}
+                                autoRotate
+                                autoRotateSpeed={2.5}
+                            />
                             <Environment preset="warehouse" />
 
                             <directionalLight intensity={1} position={[3, 1, 1]} />
