@@ -93,7 +93,6 @@ export default function BeerClient({ beer }: { beer: BeerApiResponse }) {
                                     // con 2 dita, ma 'touch-action' (sopra) è
                                     // ciò che permette lo SCROLL della pagina con 1 dito.
                                     touches={{
-                                        ONE: THREE.TOUCH.PAN, // Viene ignorato da enablePan:false
                                         TWO: THREE.TOUCH.DOLLY_ROTATE
                                     }}
                                      autoRotate
