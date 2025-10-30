@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 }
 
 
-export default function BlogPage() {
+export default function ArticlesPage() {
   return (
     <div>
       <GenericWrapper articlesPerPage={3} contentType="blog"/>

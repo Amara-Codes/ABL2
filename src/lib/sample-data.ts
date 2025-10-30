@@ -70,22 +70,6 @@ export const sampleSkyDivingContent: SkyDivingContent = {
         direction: "ltr",
       },
     ],
-    can_image: {
-      dimensions: {
-        width: 1603,
-        height: 1791,
-      },
-      alt: "Skydiving Can",
-      url: "https://images.prismic.io/fizzi/ZswEvEaF0TcGJYaB_all-cans-bunched.png?auto=format,compress",
-      id: "ZswEvEaF0TcGJYaB",
-    },
-    flavour: [
-      {
-        type: "paragraph",
-        text: "grape",
-        direction: "ltr",
-      },
-    ],
   },
 };
 
@@ -132,65 +116,6 @@ export const sampleCarouselContent: CarouselSlideContent = {
         type: "heading2",
         text: "Discover Our New Drop",
         direction: "ltr",
-      },
-    ],
-    paragraph: [
-      {
-        type: "paragraph",
-        text: "Explore our exciting new beers, crafted to delight your taste buds and elevate your beverage experience.",
-        direction: "ltr",
-      },
-    ],
-    slides: [
-      {
-        can_image: {
-          dimensions: {
-            width: 1603,
-            height: 1791,
-          },
-          alt: "Carousel Slide 1",
-          url: "https://images.prismic.io/fizzi/ZswEvEaF0TcGJYaB_all-cans-bunched.png?auto=format,compress",
-          id: "ZswEvEaF0TcGJYaB",
-        },
-        flavour: [
-          {
-            type: "paragraph",
-            text: "lemonLime",
-            direction: "ltr",
-          },
-        ],
-        name: "Lemon Lime Fizzi",
-        link: "https://example.com/lemon-lime-fizzi",
-        description: "A refreshing soda with the rich taste of lemon and lime.",
-        bgColor: "#164405",
-        textColor: "#FFFFFF",
-        khmerIngredients: true,
-        category: "Limited Edition",
-      },
-      {
-        can_image: {
-          dimensions: {
-            width: 1603,
-            height: 1791,
-          },
-          alt: "Carousel Slide 2",
-          url: "https://images.prismic.io/fizzi/ZswEvEaF0TcGJYaB_all-cans-bunched.png?auto=format,compress",
-          id: "ZswEvEaF0TcGJYaB",
-        },
-        flavour: [
-          {
-            type: "paragraph",
-            text: "blackCherry",
-            direction: "ltr",
-          },
-        ],
-        name: "Black Cherry Fizzi",
-        link: "https://example.com/black-cherry-fizzi",
-        description: "A refreshing soda with the rich taste of black cherries.",
-        bgColor: "#572981",
-        textColor: "#FFFFFF",
-        khmerIngredients: true,
-        category: "Limited Edition",
       },
     ],
   },

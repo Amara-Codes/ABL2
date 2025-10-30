@@ -5,6 +5,7 @@ import type { CSSProperties, MouseEvent, PointerEvent } from 'react';
 import { useGesture } from '@use-gesture/react';
 import type { FullGestureState } from '@use-gesture/react';
 import './DomeGallery.css';
+import Image from 'next/image';
 
 // --- Type Definitions ---
 
@@ -663,7 +664,7 @@ export default function DomeGallery({
                                     onClick={onTileClick}
                                     onPointerUp={onTilePointerUp}
                                     >
-                                    <img src={it.src} draggable={false} alt={it.alt} />
+                                    <Image src={it.src} draggable={false} alt={it.alt} fill />
                                 </div>
                             </div>
                         ))}

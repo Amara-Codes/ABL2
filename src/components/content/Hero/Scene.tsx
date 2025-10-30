@@ -97,9 +97,6 @@ export default function Scene() {
             .slice(0, 5); // Limita a un massimo di 5 lattine
 
           setLabelUrls(urls);
-          console.log("Fetched label URLs:", urls);
-          console.log("Latest drop data:", latestDrop);
-          console.log(labelUrls)
         }
       } catch (error) {
         console.error("Failed to fetch beer labels:", error);

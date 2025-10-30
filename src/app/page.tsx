@@ -1,13 +1,12 @@
 import { Metadata } from "next";
 
 import Hero from "@/components/content/Hero";
-import { HeroContent } from "@/types";
+import { HeroContent, SkyDivingContent, BigTextContent, CarouselSlideContent } from "@/types";
 import SkyDive from "@/components/content/SkyDive";
 import BigText from "@/components/content/BigText";
 import Carousel from "@/components/content/Carousel";
 import { CtaContent } from "@/types";
 import Cta from "@/components/content/Cta";
-import {  sampleSkyDivingContent, sampleBigTextContent, sampleCarouselContent } from "@/lib/sample-data";
 
 
 export const metadata: Metadata = {
@@ -16,7 +15,7 @@ export const metadata: Metadata = {
     "Discover Amara Beer Lab, a craft brewery based in Siem Reap, Cambodia, dedicated to sustainability and supporting local communities. With high-quality beers crafted using technical excellence and modern methods to offer carefully designed, contemporary flavors, Amara Beer Lab blends authentic taste with social responsibility.",
 }
 
-const cta: CtaContent = {
+const CtaData: CtaContent = {
   content: {
     ctaClasses: "custom-cta-class bg-indigo-200 text-white lg:py-12",
     titleClasses: "custom-title-class",
@@ -51,7 +50,7 @@ const cta: CtaContent = {
   },
 };
 
-const heroContent: HeroContent = {
+const HeroData: HeroContent = {
   content: {
     heading: [
       {
@@ -105,17 +104,50 @@ const heroContent: HeroContent = {
   },
 };
 
+const SkyDivingData: SkyDivingContent = {
+  content: {
+    sentence: [
+      {
+        type: "heading1",
+        text: "Learn more about our Beers",
+        direction: "ltr",
+      },
+    ],
+  },
+}
+
+const BigTextData: BigTextContent = {
+  content: {
+    bgColorClass: "bg-[#FE6334]",
+    textColorClass: "text-[#FEE832]",
+    sentence: "We Brew Our Beer With Love",
+    maxWidth: 100,
+    factor: 1
+  },
+};
+
+const CarouselSlideData: CarouselSlideContent = {
+  content: {
+    title: [
+      {
+        type: "heading2",
+        text: "Discover Our New Drop",
+        direction: "ltr",
+      },
+    ],
+  },
+};
 
 
 export default async function Index() {
   return (
     <div className="abl">
-      <Hero content={heroContent.content} />
-      <SkyDive content={sampleSkyDivingContent.content} />
+      <Hero content={HeroData.content} />
+      <SkyDive content={SkyDivingData.content} />
       <div className="flex flex-col">
-        <BigText content={sampleBigTextContent.content} />
-        <Carousel content={sampleCarouselContent.content} />
-        <Cta content={cta.content} />
+        <BigText content={BigTextData.content} />
+        <Carousel content={CarouselSlideData.content} />
+        <Cta content={CtaData.content} />
       </div>
     </div>
   );

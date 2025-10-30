@@ -40,8 +40,6 @@ export interface HeroContent {
 export interface SkyDivingContent {
     content: {
         sentence: RichTextNode[];
-        can_image: ImageField;
-      textureUrl: string | null;
     }
 }
 
@@ -60,8 +58,6 @@ export interface CarouselSlideElement {
 export interface CarouselSlideContent {
   content : {
     title?: RichTextNode[];
-    paragraph?: RichTextNode[];
-    slides?: CarouselSlideElement[]
   }
 }
 

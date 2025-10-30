@@ -1,7 +1,5 @@
 import localFont from "next/font/local";
 
-
-
 import "./app.css";
 import Header from "@/components/layout/Header";
 import ViewCanvas from "@/components/layout/ViewCanvas";

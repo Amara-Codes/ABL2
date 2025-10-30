@@ -22,7 +22,7 @@ export default function Contacts() {
                         referrerPolicy="no-referrer-when-downgrade"></iframe>
                 </div>
                 <div className="w-full lg:w-1/2 lg:h-[500px] bg-slate-800 p-8 rounded-lg">
-                    <h3 className="text-white text-4xl font-extrabold mb-8">Siem Reap's Taproom</h3>
+                    <h3 className="text-white text-4xl font-extrabold mb-8">Siem Reap&apos;s Taproom</h3>
                     <div className="text-white text-xl mb-2">
                         <span className="font-bold me-4">Phone: </span>
 
