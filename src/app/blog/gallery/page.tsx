@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import BigText from "@/components/content/BigText";
-import DomeGallery from '@/components/DomeGallery';
+import Gallery from "@/components/GalleryClient";
 
 const Title = {
     bgColorClass: "bg-black",
@@ -21,7 +21,7 @@ export default function GalleryPage() {
         <div>
             <BigText content={Title} />
             <div className="w-dvw h-dvh lg:mt-8">
-                <DomeGallery />
+                <Gallery />
             </div>
         </div>
     );
