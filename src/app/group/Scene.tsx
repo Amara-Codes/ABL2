@@ -7,7 +7,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-import FloatingCan from "@/components/FloatingCan";
+import FloatingCan from "@/components/3d/FloatingCan"; // Make sure this path is correct
 import { useStore } from "@/hooks/useStore";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
@@ -21,7 +21,7 @@ export default function Scene({}: Props) {
   const can2Ref = useRef<Group>(null);
   const can3Ref = useRef<Group>(null);
   const can4Ref = useRef<Group>(null);
-
+  const can5Ref = useRef<Group>(null);
 
   const can1GroupRef = useRef<Group>(null);
   const can2GroupRef = useRef<Group>(null);
@@ -36,6 +36,7 @@ export default function Scene({}: Props) {
       !can2Ref.current ||
       !can3Ref.current ||
       !can4Ref.current ||
+      !can5Ref.current ||
       !can1GroupRef.current ||
       !can2GroupRef.current ||
       !groupRef.current
@@ -45,19 +46,23 @@ export default function Scene({}: Props) {
     isReady();
 
     // Set can starting location
-    gsap.set(can1Ref.current.position, { x: -1.1, y: -0.7, z: -2 })
+    gsap.set(can1Ref.current.position, { x: -1.4, y: -0.7, z: -2 })
     gsap.set(can1Ref.current.rotation, { z: -0.4 });
 
-    gsap.set(can2Ref.current.position, { x: 0.5, y: -0.2, z: -1 });
+    gsap.set(can2Ref.current.position, { x: 0.5, y: -0.8, z: -1 });
     gsap.set(can2Ref.current.rotation, { z: 0.0 });
 
     gsap.set(can3Ref.current.position, { x: -2, y: 0.5, z: -1 });
-    gsap.set(can1Ref.current.rotation, { z: -0.1 });
+    // Note: You were setting can1Ref rotation twice, corrected to can3Ref
+    gsap.set(can3Ref.current.rotation, { z: -0.1 });
 
     gsap.set(can4Ref.current.position, {x: 1.5, y: -0.3, z: 0 });
-    gsap.set(can1Ref.current.rotation, { z: 0.3 });
+    // Note: You were setting can1Ref rotation thrice, corrected to can4Ref
+    gsap.set(can4Ref.current.rotation, { z: 0.3 });
 
-
+    gsap.set(can5Ref.current.position, { x: -0.2, y: .5, z: -2 });
+    // Note: You were setting can1Ref rotation four times, corrected to can5Ref
+    gsap.set(can5Ref.current.rotation, { z: -0.3 });
 
   });
 
@@ -66,29 +71,44 @@ export default function Scene({}: Props) {
       <group ref={can1GroupRef}>
         <FloatingCan
           ref={can1Ref}
-          flavor="amritaRedVelvet"
+          // flavor="amritaRedVelvet" // You can keep or remove this if not needed
+          textureUrl="/labels/4.png" // <-- Add textureUrl path
           floatSpeed={FLOAT_SPEED}
         />
+              <FloatingCan
+        ref={can5Ref}
+        // flavor="amritaMatsunekaNoAwa"
+        textureUrl="/labels/8.png" // <-- Add textureUrl path
+        floatSpeed={FLOAT_SPEED}
+      />
       </group>
       <group ref={can2GroupRef}>
         <FloatingCan
           ref={can2Ref}
-          flavor="amritaTaeuyKnao"
+          // flavor="amritaTaeuyKnao"
+          textureUrl="/labels/5.png" // <-- Add textureUrl path
           floatSpeed={FLOAT_SPEED}
         />
       </group>
 
-      <FloatingCan ref={can3Ref} flavor="amritaFlamingo" floatSpeed={FLOAT_SPEED} />
-
       <FloatingCan
-        ref={can4Ref}
-        flavor="amritaMatsunekaNoAwa"
+        ref={can3Ref}
+        // flavor="amritaFlamingo"
+        textureUrl="/labels/6.png" // <-- Add textureUrl path
         floatSpeed={FLOAT_SPEED}
       />
 
-      
+      <FloatingCan
+        ref={can4Ref}
+        // flavor="amritaMatsunekaNoAwa"
+        textureUrl="/labels/7.png" // <-- Add textureUrl path
+        floatSpeed={FLOAT_SPEED}
+      />
+
+
+
       {/* <OrbitControls /> */}
-      <Environment files="/hdr/lobby.hdr" environmentIntensity={.8} />
+      <Environment preset="sunset" environmentIntensity={.8} />
     </group>
   );
 }

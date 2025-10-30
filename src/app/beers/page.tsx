@@ -67,7 +67,7 @@ export default async function BeersPage() {
   const drops = await fetchDrops();
 
   return (
-    <div className="h-screen w-screen bg-gray-900">
+    <div className="h-screen w-screen">
       {/* Use Suspense for a loading fallback while the client 
           component and its 3D assets load. 
       */}

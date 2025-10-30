@@ -102,7 +102,7 @@ export default async function BeerPage({ params }: { params: { name: string } })
 
     if (!beer) {
         return (
-            <div className="h-screen bg-gray-900 text-white flex justify-center items-center">
+            <div className="h-screen text-white flex justify-center items-center">
                 <div className="text-center">
                     <h1 className="text-3xl font-bold text-red-500">Error</h1>
                     <p className="mt-2 text-lg">Beer not found.</p>

@@ -84,8 +84,8 @@ const heroContent: HeroContent = {
         width: 1603,
         height: 1791,
       },
-      alt: "All of the Fizzi Flavors",
-      url: "https://images.prismic.io/fizzi/ZswEvEaF0TcGJYaB_all-cans-bunched.png?auto=format,compress",
+      alt: "Our first Drop",
+      url: "/images/home/cans.png",
       id: "ZswEvEaF0TcGJYaB",
     },
     second_heading: [

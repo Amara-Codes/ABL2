@@ -44,7 +44,7 @@ export default function BeersClient({ drops }: BeersClientProps) {
                                         <span className="">{drops.length - index}. </span>
                                         <span className="ps-4 font-fatboy">{drop.name}</span>
                                     </h2>
-                                    <p className="text-lg mt-4 text-center text-secondary">{drop.description}</p>
+                                    <p className="mt-4 text-xl text-center font-bold text-white">{drop.description}</p>
                                 </div>
                             </div>
 

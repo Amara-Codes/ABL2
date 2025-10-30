@@ -117,15 +117,15 @@ const Hero = ({ content }: HeroProps): JSX.Element => {
             width={800}
             height={600}
           />
-          <div>
-            <h2 className="text-side-heading text-balance text-6xl font-black uppercase text-white lg:text-8xl">
+          <div className="max-w-[90%] mx-auto lg:max-w-none">
+            <h2 className="text-side-heading text-balance text-4xl font-black uppercase text-white lg:text-8xl">
               <TextSplitter text={second_heading[0]?.text || ""} />
             </h2>
             <div className="text-side-body mt-4 max-w-xl text-balance text-xl font-normal text-white">
               <span className="">{second_body[0]?.text}</span>
             </div>
 
-            <div className="mt-16 py-8">
+            <div className="mt-16 py-8 text-center lg:text-left">
 
               <Button
                 buttonLink={button.url}

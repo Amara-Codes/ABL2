@@ -45,7 +45,7 @@ export default function BeerClient({ beer }: { beer: BeerApiResponse }) {
     const fullImageUrl = labelUrl.startsWith("http") ? labelUrl : `${STRAPI_URL}${labelUrl}`;
 
     return (
-        <main className="min-h-screen bg-gray-900 text-white p-8">
+        <main className="min-h-screen text-white p-8">
             <div className="max-w-6xl mx-auto">
                 <div className="flex flex-col lg:flex-row gap-y-4 justify-between lg:items-center lg:mb-16">
                     <div className="hidden lg:block">
