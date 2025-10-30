@@ -1,4 +1,9 @@
+// app/layout.tsx
+
+"use client"; // <-- 1. Add this to use hooks
+
 import localFont from "next/font/local";
+import { useRef } from "react"; // <-- Import useRef
 
 import "./app.css";
 import Header from "@/components/layout/Header";
@@ -17,20 +22,27 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // 2. Create a ref for your main scrollable element
+  const mainRef = useRef<HTMLElement>(null);
+
   return (
     <html lang="en" className={alpino.variable}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        </head>
+      </head>
       <body className="overflow-x-hidden bg-black">
         <Header />
-        <main className="mt-36">
+        
+        {/* 3. Attach the ref to your <main> element */}
+        <main className="mt-36" ref={mainRef}>
           {children}
-          <ViewCanvas />
+          
+          {/* 4. Pass the ref to ViewCanvas as the 'eventSource' */}
+          <ViewCanvas eventSource={mainRef} />
         </main>
+        
         <Footer />
       </body>
-     
     </html>
   );
 }

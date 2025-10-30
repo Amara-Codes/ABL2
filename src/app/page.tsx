@@ -4,7 +4,6 @@ import Hero from "@/components/content/Hero";
 import { HeroContent, SkyDivingContent, BigTextContent, CarouselSlideContent } from "@/types";
 import SkyDive from "@/components/content/SkyDive";
 import BigText from "@/components/content/BigText";
-import Carousel from "@/components/content/Carousel";
 import { CtaContent } from "@/types";
 import Cta from "@/components/content/Cta";
 
@@ -146,7 +145,6 @@ export default async function Index() {
       <SkyDive content={SkyDivingData.content} />
       <div className="flex flex-col">
         <BigText content={BigTextData.content} />
-        <Carousel content={CarouselSlideData.content} />
         <Cta content={CtaData.content} />
       </div>
     </div>

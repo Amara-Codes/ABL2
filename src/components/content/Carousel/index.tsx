@@ -21,7 +21,7 @@ type BeerSlide = {
   textureUrl: string;
   imageBgColor: string;
   complementaryColor: string;
-  invertedColor: string;  
+  invertedColor: string;
   textColor: string;
   link: string;
 };
@@ -29,7 +29,8 @@ type BeerSlide = {
 const STRAPI_URL = process.env.NEXT_PUBLIC_AMARA_STRAPI_URL || "http://127.0.0.1:1337";
 const SPINS_ON_CHANGE = 8;
 
-const Carousel = ({ content }: CarouselSlideContent): JSX.Element => {
+// <-- MODIFICA: Aggiorniamo le props per includere `dropId` opzionale
+const Carousel = ({ content, dropId }: CarouselSlideContent & { dropId?: string | number }): JSX.Element => {
   // State for the dynamically loaded beer data
   const [beerSlides, setBeerSlides] = useState<BeerSlide[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -38,17 +39,41 @@ const Carousel = ({ content }: CarouselSlideContent): JSX.Element => {
 
   // 1. Fetch data when the component mounts
   useEffect(() => {
-    const fetchLatestDrop = async () => {
+    // <-- MODIFICA: Rinominiamo la funzione per maggiore chiarezza
+    const fetchDrop = async () => {
       try {
-        const response = await fetch(
-          `${STRAPI_URL}/api/drops?sort=createdAt:desc&pagination[limit]=1&populate[beers][populate]=label,category`
-        );
+        // <-- MODIFICA: Logica condizionale per l'URL di fetch
+        let fetchUrl = "";
+        if (dropId) {
+          // Se abbiamo un dropId, carichiamo quello specifico
+          fetchUrl = `${STRAPI_URL}/api/drops/${dropId}?populate[beers][populate]=label,category`;
+        } else {
+          // Altrimenti, carichiamo l'ultimo
+          fetchUrl = `${STRAPI_URL}/api/drops?sort=createdAt:desc&pagination[limit]=1&populate[beers][populate]=label,category`;
+        }
+
+        const response = await fetch(fetchUrl);
         const data = await response.json();
 
-        if (!data.data || data.data.length === 0) return;
+        // <-- MODIFICA: Gestiamo i due diversi formati di risposta di Strapi
+        let dropData;
+        if (dropId) {
+          // Se si carica per ID, la risposta è { data: {...} }
+          dropData = data.data;
+        } else {
+          // Se si carica una lista, la risposta è { data: [...] }
+          if (!data.data || data.data.length === 0) return;
+          dropData = data.data[0];
+        }
 
-        const latestDrop = data.data[0];
-        const beers = latestDrop.attributes.beers.data;
+        if (!dropData) {
+          console.error("Nessun drop trovato con i criteri forniti.");
+          return;
+        }
+
+        // Usiamo dropData (che sia dall'ID o dall'ultimo)
+        const beers = dropData.attributes.beers.data;
+        // ... (il resto della logica rimane invariato)
 
         // ✅ FIX #2: Use Promise.all to wait for all colors to be calculated
         const formattedSlidesPromises = beers.map(async (beer: any) => {
@@ -64,6 +89,7 @@ const Carousel = ({ content }: CarouselSlideContent): JSX.Element => {
           const beerCategory = category?.data?.attributes;
 
           const getBgColorFromImage = (imageUrl: string): Promise<string> => {
+            // ... (nessuna modifica necessaria qui)
             return new Promise((resolve) => {
               if (!imageUrl) {
                 resolve("#710523"); // Resolve with fallback if no URL
@@ -113,6 +139,7 @@ const Carousel = ({ content }: CarouselSlideContent): JSX.Element => {
 
           const imageBgColor = await getBgColorFromImage(finalUrl);
 
+          // ... (nessuna modifica necessaria nelle funzioni colore)
           function hexToComplimentary(hex: string) {
 
             // Convert hex to rgb
@@ -139,7 +166,7 @@ const Carousel = ({ content }: CarouselSlideContent): JSX.Element => {
             var h = 0, s, l = (max + min) / 2.0;
 
             if (max == min) {
-              h = s = 0;  //achromatic
+              h = s = 0;  //achromatic
             } else {
               var d = max - min;
               s = (l > 0.5 ? d / (2.0 - max - min) : d / (max + min));
@@ -234,7 +261,7 @@ const Carousel = ({ content }: CarouselSlideContent): JSX.Element => {
 
           const complementaryColor = hexToComplimentary(imageBgColor);
 
-          console.log(`Beer: ${name}, BG Color: ${imageBgColor}, complementaryColor: ${complementaryColor}, inverted: ${invertColor(imageBgColor, false)}`);
+          // console.log(`Beer: ${name}, BG Color: ${imageBgColor}, complementaryColor: ${complementaryColor}, inverted: ${invertColor(imageBgColor, false)}`);
           return {
             name: name,
             description: beerCategory?.name || "Craft Beer",
@@ -258,8 +285,8 @@ const Carousel = ({ content }: CarouselSlideContent): JSX.Element => {
       }
     };
 
-    fetchLatestDrop();
-  }, []); // Empty array ensures this runs only once
+    fetchDrop(); // <-- MODIFICA: abbiamo rinominato la funzione
+  }, [dropId]); // <-- MODIFICA: `dropId` è ora una dipendenza dell'effetto
 
   function changeSlide(index: number) {
     if (!canRef.current || beerSlides.length === 0) return;
@@ -292,21 +319,28 @@ const Carousel = ({ content }: CarouselSlideContent): JSX.Element => {
 
   return (
     <section className="carousel relative grid h-fit grid-rows-[auto,4fr,auto] justify-center overflow-hidden bg-white py-12 text-white">
-      <div className="background pointer-events-none absolute inset-0  opacity-50 bg-black"/>
+      <div className="background pointer-events-none absolute inset-0  opacity-50 bg-black" />
       <WavyCircles className="absolute left-1/2 top-1/2 h-[120vmin] -translate-x-1/2 -translate-y-1/2" />
 
       <h2 className="relative text-center text-5xl font-bold text-shadow-outline md:text-6xl lg:text-7xl px-8 py-4">
-        <span>{title?.[0]?.text ?? "Our last drop"}</span>
+        {/* <-- MODIFICA: Usiamo il titolo passato o un titolo di default
+        che ha senso anche per un drop specifico 
+      */}
+        <span>{title?.[0]?.text ?? "Drop Details"}</span>
       </h2>
 
       <div className="grid grid-cols-[auto,auto,auto] items-center">
         <ArrowButton
-          onClick={() => changeSlide(currentIndex + 1)}
+          onClick={(e) => changeSlide(currentIndex + 1)}
           direction="left"
           label="Previous Beer"
         />
 
-        <View className="aspect-square h-[70vmin] min-h-40">
+        <View
+          className="aspect-square h-[70vmin] min-h-40"
+          // Aggiungiamo il fix per lo scroll su mobile che abbiamo discusso
+          style={{ touchAction: 'pan-y' }}
+        >
           <Center position={[0, 0, 1.5]}>
             {/* 3. Pass the dynamic textureUrl to FloatingCan */}
             <FloatingCan
@@ -321,7 +355,7 @@ const Carousel = ({ content }: CarouselSlideContent): JSX.Element => {
         </View>
 
         <ArrowButton
-          onClick={() => changeSlide(currentIndex - 1)}
+          onClick={(e) => changeSlide(currentIndex - 1)}
           direction="right"
           label="Next Beer"
         />
@@ -346,11 +380,11 @@ const Carousel = ({ content }: CarouselSlideContent): JSX.Element => {
 
 export default Carousel;
 
-// ArrowButton component (no changes needed)
+// ArrowButton component (nessuna modifica necessaria qui)
 type ArrowButtonProps = {
   direction?: "right" | "left";
   label: string;
-  onClick: () => void;
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void; // <-- Modifica qui
 };
 
 function ArrowButton({
@@ -359,12 +393,20 @@ function ArrowButton({
   direction = "right",
 }: ArrowButtonProps) {
   return (
-    <button
-      onClick={onClick}
-      className="size-12 rounded-full border-2 border-white bg-white/10 p-3 opacity-85 ring-white focus:outline-none focus-visible:opacity-100 focus-visible:ring-4 md:size-16 lg:size-20"
-    >
-      <ArrowIcon className={clsx(direction === "right" && "-scale-x-100")} />
-      <span className="sr-only">{label}</span>
-    </button>
+    <div className="flex justify-center items-center">
+
+      <button
+        type="button" // <-- Assicurati che ci sia
+        // 4. Applica preventDefault() e poi chiama la prop onClick
+        onClick={(e) => {
+          e.preventDefault();
+          onClick(e);
+        }}
+        className="size-12 rounded-full border-2 border-white bg-white/10 p-3 opacity-85 ring-white focus:outline-none focus-visible:opacity-100 focus-visible:ring-4 md:size-16 lg:size-20"
+      >
+        <ArrowIcon className={clsx(direction === "right" && "-scale-x-100")} />
+        <span className="sr-only">{label}</span>
+      </button>
+    </div>
   );
 }

@@ -1,22 +1,20 @@
+// components/layout/ViewCanvas.tsx
+
 "use client";
 
 import { Canvas } from "@react-three/fiber";
 import { View } from "@react-three/drei";
-import { Suspense } from "react";
-import dynamic from "next/dynamic";
+// 1. Keep this type just as it was
+import { RefObject } from "react";
 
-const Loader = dynamic(
-  () => import("@react-three/drei").then((mod) => mod.Loader),
-  { ssr: false },
-);
+type ViewCanvasProps = {
+  eventSource: RefObject<HTMLElement>;
+};
 
-type Props = {};
-
-export default function ViewCanvas({}: Props) {
+export default function ViewCanvas({ eventSource }: ViewCanvasProps) {
   return (
-    <>
-      <Canvas
-        style={{
+    <Canvas
+   style={{
           position: "fixed",
           top: 0,
           left: "50%",
@@ -31,12 +29,17 @@ export default function ViewCanvas({}: Props) {
         camera={{
           fov: 30,
         }}
-      >
-        <Suspense fallback={null}>
-          <View.Port />
-        </Suspense>
-      </Canvas>
-      <Loader />
-    </>
+      
+      // 2. THIS IS THE FIX:
+      // Pass the .current value of the ref.
+      // If eventSource.current is 'null' (on first render),
+      // the '|| undefined' converts it to 'undefined'.
+      // This satisfies the type 'HTMLElement | ... | undefined'.
+      eventSource={eventSource.current || undefined}
+      
+      eventPrefix="client"
+    >
+      <View.Port />
+    </Canvas>
   );
 }

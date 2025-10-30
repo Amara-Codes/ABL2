@@ -1,7 +1,7 @@
 // app/beers/[name]/page.tsx
 
 import { Metadata } from "next";
-import BeerClient from "@/components/BeerClient"; 
+import BeerClient from "@/components/BeerClient";
 // We will create this component shortly
 
 const STRAPI_URL = process.env.NEXT_PUBLIC_AMARA_STRAPI_URL || "http://127.0.0.1:1337";
@@ -16,19 +16,16 @@ type BeerApiResponse = {
         specialIngredients: string;
         abv: number;
         label: {
-            data: {
-                attributes: {
-                    url: string;
-                };
-            };
+            data: { attributes: { url: string; }; };
         };
         category: {
+            data: { attributes: { name: string; }; }
+        };
+        drop: { // <-- Assicurati che questo sia popolato!
             data: {
-                attributes: {
-                    name: string;
-                };
-            }
-        }
+                id: number;
+            };
+        };
     };
 };
 
@@ -41,7 +38,7 @@ async function getBeerData(name: string): Promise<BeerApiResponse | null> {
         const response = await fetch(
             `${STRAPI_URL}/api/beers?filters[name][$eqi]=${formattedName}&populate=*`,
             // Use caching strategy as needed. 'no-store' fetches fresh data every time.
-            { cache: 'no-store' } 
+            { cache: 'no-store' }
             // Or use revalidation: next: { revalidate: 3600 } // Re-fetch every hour
         );
 
@@ -74,7 +71,7 @@ export async function generateMetadata({ params }: { params: { name: string } })
 
     const beerName = beer.attributes.name;
     // Trim description for meta tag best practices (under 160 characters)
-    const beerDescription = beer.attributes.description.substring(0, 160); 
+    const beerDescription = beer.attributes.description.substring(0, 160);
 
     return {
         title: `${beerName} | Amara Beer Lab`,
