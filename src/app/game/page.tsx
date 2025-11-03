@@ -214,7 +214,7 @@ const Page: React.FC = () => {
       {!hasStarted ? (
         // --- Schermata Iniziale ---
         <div className="min-h-screen text-white flex justify-center p-4">
-          <div className="p-6 sm:p-10 rounded-xl shadow-2xl text-center w-full max-w-md border border-gray-700">
+          <div className="h-fit p-6 sm:p-10 rounded-xl shadow-2xl text-center w-full max-w-md border border-gray-700">
             <h1 className="text-4xl sm:text-5xl font-bold mb-6 flex flex-col items-center">
               <span className="text-white">Beers &</span>
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary leading-[60px]">Memory</span>
