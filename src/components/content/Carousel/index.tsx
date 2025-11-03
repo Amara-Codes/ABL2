@@ -369,9 +369,9 @@ const Carousel = ({ content, dropId }: CarouselSlideContent & { dropId?: string 
           </div>
         </Link>
         <div className="text-2xl font-normal opacity-90 mt-8">
-          <Link href={currentSlide.categoryUrl} className="mx-auto my-4 rounded-full bg-white/10 px-6 py-3 text-lg font-medium text-white ring-white hover:bg-white/20 focus:outline-none focus:ring-4">
+          <p className="mx-auto my-4 rounded-full bg-white/10 px-6 py-3 text-lg font-medium text-white ring-white hover:bg-white/20 focus:outline-none focus:ring-4">
             <span>{currentSlide.description}</span>
-          </Link>
+          </p>
         </div>
       </div>
     </section>

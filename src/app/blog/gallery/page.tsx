@@ -19,7 +19,10 @@ const Title = {
 export default function GalleryPage() {
     return (
         <div>
+            <div className="hidden lg:block">
+
             <BigText content={Title} />
+            </div>
             <div className="w-dvw h-dvh lg:mt-8">
                 <Gallery />
             </div>

@@ -15,7 +15,7 @@ export default function GenericWrapper({ contentType, articlesPerPage }: Generic
         <BackButton destination="/blog" />
         </div>
         <div className="mt-16 flex justify-center mb-8 lg:mb-16">
-          <h1 className="font-fatboy text-8xl text-primary h-1/2 flex items-end">{contentType.toLocaleUpperCase()}</h1>
+          <h1 className={`font-fatboy text-6xl lg:text-8xl text-primary h-1/2 flex items-end`}>{contentType.toLocaleUpperCase()}</h1>
         </div>
         <ArticlesFetcherWrapper initialCategory={contentType} articlesPerPage={articlesPerPage} />
 

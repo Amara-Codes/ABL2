@@ -627,7 +627,7 @@ export default function DomeGallery({
     return (
         <div
             ref={rootRef}
-            className="sphere-root"
+            className="sphere-root bg-gray-700"
             style={{
                 '--segments-x': segments,
                 '--segments-y': segments,
