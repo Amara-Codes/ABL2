@@ -27,7 +27,7 @@ export default function BeersClient({ drops }: BeersClientProps) {
                         <section
                             key={drop.id}
                             // ✅ Layout verticale su mobile (flex-col) e orizzontale (md:flex-row) su desktop
-                            className="h-screen w-screen flex flex-col md:flex-row"
+                            className="h-screen w-screen flex flex-col md:flex-row justify-center md:justify-normal"
                         >
                             {/* 1. Contenitore del Testo */}
                             {/* ✅ Occupa la metà superiore su mobile (h-1/2) e la metà sinistra su desktop (md:w-1/2) */}
