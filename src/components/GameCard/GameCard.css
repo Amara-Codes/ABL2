@@ -1,0 +1,19 @@
+/* Questo file è necessario solo per l'animazione 'shake' 
+  che non è inclusa di default in Tailwind.
+  Tutto il resto dello stile è gestito dalle classi Tailwind in GameCard.tsx.
+*/
+
+@keyframes shake {
+  0% { transform: translateX(0) rotateY(180deg); }
+  25% { transform: translateX(-5px) rotateY(180deg); }
+  50% { transform: translateX(5px) rotateY(180deg); }
+  75% { transform: translateX(-5px) rotateY(180deg); }
+  100% { transform: translateX(0) rotateY(180deg); }
+}
+
+/* Questa classe applica l'animazione definita sopra.
+  Viene usata in GameCard.tsx (`animate-shake`).
+*/
+.animate-shake {
+  animation: shake 0.3s ease-in-out;
+}
