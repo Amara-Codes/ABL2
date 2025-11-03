@@ -416,7 +416,7 @@ export default function DomeGallery({
                 }
             }
         },
-        { target: mainRef, eventOptions: { passive: true } }
+        { target: mainRef, eventOptions: {} }
     );
 
     useEffect(() => {
@@ -677,7 +677,7 @@ export default function DomeGallery({
                 '--image-filter': grayscale ? 'grayscale(1)' : 'none'
             } as CSSProperties}
         >
-            <main ref={mainRef} className="sphere-main">
+            <main ref={mainRef} className="sphere-main" style={{ touchAction: 'pan-y' }}>
                 <div className="stage">
                     <div ref={sphereRef} className="sphere">
                         {items.map((it, i) => (

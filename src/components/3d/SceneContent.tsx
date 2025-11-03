@@ -47,7 +47,7 @@ export function SceneContent({ drops }: { drops: DropData[] }) {
 
   // Desktop: posizione y originale
   // Mobile: sposta più in basso per adattarsi alla metà inferiore dello schermo
-  const showcaseYPos = isDesktop ? -1 : -2.5;
+  const showcaseYPos = -2.5;
 
   useFrame(() => {
     if (groupRef.current) {
