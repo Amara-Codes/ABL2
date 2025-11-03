@@ -216,8 +216,9 @@ const Page: React.FC = () => {
         <div className="min-h-screen text-white flex justify-center p-4">
           <div className="p-6 sm:p-10 rounded-xl shadow-2xl text-center w-full max-w-md border border-gray-700">
             <h1 className="text-4xl sm:text-5xl font-bold mb-6 flex flex-col items-center">
-              <span className="text-white">Drunken</span>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Memory</span>
+              <span className="text-white">Beers &</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary leading-[60px]">Memory</span>
+              <em className="italic mt-4 text-white text-lg">Keep your brain trained while drinking... </em>
             </h1>
             
             <label htmlFor="name" className="text-sm font-medium text-gray-400 uppercase tracking-wider mb-2 block">
@@ -289,7 +290,7 @@ const Page: React.FC = () => {
         // --- Schermata di Gioco ---
         <div className="min-h-screen text-white flex flex-col items-center p-4 sm:p-6">
           <h2 className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-secondary to-pink-500 mb-2">
-            Let's go, {gameName}!
+            Let&apos;s go, {gameName}!
           </h2>
           <h3 className="text-xl font-medium text-gray-300 mb-1">
             Score: <span className="text-white font-bold">{score}</span> | Time: <span className="text-white font-bold">{timeElapsed}s</span>

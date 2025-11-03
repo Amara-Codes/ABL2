@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 // import Image from 'next/image'; // Rimosso a causa dell'errore di build
 // import './GameCard.css'; // Rimosso a causa dell'errore di build
 
@@ -64,7 +65,8 @@ const GameCard: React.FC<SingleCardProps> = ({ card, onClick }) => {
           {/* Fronte della Carta (l'immagine del memory) */}
           <div className="absolute w-full h-full [backface-visibility:hidden] rounded-lg overflow-hidden shadow-md [transform:rotateY(180deg)]">
             {/* Sostituito <Image> con <img> standard */}
-            <img 
+            <Image 
+            layout="fill"
               src={card.value} 
               alt="Card Front" 
               className="w-full h-full object-contain" // Tailwind controlla la dimensione
@@ -74,7 +76,8 @@ const GameCard: React.FC<SingleCardProps> = ({ card, onClick }) => {
           {/* Retro della Carta (il tuo back.png) */}
           <div className="absolute w-full h-full [backface-visibility:hidden] rounded-lg overflow-hidden shadow-md">
             {/* Sostituito <Image> con <img> standard */}
-            <img 
+            <Image
+             layout="fill"
               src="/images/game-cards/back.png" // Percorso aggiornato
               alt="Card Back" 
               className="w-full h-full object-contain" // Aggiunto p-2 per un piccolo bordo
