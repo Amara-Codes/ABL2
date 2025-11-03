@@ -125,7 +125,7 @@ const Hero = ({ content }: HeroProps): JSX.Element => {
               <span className="">{second_body[0]?.text}</span>
             </div>
 
-            <div className="mt-16 py-8 text-center lg:text-left">
+            <div className="mt-8 lg:mt-16 py-8 text-center lg:text-left">
 
               <Button
                 buttonLink={button.url}

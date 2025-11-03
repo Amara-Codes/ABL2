@@ -34,11 +34,6 @@ export function TextSplitter({
             </span>
           );
         })}
-        {wordIndex < words.length - 1 ? (
-          <span className="split-char">{` `}</span>
-        ) : (
-          ""
-        )}
       </span>
     );
   });

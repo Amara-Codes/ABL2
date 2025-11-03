@@ -29,7 +29,7 @@ const Cta = ({ content }: CtaContent): JSX.Element => {
                 ) : (
                     <div className="gapper w-20 h-20 grow hidden lg:block"></div>
                 )}
-                <div className="flex flex-col gap-4 max-w-lg m-4 p-8 h-full w-full bg-purple-400 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-20">
+                <div className="flex flex-col gap-4 max-w-lg p-8 h-full w-full bg-purple-400 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-20">
                     <h2 className={`text-4xl font-bold ${titleClasses}`}>{title.text}</h2>
                     <p className={`text-xl ${paragraphClasses}`}>{paragraph.text}</p>
 
