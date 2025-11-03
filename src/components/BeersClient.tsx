@@ -31,7 +31,7 @@ export default function BeersClient({ drops }: BeersClientProps) {
                         >
                             {/* 1. Contenitore del Testo */}
                             {/* ✅ Occupa la metà superiore su mobile (h-1/2) e la metà sinistra su desktop (md:w-1/2) */}
-                            <div className="w-full md:w-1/2 h-1/2 md:h-full flex justify-center items-center p-8 pt-24 md:pt-8 md:pl-16">
+                            <div className="w-full md:w-1/2 h-1/2 md:h-full flex justify-center items-center p-8 md:pt-8 md:pl-16">
                                 <div className="max-w-md w-full p-6 text-center hidden lg:block bg-purple-400 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-20">
                                     <h2 className="text-4xl font-bold text-primary">
                                         <span className="">{drops.length - index}. </span>
