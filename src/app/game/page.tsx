@@ -215,10 +215,10 @@ const Page: React.FC = () => {
         // --- Schermata Iniziale ---
         <div className="min-h-screen text-white flex justify-center p-4">
           <div className="h-fit p-6 sm:p-10 rounded-xl shadow-2xl text-center w-full max-w-md border border-gray-700">
-            <h1 className="text-4xl sm:text-5xl font-bold mb-6 flex flex-col items-center">
+            <h1 className="text-4xl sm:text-5xl font-bold mb-4 flex flex-col items-center">
               <span className="text-white">Beers &</span>
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary leading-[60px]">Memory</span>
-              <em className="italic mt-4 text-white text-lg">Keep your brain trained while drinking... </em>
+              <em className="italic mt-2 text-white text-lg">Keep your brain trained while drinking... </em>
             </h1>
             
             <label htmlFor="name" className="text-sm font-medium text-gray-400 uppercase tracking-wider mb-2 block">
@@ -226,7 +226,7 @@ const Page: React.FC = () => {
             </label>
             <input 
               id="name"
-              className="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-secondary mb-6"
+              className="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-secondary mb-4"
               type="text"
               name="name"
               placeholder="Your Name..."
@@ -295,11 +295,11 @@ const Page: React.FC = () => {
           <h3 className="text-xl font-medium text-gray-300 mb-1">
             Score: <span className="text-white font-bold">{score}</span> | Time: <span className="text-white font-bold">{timeElapsed}s</span>
           </h3>
-          <h3 className="text-lg font-medium text-yellow-400 mb-6">
+          <h3 className="text-lg font-medium text-yellow-400 mb-4">
             Final Score: <span className="text-yellow-300 font-bold">{extraScore}</span>
           </h3>
           
-          <div className={`grid ${gridStyles[difficulty!]} gap-2 sm:gap-3 w-full max-w-4xl mx-auto mb-6`}>
+          <div className={`grid ${gridStyles[difficulty!]} gap-2 sm:gap-3 w-full max-w-4xl mx-auto mb-4`}>
             {cards.map((card) => (
               <GameCard 
                 key={card.id} 
