@@ -170,6 +170,7 @@ export default function DomeGallery({
     const rotationRef = useRef({ x: 0, y: 0 });
     const startRotRef = useRef({ x: 0, y: 0 });
     const startPosRef = useRef<{ x: number; y: number } | null>(null);
+    const dragAxisRef = useRef<'x' | 'y' | null>(null);
     const draggingRef = useRef(false);
     const movedRef = useRef(false);
     const inertiaRAF = useRef<number | null>(null);
@@ -334,31 +335,67 @@ export default function DomeGallery({
             onDragStart: ({ event }: FullGestureState<'drag'>) => {
                 if (focusedElRef.current) return;
                 stopInertia();
-                const evt = event as any; // Cast to access clientX/Y, as in original code
-                draggingRef.current = true;
+                const evt = event as any;
                 movedRef.current = false;
                 startRotRef.current = { ...rotationRef.current };
                 startPosRef.current = { x: evt.clientX, y: evt.clientY };
+                dragAxisRef.current = null; // Resetta l'asse
+                // Non impostare ancora draggingRef.current = true
             },
             onDrag: ({ event, last, velocity, direction, movement }: FullGestureState<'drag'>) => {
-                if (focusedElRef.current || !draggingRef.current || !startPosRef.current) return;
-                const evt = event as any; // Cast to access clientX/Y
+                if (focusedElRef.current || !startPosRef.current) return;
+
+                const evt = event as any;
                 const dxTotal = evt.clientX - startPosRef.current.x;
                 const dyTotal = evt.clientY - startPosRef.current.y;
-                if (!movedRef.current) {
-                    const dist2 = dxTotal * dxTotal + dyTotal * dyTotal;
-                    if (dist2 > 16) movedRef.current = true;
+                const absDx = Math.abs(dxTotal);
+                const absDy = Math.abs(dyTotal);
+
+                // 1. Logica per decidere e "bloccare" l'asse
+                if (!dragAxisRef.current) {
+                    const DRAG_THRESHOLD = 12; // Puoi aggiustare questa soglia
+                    if (absDx > DRAG_THRESHOLD && absDx > absDy) {
+                        // L'utente si è mosso orizzontalmente: attiva la rotazione
+                        dragAxisRef.current = 'x';
+                        draggingRef.current = true; // Inizia a trascinare ORA
+                        movedRef.current = true;
+                    } else if (absDy > DRAG_THRESHOLD && absDy > absDx) {
+                        // L'utente si è mosso verticalmente: lascia scrollare la pagina
+                        dragAxisRef.current = 'y';
+                        // NON impostiamo draggingRef = true
+                    }
                 }
+
+                // 2. Esegui la rotazione SOLO se l'asse X è stato attivato
+                if (dragAxisRef.current !== 'x' || !draggingRef.current) {
+                    // Se siamo in 'y' (scroll) o 'null' (indeciso),
+                    // lascia che il browser gestisca l'evento (es. scroll verticale).
+
+                    // Gestisci la fine del gesto anche se non abbiamo fatto nulla
+                    if (last) {
+                        draggingRef.current = false;
+                        movedRef.current = false;
+                        dragAxisRef.current = null;
+                    }
+                    return; // IMPORTANTE: esci dalla funzione
+                }
+
+                // 3. Logica di rotazione (come prima, ma ora include anche l'asse Y)
+                // Se siamo qui, dragAxisRef.current === 'x' e draggingRef.current === true
+
                 const nextX = clamp(
                     startRotRef.current.x - dyTotal / dragSensitivity,
                     -maxVerticalRotationDeg,
                     maxVerticalRotationDeg
                 );
                 const nextY = wrapAngleSigned(startRotRef.current.y + dxTotal / dragSensitivity);
+
                 if (rotationRef.current.x !== nextX || rotationRef.current.y !== nextY) {
                     rotationRef.current = { x: nextX, y: nextY };
                     applyTransform(nextX, nextY);
                 }
+
+                // 4. Logica di fine trascinamento (inerzia)
                 if (last) {
                     draggingRef.current = false;
                     let [vMagX, vMagY] = velocity;
@@ -372,7 +409,10 @@ export default function DomeGallery({
                     }
                     if (Math.abs(vx) > 0.005 || Math.abs(vy) > 0.005) startInertia(vx, vy);
                     if (movedRef.current) lastDragEndAt.current = performance.now();
+
+                    // Resetta tutto alla fine
                     movedRef.current = false;
+                    dragAxisRef.current = null;
                 }
             }
         },
@@ -663,7 +703,7 @@ export default function DomeGallery({
                                     aria-label={it.alt || 'Open image'}
                                     onClick={onTileClick}
                                     onPointerUp={onTilePointerUp}
-                                    >
+                                >
                                     <Image src={it.src} draggable={false} alt={it.alt} fill />
                                 </div>
                             </div>
