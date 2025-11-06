@@ -237,7 +237,7 @@ const Page: React.FC = () => {
             <span className="text-sm font-medium text-gray-400 uppercase tracking-wider mb-3 block">
               Choose your level:
             </span>
-            <div className="grid grid-cols-3 gap-3 mb-8">
+            <div className="grid grid-cols-3 gap-3 mb-6">
               <button 
                 onClick={() => setDifficulty("easy")}
                 className={`w-full p-3 text-sm lg:text-xl text-center font-semibold rounded-lg transition-all duration-200 ${
