@@ -240,7 +240,7 @@ const Page: React.FC = () => {
             <div className="grid grid-cols-3 gap-3 mb-8">
               <button 
                 onClick={() => setDifficulty("easy")}
-                className={`w-full p-3 font-semibold rounded-lg transition-all duration-200 ${
+                className={`w-full p-3 text-sm lg:text-xl text-center font-semibold rounded-lg transition-all duration-200 ${
                   difficulty === 'easy' 
                   ? 'bg-primary text-white ring-2 ring-secondary' 
                   : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
@@ -250,7 +250,7 @@ const Page: React.FC = () => {
               </button>
               <button 
                 onClick={() => setDifficulty("medium")}
-                className={`w-full p-3 font-semibold rounded-lg transition-all duration-200 ${
+                className={`w-full p-3 text-sm lg:text-xl text-center font-semibold rounded-lg transition-all duration-200 ${
                   difficulty === 'medium' 
                   ? 'bg-primary text-white ring-2 ring-secondary' 
                   : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
@@ -260,7 +260,7 @@ const Page: React.FC = () => {
               </button>
               <button 
                 onClick={() => setDifficulty("hard")}
-                className={`w-full p-3 font-semibold rounded-lg transition-all duration-200 ${
+                className={`w-full p-3 text-sm lg:text-xl text-center font-semibold rounded-lg transition-all duration-200 ${
                   difficulty === 'hard' 
                   ? 'bg-primary text-white ring-2 ring-secondary' 
                   : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
@@ -273,7 +273,7 @@ const Page: React.FC = () => {
             <div className="go">
               {firstEntry && (
                 <button 
-                  className={`w-full p-4 font-bold text-xl rounded-lg text-white bg-gradient-to-r from-secondary to-pink-500 hover:from-primary hover:to-pink-600 focus:outline-none focus:ring-4 focus:ring-secondary transform transition-all duration-500 ease-in-out ${
+                  className={`w-full p-4 font-bold text-sm lg:text-xl text-center rounded-lg text-white bg-gradient-to-r from-secondary to-pink-500 hover:from-primary hover:to-pink-600 focus:outline-none focus:ring-4 focus:ring-secondary transform transition-all duration-500 ease-in-out ${
                     goButtonZoom ? "scale-125 opacity-0" : "scale-100 opacity-100"
                   }`} 
                   onClick={handleStartGame}
