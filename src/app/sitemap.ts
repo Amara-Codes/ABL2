@@ -1,0 +1,131 @@
+// app/sitemap.ts
+
+import { MetadataRoute } from "next";
+
+// Definisci il tuo URL di base
+const BASE_URL =
+  process.env.NEXT_PUBLIC_AMARA_STRAPI_URL || "https://tuo-dominio.com";
+
+// Funzione helper per fetchare i dati da Strapi (meglio se la metti in un file separato)
+async function fetchStrapiData(endpoint: string) {
+  const fetchUrl = `${BASE_URL}/api/${endpoint}`;
+
+  console.log("url fetch sitemap:", fetchUrl);
+  // Assicurati di gestire il token API se Strapi non è pubblico
+  const res = await fetch(fetchUrl, {
+    next: { revalidate: 60 }, // Opzionale: revalida i dati della sitemap ogni 60 sec
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch data from Strapi");
+  }
+
+  const json = await res.json();
+  const data = json.data;
+  console.log("data fetch sitemap:", data);
+  return json.data; // Strapi V4 di solito wrappa i dati in .data
+}
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  // 1. Aggiungi le tue pagine statiche
+  const staticRoutes: MetadataRoute.Sitemap = [
+    {
+      url: 'https://amarabeerlab.com',
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 1,
+    },
+    {
+      url: 'https://amarabeerlab.com/contacts',
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: 'https://amarabeerlab.com/beers',
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: 'https://amarabeerlab.com/brewery',
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: 'https://amarabeerlab.com/lab',
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: 'https://amarabeerlab.com/blog',
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+
+    {
+      url: 'https://amarabeerlab.com/lab/ingredients',
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
+      url: 'https://amarabeerlab.com/lab/brew-with-us',
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
+      url: 'https://amarabeerlab.com/blog/articles',
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
+      url: 'https://amarabeerlab.com/blog/activities',
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
+      url: 'https://amarabeerlab.com/blog/news',
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
+      url: 'https://amarabeerlab.com/blog/gallery',
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+  ];
+
+  // 2. Fetch e mappa gli Articoli
+
+  // eslint-disable-next-line
+  const articles: any[] = await fetchStrapiData("articles"); // Sostituisci 'articoli' con il tuo endpoint
+  const articleRoutes: MetadataRoute.Sitemap = articles.map((article) => ({
+    url: `https://amarabeerlab.com/blog/${article.attributes.Slug.replace(/\s+/g, "-").toLowerCase()}`,
+    lastModified: new Date(article.attributes.updatedAt),
+    changeFrequency: "weekly",
+    priority: 0.6,
+  }));
+
+  // 3. Fetch e mappa i Prodotti
+
+  // eslint-disable-next-line
+  const products: any[] = await fetchStrapiData("beers"); // Sostituisci 'prodotti' con il tuo endpoint
+  const productRoutes: MetadataRoute.Sitemap = products.map((product) => ({
+    url: `https://amarabeerlab.com/beer/${product.attributes.name.replace(/\s+/g, "-").toLowerCase()}`,
+    lastModified: new Date(product.attributes.updatedAt),
+    changeFrequency: "daily",
+    priority: 0.6,
+  }));
+
+  // 4. Combina tutto e ritorna
+  return [...staticRoutes, ...articleRoutes, ...productRoutes];
+}
