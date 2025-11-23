@@ -72,7 +72,8 @@ const Hero = ({ content }: HeroProps): JSX.Element => {
       });
 
       scrollTl
-        .fromTo("body", { backgroundColor: "#FF850E" }, { backgroundColor: "#000000", overwrite: "auto", }, 1)
+        .fromTo("body", { backgroundColor: "#FA4700" }, { backgroundColor: "#000000", overwrite: "auto", }, 1)
+        .fromTo("#hero-title", { color: "#000000" }, { color: "#FF850E", overwrite: "auto", }, 1)
         .from(".text-side-heading .split-char", { scale: 1.3, y: 40, rotate: -25, opacity: 0, stagger: 0.1, ease: "back.out(3)", duration: 0.5, })
         .from(".text-side-body", { y: 20, opacity: 0, });
     },
@@ -90,7 +91,7 @@ const Hero = ({ content }: HeroProps): JSX.Element => {
       <div className="grid">
         <div className="grid h-screen place-items-center">
           <div className="grid auto-rows-min place-items-center text-center">
-            <h1 className="hero-header text-7xl font-black uppercase leading-[.8] text-primary md:text-[9rem] lg:text-[13rem]">
+            <h1 id="hero-title" className="hero-header text-7xl font-black uppercase leading-[.8] text-secondary md:text-[9rem] lg:text-[13rem]">
               <TextSplitter
                 text={heading[0]?.text || ""}
                 wordDisplayStyle="block"
