@@ -1,6 +1,6 @@
 "use client";
 
-import { Cloud, Clouds, Environment, Text } from "@react-three/drei";
+import { Cloud, Clouds, Environment, Text, useTexture } from "@react-three/drei";
 import { useRef } from "react";
 import * as THREE from "three";
 import gsap from "gsap";
@@ -10,8 +10,11 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import FloatingCan from "@/components/3d/FloatingCan";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 
-
 gsap.registerPlugin(useGSAP, ScrollTrigger);
+
+// ✅ 1. Precarichiamo la texture fuori dal componente per evitare glitch visivi
+// Assicurati che il file sia in: public/textures/cloud.png
+useTexture.preload("/textures/cloud.png");
 
 type SkyDiveProps = {
   sentence: string | null;
@@ -26,6 +29,8 @@ export default function Scene({ sentence, textureUrl }: SkyDiveProps) {
   const cloudsRef = useRef<THREE.Group>(null);
   const wordsRef = useRef<THREE.Group>(null);
 
+  // ❌ RIMOSSO: const cloudTexture = useTexture(...) 
+  // Non serve dichiararlo qui perché <Clouds> accetta direttamente la stringa.
 
   const ANGLE = 75 * (Math.PI / 180);
 
@@ -134,8 +139,6 @@ export default function Scene({ sentence, textureUrl }: SkyDiveProps) {
   });
 
   return (
-
-
     <group ref={groupRef}>
       {/* Can */}
       <group rotation={[0, 0, 0.5]}>
@@ -151,7 +154,8 @@ export default function Scene({ sentence, textureUrl }: SkyDiveProps) {
       </group>
 
       {/* Clouds */}
-      <Clouds ref={cloudsRef}>
+      {/* ✅ 2. Passiamo la stringa direttamente. Risolve l'errore di TypeScript. */}
+      <Clouds ref={cloudsRef} texture="/textures/cloud.png" material={THREE.MeshLambertMaterial}>
         <Cloud ref={cloud1Ref} bounds={[10, 20, 2]} opacity={1} />
         <Cloud ref={cloud2Ref} bounds={[10, 10, 2]} />
       </Clouds>
@@ -162,10 +166,9 @@ export default function Scene({ sentence, textureUrl }: SkyDiveProps) {
       </group>
 
       {/* Lights */}
-      <Environment preset="warehouse" />
+      <Environment path='/hdr/' files="warehouse.hdr" />
       <directionalLight intensity={0.5} position={[0, 1, 1]} />
     </group>
-
   );
 }
 
