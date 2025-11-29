@@ -35,7 +35,7 @@ export function SceneContent({ drops }: { drops: DropData[] }) {
   const groupRef = useRef<Group>(null!);
   const scroll = useScroll();
   const sectionHeight = 12;
-  const totalContentHeight = (drops.length - 0.5) * sectionHeight;
+  const totalContentHeight = (drops.length - 0.3) * sectionHeight;
 
   // ✅ Usa l'hook per la responsività
   const isDesktop = useIsDesktop();
@@ -47,7 +47,7 @@ export function SceneContent({ drops }: { drops: DropData[] }) {
 
   // Desktop: posizione y originale
   // Mobile: sposta più in basso per adattarsi alla metà inferiore dello schermo
-  const showcaseYPos = -2.5;
+  const showcaseYPos = -3.5;
 
   useFrame(() => {
     if (groupRef.current) {

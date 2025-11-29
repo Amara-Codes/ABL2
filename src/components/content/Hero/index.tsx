@@ -16,6 +16,7 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 // Import the specific types needed, not the whole HeroContent slice
 import type { HeroContent } from "@/types";
 
+
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 // Define a more accurate type for the props this component receives.
@@ -90,23 +91,33 @@ const Hero = ({ content }: HeroProps): JSX.Element => {
 
       <div className="grid">
         <div className="grid h-screen place-items-center">
-          <div className="grid auto-rows-min place-items-center text-center">
-            <h1 id="hero-title" className="hero-header text-7xl font-black uppercase leading-[.8] text-secondary md:text-[9rem] lg:text-[13rem]">
+          <div className="hidden lg:grid auto-rows-min place-items-center text-center">
+            <h1 id="hero-title" className="hero-header text-7xl font-black uppercase leading-[.8] text-secondary text-[13rem] hidden lg:block">
               <TextSplitter
                 text={heading[0]?.text || ""}
                 wordDisplayStyle="block"
                 className="hero-header-word font-fatboy"
               />
             </h1>
-            <div className="hero-subheading mt-16 text-5xl font-semibold text-[#0B3848] lg:text-6xl">
+            <div className="hero-subheading mt-16 text-5xl font-semibold">
               <span className="text-white">{subheading[0]?.text}</span>
             </div>
-            <div className="mt-4 hero-body text-2xl font-normal text-[#0B3848]">
+            <div className="mt-4 hero-body text-2xl font-normal">
               <span className="text-white">{body[0]?.text}</span>
             </div>
-            {/* The buttonLink prop in your Button component might expect a string, not an object.
-                If it expects just the URL, this is correct. If it expects the whole object, change it to buttonLink={button_link} */}
 
+
+          </div>
+          <div className="grid auto-rows-min place-items-center text-center lg:hidden">
+            <h1 className="font-fatboy text-6xl uppercase leading-[1] text-black">
+              {heading[0]?.text}
+            </h1>
+            <div className="mt-16 text-5xl font-semibold">
+              <span className="text-white">{subheading[0]?.text}</span>
+            </div>
+            <div className="mt-4 text-2xl font-normal">
+              <span className="text-white">{body[0]?.text}</span>
+            </div>
           </div>
         </div>
 
@@ -118,20 +129,40 @@ const Hero = ({ content }: HeroProps): JSX.Element => {
             width={800}
             height={600}
           />
-          <div className="max-w-[90%] mx-auto lg:max-w-none">
-            <h2 className="text-side-heading text-balance text-4xl font-black uppercase text-white lg:text-8xl">
+          <div className="mx-auto hidden lg:block">
+            <h2 className="text-side-heading text-balance font-black uppercase text-white text-8xl">
               <TextSplitter text={second_heading[0]?.text || ""} />
             </h2>
+        
             <div className="text-side-body mt-4 max-w-xl text-balance text-xl font-normal text-white">
               <span className="">{second_body[0]?.text}</span>
             </div>
 
-            <div className="mt-8 lg:mt-16 py-8 text-center lg:text-left">
+            <div className="mt-16 py-8 text-left">
 
               <Button
                 buttonLink={button.url}
                 buttonText={button.label}
                 className="hero-button mt-12"
+                type={button.type === "ext" ? "ext" : "int"}
+              />
+            </div>
+          </div>
+          <div className="max-w-[90%] mx-auto block lg:hidden">
+      
+            <h2 className="text-balance font-black uppercase text-white text-4xl">
+              {second_heading[0]?.text}
+            </h2>
+            <div className="mt-4 max-w-xl text-balance text-xl font-normal text-white">
+              <span className="">{second_body[0]?.text}</span>
+            </div>
+
+            <div className="mt-8 py-8 text-center">
+
+              <Button
+                buttonLink={button.url}
+                buttonText={button.label}
+                className="mt-12"
                 type={button.type === "ext" ? "ext" : "int"}
               />
             </div>

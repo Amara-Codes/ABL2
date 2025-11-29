@@ -106,7 +106,7 @@ export default function BeerClient({ beer }: { beer: BeerApiResponse }) {
                                 autoRotate
                                 autoRotateSpeed={2.5}
                             />
-                            <Environment preset="warehouse" />
+                            <Environment  path='/hdr/' files="warehouse.hdr" />
 
                             <directionalLight intensity={1} position={[3, 1, 1]} />
                         </View>

@@ -8,11 +8,11 @@ type Props = {};
 
 export default function Footer({ }: Props) {
   return (
-    <footer className="bg-black">
-      <div className="relative mx-auto flex flex-col w-full max-w-6xl justify-center px-4 pt-8 pb-4">
+    <footer className="bg-black h-screen lg:h-auto">
+      <div className="relative mx-auto flex flex-col w-full max-w-6xl justify-center px-4 pt-8 pb-4 h-full">
         <div className="w-full grid md:grid-cols-2 lg:grid-cols-3">
           <ABLLogo />
-          <div className="flex flex-col items-center p-4 mt-12 lg:mt-0">
+          <div className="flex flex-col items-center p-4 mt-32 lg:mt-8">
             <Link href="/" className="text-center text-lg font-fatboy hover:underline text-primary hover:text-white transition-colors duration-700">
               Home
             </Link>
@@ -26,7 +26,7 @@ export default function Footer({ }: Props) {
               Our Beers
             </Link>
           </div>
-          <div className="flex flex-col items-center p-4">
+          <div className="flex flex-col items-center p-4 lg:mt-8">
             <Link href="/blog" className="text-center text-lg font-fatboy hover:underline text-primary hover:text-white transition-colors duration-700">
               Blog
             </Link>
@@ -41,6 +41,8 @@ export default function Footer({ }: Props) {
             </Link>
           </div>
         </div>
+        <div className="flex flex-col h-full justify-end pt-8">
+
           <div className="w-full grid grid-cols-4 mt-16 max-w-2xl mx-auto">
 
 
@@ -68,6 +70,7 @@ export default function Footer({ }: Props) {
           </div>
 
           <p className="text-center text-sm text-white mt-8">{new Date().getFullYear()} Amara Beer Lab. All rights reserved.</p>
+        </div>
       </div>
     </footer>
   );

@@ -350,7 +350,7 @@ const Carousel = ({ content, dropId }: CarouselSlideContent & { dropId?: string 
               textureUrl={currentSlide.textureUrl}
             />
           </Center>
-          <Environment preset="warehouse" />
+          <Environment path='/hdr/' files="warehouse.hdr" />
           <directionalLight intensity={0.5} position={[0, 1, 1]} />
         </View>
 
