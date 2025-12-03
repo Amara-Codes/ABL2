@@ -32,7 +32,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     {
       url: 'https://amarabeerlab.com',
       lastModified: new Date(),
-      changeFrequency: "yearly",
+      changeFrequency: "daily",
       priority: 1,
     },
     {
@@ -44,7 +44,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     {
       url: 'https://amarabeerlab.com/beers',
       lastModified: new Date(),
-      changeFrequency: "monthly",
+      changeFrequency: "weekly",
       priority: 0.8,
     },
     {
@@ -56,13 +56,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     {
       url: 'https://amarabeerlab.com/lab',
       lastModified: new Date(),
-      changeFrequency: "monthly",
+      changeFrequency: "weekly",
       priority: 0.8,
     },
     {
       url: 'https://amarabeerlab.com/blog',
       lastModified: new Date(),
-      changeFrequency: "monthly",
+      changeFrequency: "daily",
       priority: 0.8,
     },
 
@@ -81,25 +81,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     {
       url: 'https://amarabeerlab.com/blog/articles',
       lastModified: new Date(),
-      changeFrequency: "monthly",
+      changeFrequency: "daily",
       priority: 0.7,
     },
     {
       url: 'https://amarabeerlab.com/blog/activities',
       lastModified: new Date(),
-      changeFrequency: "monthly",
+      changeFrequency: "daily",
       priority: 0.7,
     },
     {
       url: 'https://amarabeerlab.com/blog/news',
       lastModified: new Date(),
-      changeFrequency: "monthly",
+      changeFrequency: "daily",
       priority: 0.7,
     },
     {
       url: 'https://amarabeerlab.com/blog/gallery',
       lastModified: new Date(),
-      changeFrequency: "monthly",
+      changeFrequency: "daily",
       priority: 0.7,
     },
   ];
@@ -111,7 +111,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const articleRoutes: MetadataRoute.Sitemap = articles.map((article) => ({
     url: `https://amarabeerlab.com/blog/${article.attributes.Slug.replace(/\s+/g, "-").toLowerCase()}`,
     lastModified: new Date(article.attributes.updatedAt),
-    changeFrequency: "weekly",
+    changeFrequency: "daily",
     priority: 0.6,
   }));
 
