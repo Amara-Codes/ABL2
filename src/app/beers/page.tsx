@@ -1,58 +1,42 @@
-// src/app/beers/page.tsx
-
 import { Suspense } from "react";
 import type { Metadata } from "next";
-import type { DropData } from "@/types"; // Adjust path if needed
-import BeersClient from "@/components/BeersClient"; // Your new client component
-import type { BeerData } from "@/types"; // Adjust path if needed
-// ============================================================================
-// Server-Side Data Fetching
-// ============================================================================
+import BeerGrid from "@/components/BeerGrid"; // Il componente PLP creato nel passo precedente
+import BeerGridSkeleton from "@/components/skeletons/templates/skeleton-beer-grid";
+
 const STRAPI_URL = process.env.NEXT_PUBLIC_AMARA_STRAPI_URL || "http://127.0.0.1:1337";
 
-async function fetchDrops(): Promise<DropData[]> {
+// ============================================================================
+// 1. Generic Server-Side Data Fetcher
+// ============================================================================
+/**
+ * Funzione generica per chiamare Strapi.
+ * @param endpoint - La collezione da chiamare (es. "beers", "categories", "drops")
+ * @param queryParams - Stringa opzionale per filtri e populate (es. "populate=*")
+ */
+async function fetchData(endpoint: string, queryParams: string = "") {
   try {
-    const response = await fetch(
-      `${STRAPI_URL}/api/drops?sort=createdAt:desc&pagination[limit]=5&populate[beers][populate]=label`,
-      {
-        // Use 'no-store' for fresh data on every request, 
-        // or 'revalidate' for ISR
-        cache: 'no-store'
-      }
-    );
-    const data = await response.json();
+    // Costruiamo l'URL completo
+    const url = `${STRAPI_URL}/api/${endpoint}?${queryParams}`;
+    
+    const response = await fetch(url, {
+      cache: 'no-store', // Dati sempre freschi
+      // next: { revalidate: 3600 } // Alternativa: Cache per 1 ora
+    });
 
-    if (!data.data || data.data.length === 0) {
-      return [];
+    if (!response.ok) {
+      throw new Error(`Error fetching ${endpoint}: ${response.statusText}`);
     }
 
-    // Format the data right here on the server
-    const formattedDrops: DropData[] = data.data.map((drop: any) => {
-      const beerList = drop.attributes.beers.data || [];
-      const formattedBeers: BeerData[] = beerList.map((beer: any) => {
-        const labelUrl = beer.attributes?.label?.data?.attributes?.url || "";
-        const finalUrl = labelUrl.startsWith("http")
-          ? labelUrl
-          : `${STRAPI_URL}${labelUrl}`;
-        return { id: beer.id, imageUrl: finalUrl, name: beer.attributes.name };
-      });
-      return {
-        id: drop.id,
-        name: drop.attributes.name,
-        description: drop.attributes.description,
-        beers: formattedBeers,
-      };
-    });
-    return formattedDrops;
-
+    const json = await response.json();
+    return json.data || []; // Ritorniamo l'array 'data' o un array vuoto
   } catch (error) {
-    console.error("Failed to fetch drops:", error);
-    return []; // Return an empty array on error
+    console.error(`Failed to fetch ${endpoint}:`, error);
+    return [];
   }
 }
 
 // ============================================================================
-// Metadata (Now possible in a Server Component)
+// Metadata
 // ============================================================================
 export const metadata: Metadata = {
   title: "Craft Beer Brewery in Siem Reap - Amara Beer Lab | Our Craft Beers",
@@ -63,18 +47,38 @@ export const metadata: Metadata = {
 // The Page Component (Server)
 // ============================================================================
 export default async function BeersPage() {
-  // Fetch data directly on the server
-  const drops = await fetchDrops();
+  // 2. Eseguiamo le chiamate in parallelo per massimizzare la velocità
+  // Usiamo la nuova funzione `fetchData` per tutto
+  const [beers, categories, drops] = await Promise.all([
+    fetchData("beers", "populate=*&sort=createdAt:desc"), // Carica birre con immagini e relazioni
+    fetchData("categories", "sort=name:asc"),             // Carica categorie
+    fetchData("drops", "sort=createdAt:desc"),            // Carica drops
+  ]);
 
   return (
-    <div className="h-screen w-screen">
-      {/* Use Suspense for a loading fallback while the client 
-          component and its 3D assets load. 
-      */}
-      <Suspense fallback={<div className="h-screen w-screen flex items-center justify-center text-primary">Loading 3D Scene...</div>}>
-        {/* Pass the server-fetched data as props to the Client Component */}
-        <BeersClient drops={drops} />
-      </Suspense>
-    </div>
+    <main className="min-h-screen bg-black text-white p-4 lg:p-8">
+      <div className="max-w-7xl mx-auto">
+        
+        {/* Header */}
+        <div className="mb-12 text-center max-w-3xl mx-auto">
+            <h1 className="text-5xl md:text-7xl font-fatboy text-white mb-4">
+                Our <span className="text-secondary">Beers</span>
+            </h1>
+            <p className="text-white max-w-7xl text-lg">
+                Explore our diverse range of craft beers, each brewed with passion and precision to deliver unique flavors and unforgettable experiences.
+            </p>
+        </div>
+
+        {/* 3. Passiamo i dati grezzi al Client Component che gestisce la logica UI */}
+        <Suspense fallback={<BeerGridSkeleton />}>
+          <BeerGrid 
+            beers={beers} 
+            categories={categories} 
+            drops={drops} 
+          />
+        </Suspense>
+
+      </div>
+    </main>
   );
 }

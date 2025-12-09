@@ -5,7 +5,7 @@ import BackButton from '@/components/BackButton';
 export default function GenericWrapper({ contentType, articlesPerPage }: GenericWrapperProps) {
   return (
     <div
-      className="flex flex-col small:flex-row small:items-start p-8 content-container mt-32"
+      className="flex flex-col small:flex-row small:items-start p-4 lg:p-8 content-container mt-32"
       data-testid={`${contentType}-container`}
     >
       <div className="w-full max-w-6xl mx-auto">

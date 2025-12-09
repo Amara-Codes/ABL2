@@ -19,6 +19,7 @@ const firstCta: CtaContent = {
     ctaClasses: "custom-cta-class bg-black p-4 lg:p-12 rounded-lg lg:border-secondary lg:border-2",
     titleClasses: "custom-title-class text-white",
     paragraphClasses: "custom-paragraph-class text-white",
+  bgColorClass: "bg-lime-900",
     title: {
       type: "heading2",
       text: "Discover where we source and how we use our ingredients",
@@ -41,7 +42,7 @@ const firstCta: CtaContent = {
         height: 1080,
       },
       alt: "Our Ingredients Background",
-      url: "/images/lab/cta-1.gif",
+      url: "/images/lab/cta-1.png",
       id: "cta-bg-001",
     },
 
@@ -51,9 +52,10 @@ const firstCta: CtaContent = {
 
 const secondCta: CtaContent = {
   content: {
-    ctaClasses: "custom-cta-class bg-indigo-200",
+    ctaClasses: "custom-cta-class bg-indigo-200 lg:pb-8",
     titleClasses: "custom-title-class",
     paragraphClasses: "custom-paragraph-class",
+    bgColorClass: "bg-cyan-800",
     title: {
       type: "heading2",
       text: "Are you curious about how a brewery works?",

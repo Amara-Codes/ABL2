@@ -8,6 +8,7 @@ import { View, OrbitControls, Environment, PerspectiveCamera } from "@react-thre
 import * as THREE from 'three';
 import BackButton from "@/components/BackButton";
 import { AnimatedBeerCan } from "@/components/3d/AnimatedBeerCan";
+import Link from "next/link";
 
 // Importa il carosello e i tipi necessari
 import Carousel from "@/components/content/Carousel";
@@ -82,10 +83,10 @@ export default function BeerClient({ beer }: { beer: BeerApiResponse }) {
 
     return (
         <>
-            <main className="min-h-screen text-white p-8">
+            <main className="min-h-screen bg-black text-white p-4 lg:p-8">
                 <div className="max-w-6xl mx-auto">
                     {/* HEADER */}
-                    <div className="flex flex-col lg:flex-row gap-y-4 justify-between lg:items-center lg:mb-16">
+                    <div className="flex flex-col lg:flex-row lg:gap-y-4 lg:justify-between lg:items-center lg:mb-16">
                         <div className="hidden lg:block">
                             <BackButton destination='/beers' />
                         </div>
@@ -93,7 +94,7 @@ export default function BeerClient({ beer }: { beer: BeerApiResponse }) {
                             <span className="text-secondary"> {beer.attributes?.name || "Unknown Beer"} - </span>
                             <span className="text-secondary">ABV: {beer.attributes?.abv || 0}%</span>
                         </h1>
-                        <p className="px-8 py-4 h-fit w-fit mx-auto hidden lg:flex items-center rounded-md bg-primary/10 font-medium text-primary hover:bg-secondary/10 hover:text-secondary hover:ring-2 hover:ring-secondary transition-all duration-500">{beer.attributes?.category?.data?.attributes?.name || "Unknown Category"}</p>
+                        <Link href={`/beers/category/${beer.attributes?.category?.data?.attributes?.name.replace(/\s+/g, '-').toLowerCase() || "/beers"}`} className="px-4 lg:px-8 py-2 lg:py-4 h-fit w-fit mx-auto lg:flex items-center rounded-md bg-primary/10 font-medium text-primary hover:bg-secondary/10 hover:text-secondary hover:ring-2 hover:ring-secondary transition-all duration-500">{beer.attributes?.category?.data?.attributes?.name || "Unknown Category"}</Link>
                     </div>
 
                     {/* CONTENT GRID */}

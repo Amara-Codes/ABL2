@@ -91,7 +91,7 @@ const BigTextData: BigTextContent = {
 
 const CtaData: CtaContent = {
   content: {
-    ctaClasses: "custom-cta-class bg-indigo-200 text-white lg:py-12",
+    ctaClasses: "custom-cta-class bg-indigo-200 text-white lg:py-12 pb:32 lg:pb-0",
     titleClasses: "custom-title-class",
     paragraphClasses: "custom-paragraph-class font-medium",
     title: {

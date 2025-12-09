@@ -75,6 +75,7 @@ export interface CtaContent {
     content: {
       ctaClasses?: string;
       titleClasses?: string;
+      bgColorClass?: string;
       paragraphClasses?: string;
         title: RichTextNode;
         paragraph: RichTextNode;

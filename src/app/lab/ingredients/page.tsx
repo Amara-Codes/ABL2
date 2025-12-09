@@ -1,7 +1,8 @@
 import { Metadata } from "next";
-import { InteractiveCambodianMapContent, BigTextContent } from "@/types";
+import { InteractiveCambodianMapContent, BigTextContent, CtaContent } from "@/types";
 import InteractiveCambodianMap from "@/components/InteractiveCambodianMap";
 import BigText from "@/components/content/BigText";
+import Cta from "@/components/content/Cta";
 
 export const metadata: Metadata = {
   title: "Craft Beer Brewery in Siem Reap - Amara Beer Lab | The Lab Ingredients",
@@ -62,6 +63,42 @@ const BigTextData: BigTextContent = {
   },
 };
 
+const CtaData: CtaContent = {
+  content: {
+    ctaClasses: "custom-cta-class bg-indigo-200 text-white lg:py-12",
+    titleClasses: "custom-title-class",
+    paragraphClasses: "custom-paragraph-class font-medium",
+    bgColorClass: "bg-amber-700",
+    title: {
+      type: "heading2",
+      text: "Discover Our Khmer Ingredient Beers",
+      direction: "ltr",
+    },
+    paragraph: {
+      type: "paragraph",
+      text: "Every drop we release highlights unique ingredients sourced from Cambodia and beyond. Discover how we use these special components to craft beers that tell a story of place and passion.",
+      direction: "ltr",
+    },
+    button: {
+      label: "Our Khmer Beers",
+      type: "int",
+      url: "/beers/khmer-ingredients",
+    },
+    background_image: {
+      dimensions: {
+        width: 1920,
+
+        height: 1080,
+      },
+      alt: "Lab Background",
+      url: "/images/lab/ingredients/cta-1.png",
+      id: "cta-bg-001",
+    },
+
+    layout: "imageLeft", // Options: 'centered', 'imageLeft', 'imageRight'
+  },
+};
+
 
 export default function LabIngredients() {
   return (
@@ -107,6 +144,9 @@ export default function LabIngredients() {
               <p className="text-4xl font-bold">Italian Yeast</p>
             </li>
           </ul>
+        </div>
+        <div className="w-full mt-16">
+          <Cta content={CtaData.content} />
         </div>
       </div>
     </div>

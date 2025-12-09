@@ -50,12 +50,12 @@ const Paragraph: React.FC<BlogPostParagraphElement> = ({
                   </h1>
                 ),
                 h2: ({ children, ...props }) => (
-                  <h2 className="text-3xl font-semibold text-white text-center" {...props}>
+                  <h2 className="text-3xl my-6 font-semibold text-white text-center" {...props}>
                     {children}
                   </h2>
                 ),
                 h3: ({ children, ...props }) => (
-                  <h3 className="text-2xl font-bold text-primary" {...props}>
+                  <h3 className="text-2xl my-4 font-bold text-primary" {...props}>
                     {children}
                   </h3>
                 ),
@@ -65,7 +65,7 @@ const Paragraph: React.FC<BlogPostParagraphElement> = ({
                   </h4>
                 ),
                 p: ({ children, ...props }) => (
-                  <p className="text-base leading-relaxed text-white" {...props}>
+                  <p className="text-base leading-relaxed text-white mt-8 lg:mt-0" {...props}>
                     {children}
                   </p>
                 ),
@@ -76,6 +76,11 @@ const Paragraph: React.FC<BlogPostParagraphElement> = ({
                   >
                     {children}
                   </strong>
+                ),
+                ul: ({ children, ...props }) => (
+                  <ul className="list-disc ps-8 my-4" {...props}>
+                    {children}
+                  </ul>
                 ),
                 li: ({ children, ...props }) => (
                   <li className="text-white" {...props}>

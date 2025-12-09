@@ -1,5 +1,8 @@
 User-Agent: *
 Allow: /
-
+Disallow: /mockup
+Disallow: /secret-gift
+Disallow: /gift-check
+Disallow: /game
 
 Sitemap: https://amarabeerlab.com/sitemap.xml

@@ -30,81 +30,85 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // 1. Aggiungi le tue pagine statiche
   const staticRoutes: MetadataRoute.Sitemap = [
     {
-      url: 'https://amarabeerlab.com',
+      url: "https://amarabeerlab.com",
       lastModified: new Date(),
       changeFrequency: "daily",
       priority: 1,
     },
     {
-      url: 'https://amarabeerlab.com/contacts',
+      url: "https://amarabeerlab.com/contacts",
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: 'https://amarabeerlab.com/beers',
+      url: "https://amarabeerlab.com/beers",
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.8,
     },
     {
-      url: 'https://amarabeerlab.com/brewery',
+      url: "https://amarabeerlab.com/khmer-ingredients",
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
+      url: "https://amarabeerlab.com/brewery",
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: 'https://amarabeerlab.com/lab',
+      url: "https://amarabeerlab.com/lab",
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.8,
     },
     {
-      url: 'https://amarabeerlab.com/blog',
+      url: "https://amarabeerlab.com/blog",
       lastModified: new Date(),
       changeFrequency: "daily",
       priority: 0.8,
     },
 
     {
-      url: 'https://amarabeerlab.com/lab/ingredients',
+      url: "https://amarabeerlab.com/lab/ingredients",
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.7,
     },
     {
-      url: 'https://amarabeerlab.com/lab/brew-with-us',
+      url: "https://amarabeerlab.com/lab/brew-with-us",
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.7,
     },
     {
-      url: 'https://amarabeerlab.com/blog/articles',
+      url: "https://amarabeerlab.com/blog/articles",
       lastModified: new Date(),
       changeFrequency: "daily",
       priority: 0.7,
     },
     {
-      url: 'https://amarabeerlab.com/blog/activities',
+      url: "https://amarabeerlab.com/blog/activities",
       lastModified: new Date(),
       changeFrequency: "daily",
       priority: 0.7,
     },
     {
-      url: 'https://amarabeerlab.com/blog/news',
+      url: "https://amarabeerlab.com/blog/news",
       lastModified: new Date(),
       changeFrequency: "daily",
       priority: 0.7,
     },
     {
-      url: 'https://amarabeerlab.com/blog/gallery',
+      url: "https://amarabeerlab.com/blog/gallery",
       lastModified: new Date(),
       changeFrequency: "daily",
       priority: 0.7,
     },
   ];
-
-  // 2. Fetch e mappa gli Articoli
 
   // eslint-disable-next-line
   const articles: any[] = await fetchStrapiData("articles"); // Sostituisci 'articoli' con il tuo endpoint
@@ -115,8 +119,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }));
 
-  // 3. Fetch e mappa i Prodotti
-
   // eslint-disable-next-line
   const products: any[] = await fetchStrapiData("beers"); // Sostituisci 'prodotti' con il tuo endpoint
   const productRoutes: MetadataRoute.Sitemap = products.map((product) => ({
@@ -126,6 +128,29 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }));
 
-  // 4. Combina tutto e ritorna
-  return [...staticRoutes, ...articleRoutes, ...productRoutes];
+  // eslint-disable-next-line
+  const categories: any[] = await fetchStrapiData("categories");
+  const categoryRoutes: MetadataRoute.Sitemap = categories.map((category) => ({
+    url: `https://amarabeerlab.com/beers/category/${category.attributes.name.replace(/\s+/g, "-").toLowerCase()}`,
+    lastModified: new Date(category.attributes.updatedAt),
+    changeFrequency: "daily",
+    priority: 0.7,
+  }));
+
+  // eslint-disable-next-line
+  const drops: any[] = await fetchStrapiData("drops");
+  const dropRoutes: MetadataRoute.Sitemap = drops.map((drop) => ({
+    url: `https://amarabeerlab.com/beers/drop/${drop.attributes.name.replace(/\s+/g, "-").toLowerCase()}`,
+    lastModified: new Date(drop.attributes.updatedAt),
+    changeFrequency: "daily",
+    priority: 0.7,
+  }));
+
+  return [
+    ...staticRoutes,
+    ...articleRoutes,
+    ...productRoutes,
+    ...categoryRoutes,
+    ...dropRoutes,
+  ];
 }

@@ -1,4 +1,4 @@
-// app/beers/[name]/page.tsx
+// app/beer/[name]/page.tsx
 
 import { Metadata } from "next";
 import BeerClient from "@/components/BeerClient";

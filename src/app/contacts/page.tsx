@@ -13,7 +13,7 @@ export default function Contacts() {
 
                 <h1 className="font-fatboy text-8xl text-primary h-1/2 flex items-end">Contacts</h1>
             </div>
-            <div className="flex flex-col lg:flex-row w-full justify-between lg:px-16 px-8 gap-8 mb-16">
+            <div className="flex flex-col lg:flex-row w-full justify-between lg:px-16 px-4 gap-8 mb-16">
                 <div className="w-full lg:w-1/2 h-[500px] border-0 rounded-lg overflow-hidden">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3881.8937814439364!2d103.8549970747992!3d13.356880306314844!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3110173824530e15%3A0x58989ffc8660d3b!2sAmara%20Beer%20Lab!5e0!3m2!1sit!2skh!4v1758276000174!5m2!1sit!2skh"
                         width="100%"
