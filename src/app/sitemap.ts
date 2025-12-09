@@ -48,7 +48,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     },
     {
-      url: "https://amarabeerlab.com/khmer-ingredients",
+      url: "https://amarabeerlab.com/beers/khmer-ingredients",
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.8,
