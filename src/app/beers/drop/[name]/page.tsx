@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import type { Metadata } from "next"; // ✅ 1. Importiamo i tipi per i metadata
 import BeerGrid from "@/components/BeerGrid";
+import BeerGridSkeleton from "@/components/skeletons/templates/skeleton-beer-grid";
 
 const STRAPI_URL = process.env.NEXT_PUBLIC_AMARA_STRAPI_URL || "http://127.0.0.1:1337";
 
@@ -89,7 +90,7 @@ export default async function DropPage({ params }: Props) {
                 </div>
 
                 {/* GRID (Filtri nascosti) */}
-                <Suspense fallback={<div className="text-white text-center py-20">Loading limited edition beers...</div>}>
+                <Suspense fallback={<BeerGridSkeleton />}>
                     <BeerGrid 
                         beers={beerList} 
                         hideFilters={true} 

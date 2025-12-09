@@ -1,32 +1,34 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import BeerCard from "@/components/BeerCard";
+import BeerCard from "@/components/BeerCard"; // Assicurati che il path sia corretto
 import { Filter, ArrowUpDown, X, Check, Leaf } from "lucide-react";
 
 // --- TIPI ---
-// Rendiamo Category e Drop opzionali o gestiti esternamente se siamo in una pagina specifica
 type Category = { id: number; attributes: { name: string } };
 type Drop = { id: number; attributes: { name: string } };
+
 type Beer = {
   id: number;
   attributes: {
     name: string;
     abv: number;
     createdAt: string;
-    category: { data: Category };
-    drop: { data: Drop | null };
-    label: { data: { attributes: { url: string } } };
-    rendering: { data: { attributes: { url: string } } };
+    category: { data: Category | null }; // Può essere null
+    drop: { data: Drop | null };         // Può essere null
+    // Label e Rendering sono opzionali/nullabili in Strapi spesso
+    label?: { data?: { attributes: { url: string } } };
+    rendering?: { data?: { attributes: { url: string } } };
     isKhmerIngredients: boolean;
+    slug?: string; // È meglio avere uno slug reale, altrimenti usiamo il nome
   };
 };
 
 type Props = {
   beers: Beer[];
-  categories?: Category[]; // Ora opzionale
-  drops?: Drop[];          // Ora opzionale
-  hideFilters?: boolean;   // NUOVA PROP
+  categories?: Category[];
+  drops?: Drop[];
+  hideFilters?: boolean; // Se true, nasconde il bottone filtri ma mantiene il sort
 };
 
 const STRAPI_URL = process.env.NEXT_PUBLIC_AMARA_STRAPI_URL || "http://127.0.0.1:1337";
@@ -35,7 +37,7 @@ export default function BeerGrid({
     beers = [], 
     categories = [], 
     drops = [], 
-    hideFilters = false // Default a false (mostra filtri)
+    hideFilters = false 
 }: Props) {
   
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -46,14 +48,15 @@ export default function BeerGrid({
     id: number | null;
   }>({ type: "all", id: null });
 
-  // --- LOGICA ---
+  // --- LOGICA MEMOIZZATA ---
   const filteredAndSortedBeers = useMemo(() => {
     if (!beers || !Array.isArray(beers)) return [];
 
     let result = [...beers];
 
-    // Se i filtri sono nascosti, assumiamo che i dati arrivino già filtrati dal server
-    // Applichiamo i filtri client solo se hideFilters è false
+    // 1. FILTRAGGIO
+    // Applichiamo i filtri client solo se NON sono nascosti.
+    // Se hideFilters è true, assumiamo che il parent component abbia già passato i dati giusti.
     if (!hideFilters) {
         if (activeFilter.type === "category" && activeFilter.id) {
             result = result.filter((b) => b.attributes.category?.data?.id === activeFilter.id);
@@ -64,7 +67,7 @@ export default function BeerGrid({
         }
     }
 
-    // L'ordinamento rimane sempre utile
+    // 2. ORDINAMENTO (Funziona sempre, anche con hideFilters=true)
     result.sort((a, b) => {
       const dateA = a.attributes.createdAt ? new Date(a.attributes.createdAt).getTime() : 0;
       const dateB = b.attributes.createdAt ? new Date(b.attributes.createdAt).getTime() : 0;
@@ -74,7 +77,9 @@ export default function BeerGrid({
     return result;
   }, [beers, activeFilter, sortOrder, hideFilters]);
 
+  // Gestione click filtri
   const handleFilterSelect = (type: "category" | "drop" | "khmer", id: number | null) => {
+    // Toggle: se clicco sullo stesso filtro attivo, lo resetto
     if (activeFilter.type === type && activeFilter.id === id) {
         setActiveFilter({ type: "all", id: null });
     } else {
@@ -83,11 +88,11 @@ export default function BeerGrid({
   };
 
   return (
-    <div>
+    <div className="w-full">
       {/* --- TOP BAR --- */}
-      <div className={`flex justify-between items-center mb-8 sticky top-4 z-30 bg-black/80 backdrop-blur-md p-4 rounded-xl   ${hideFilters ? '' : 'border border-gray-800 shadow-lg'}`}>
+      <div className={`flex justify-between items-center mb-8 sticky top-4 z-30 bg-black/80 backdrop-blur-md p-4 rounded-xl ${!hideFilters ? 'border border-gray-800 shadow-lg' : ''}`}>
         
-        {/* Nascondiamo il bottone Filtri se hideFilters è true */}
+        {/* Sinistra: Bottone Filtri (Visibile solo se !hideFilters) */}
         {!hideFilters ? (
             <button 
                 onClick={() => setIsFilterOpen(true)}
@@ -99,49 +104,52 @@ export default function BeerGrid({
                 </span>
             </button>
         ) : (
-            // Placeholder vuoto per mantenere allineamento Sort a destra
+            // Div vuoto per mantenere il Sort a destra (Flexbox space-between)
             <div />
         )}
 
-        {/* Sort rimane sempre visibile */}
+        {/* Destra: Sort (Sempre visibile) */}
         <div className="flex items-center gap-2">
             <span className="text-gray-500 text-xs uppercase hidden sm:inline">Sort by</span>
             <div className="relative">
                 <select
                     value={sortOrder}
                     onChange={(e) => setSortOrder(e.target.value as "newest" | "oldest")}
-                    className="bg-transparent text-white text-sm font-bold focus:outline-none cursor-pointer appearance-none pr-8 text-center"
+                    className="bg-transparent text-white text-sm font-bold focus:outline-none cursor-pointer appearance-none pr-8 text-right sm:text-center"
                 >
-                    <option value="newest" className="bg-gray-800 p-4">Newest</option>
-                    <option value="oldest" className="bg-gray-800">Oldest</option>
+                    <option value="newest" className="bg-gray-900">Newest</option>
+                    <option value="oldest" className="bg-gray-900">Oldest</option>
                 </select>
                 <ArrowUpDown className="w-4 h-4 text-gray-400 absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none" />
             </div>
         </div>
       </div>
 
-      {/* --- FILTER MODAL (Renderizzato solo se !hideFilters) --- */}
+      {/* --- FILTER MODAL (Solo se !hideFilters) --- */}
       {!hideFilters && isFilterOpen && (
         <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
-            {/* ... (Codice Modale invariato, tanto non viene renderizzato se hideFilters=true) ... */}
+            {/* Backdrop */}
              <div 
                 className="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity"
                 onClick={() => setIsFilterOpen(false)}
             />
-            {/* Copia pure il contenuto del modale dal codice precedente qui dentro */}
-            {/* Per brevità, immagina che qui ci sia tutto il blocco del modale */}
+            
+            {/* Modal Content */}
              <div className="relative bg-gray-900 w-full max-w-lg rounded-t-2xl sm:rounded-2xl border border-gray-700 shadow-2xl overflow-hidden animate-in slide-in-from-bottom-10 fade-in duration-300">
+                
+                {/* Modal Header */}
                 <div className="flex justify-between items-center p-6 border-b border-gray-800 bg-gray-800/50">
                     <h2 className="text-xl font-fatboy text-white">Filter Beers</h2>
                     <button onClick={() => setIsFilterOpen(false)} className="text-gray-400 hover:text-white transition-colors">
                         <X className="w-6 h-6" />
                     </button>
                 </div>
-                {/* ... Contenuto filtri ... */}
-                <div className="p-6 space-y-8 max-h-[70vh] overflow-y-auto">
-                    {/* ... Special, Categories, Drops ... */}
-                    {/* Assicurati di includere tutto il contenuto del modale che avevi prima */}
-                     <div>
+
+                {/* Modal Body - Scrollable */}
+                <div className="p-6 space-y-8 max-h-[70vh] overflow-y-auto custom-scrollbar">
+                    
+                    {/* 1. Special Collections */}
+                    <div>
                         <h3 className="text-secondary text-xs font-bold uppercase tracking-wider mb-3">Special Collections</h3>
                         <div className="flex flex-wrap gap-2">
                             <button
@@ -158,7 +166,8 @@ export default function BeerGrid({
                             </button>
                         </div>
                     </div>
-                    {/* ... Categories Loop ... */}
+
+                    {/* 2. By Style (Categories) */}
                     {categories && categories.length > 0 && (
                         <div>
                             <h3 className="text-secondary text-xs font-bold uppercase tracking-wider mb-3">By Style</h3>
@@ -180,8 +189,9 @@ export default function BeerGrid({
                             </div>
                         </div>
                     )}
-                     {/* ... Drops Loop ... */}
-                      {drops && drops.length > 0 && (
+
+                    {/* 3. By Drop */}
+                    {drops && drops.length > 0 && (
                         <div>
                             <h3 className="text-secondary text-xs font-bold uppercase tracking-wider mb-3">By Drop</h3>
                             <div className="flex flex-wrap gap-2">
@@ -203,8 +213,9 @@ export default function BeerGrid({
                         </div>
                     )}
                 </div>
-                {/* ... Footer ... */}
-                 <div className="p-4 bg-gray-950 flex justify-between items-center gap-4">
+
+                {/* Modal Footer */}
+                 <div className="p-4 bg-gray-950 flex justify-between items-center gap-4 border-t border-gray-800">
                     <button 
                         onClick={() => setActiveFilter({ type: 'all', id: null })}
                         className="text-gray-400 text-sm hover:text-white underline px-4"
@@ -213,7 +224,7 @@ export default function BeerGrid({
                     </button>
                     <button 
                         onClick={() => setIsFilterOpen(false)}
-                        className="bg-secondary text-black font-fatboy px-8 py-3 rounded-lg hover:bg-secondary/80 transition-colors w-full sm:w-auto"
+                        className="bg-secondary text-black font-fatboy px-6 py-3 rounded-lg hover:bg-secondary/80 transition-colors w-full sm:w-auto"
                     >
                         Show Results ({filteredAndSortedBeers.length})
                     </button>
@@ -226,29 +237,43 @@ export default function BeerGrid({
       {filteredAndSortedBeers.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredAndSortedBeers.map((beer) => {
-                 // Logica immagine invariata
-                 const renderingUrl = beer.attributes.rendering?.data?.attributes?.url;
-                 const fullImageUrl = renderingUrl 
-                    ? (renderingUrl.startsWith("http") ? renderingUrl : `${STRAPI_URL}${renderingUrl}`)
-                    : "/labels/placeholder.png";
+                // Priorità Rendering > Label > Placeholder
+                // Nota: In Strapi spesso label/rendering possono essere null o undefined se non popolati
+                const renderingUrl = beer.attributes.rendering?.data?.attributes?.url;
+                const labelUrl = beer.attributes.label?.data?.attributes?.url;
+                const finalUrl = renderingUrl || labelUrl;
+
+                const fullImageUrl = finalUrl 
+                    ? (finalUrl.startsWith("http") ? finalUrl : `${STRAPI_URL}${finalUrl}`)
+                    : "/images/placeholder-rendering.png"; // Assicurati di avere questa immagine in public/
 
                 return (
                     <BeerCard
                         key={beer.id}
                         id={beer.id}
                         name={beer.attributes.name}
-                        category={beer.attributes.category?.data?.attributes?.name || "Uncategorized"}
+                        category={beer.attributes.category?.data?.attributes?.name || "Special"}
                         abv={beer.attributes.abv}
                         imageUrl={fullImageUrl}
-                        slug={beer.attributes.name}
+                        // Uso lo slug se c'è, altrimenti fallback sul nome pulito
+                        slug={beer.attributes.slug || beer.attributes.name} 
                         isKhmer={beer.attributes.isKhmerIngredients}
                     />
                 );
             })}
         </div>
       ) : (
+        // Empty State
         <div className="text-center py-20 bg-gray-900/30 rounded-xl border border-dashed border-gray-800">
             <p className="text-xl text-gray-400 font-fatboy mb-2">No beers found</p>
+            {!hideFilters && (
+                <button 
+                    onClick={() => setActiveFilter({ type: 'all', id: null })}
+                    className="text-secondary text-sm hover:underline"
+                >
+                    Clear filters
+                </button>
+            )}
         </div>
       )}
     </div>

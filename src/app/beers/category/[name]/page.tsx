@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import type { Metadata, ResolvingMetadata } from "next"; // ✅ 1. Importiamo i tipi
 import BeerGrid from "@/components/BeerGrid";
+import BeerGridSkeleton from "@/components/skeletons/templates/skeleton-beer-grid";
 
 const STRAPI_URL = process.env.NEXT_PUBLIC_AMARA_STRAPI_URL || "http://127.0.0.1:1337";
 
@@ -63,7 +64,7 @@ export default async function CategoryPage({ params }: Props) {
             <div className="min-h-[50vh] flex items-center justify-center bg-black text-white">
                 <div className="text-center">
                     <h1 className="text-3xl font-fatboy text-secondary mb-2">Category Not Found</h1>
-                    <p className="text-gray-400">We couldn't find the style you're looking for.</p>
+                    <p className="text-gray-400">We couldn&apos;t find the style you&apos;re looking for.</p>
                 </div>
             </div>
         );
@@ -89,7 +90,7 @@ export default async function CategoryPage({ params }: Props) {
                 </div>
 
                 {/* GRID (Filtri nascosti) */}
-                <Suspense fallback={<div className="text-white text-center py-20">Loading beers...</div>}>
+                <Suspense fallback={<BeerGridSkeleton />}>
                     <BeerGrid 
                         beers={beerList} 
                         hideFilters={true} // Nasconde il tasto filtri
