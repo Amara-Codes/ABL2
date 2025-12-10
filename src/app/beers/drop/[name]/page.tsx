@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         title: `${name} - Limited Release | Craft Beer Brewery in Siem Reap - Amara Beer Lab`,
         description: description || `Discover ${name}, a limited edition craft beer drop by Amara Beer Lab in Siem Reap.`,
         openGraph: {
-            title: `${name} | Limited Drop`,
+            title: `${name} | Limited Drop by Amara Beer Lab, Craft Brewery in Siem Reap`,
             description: description || `Don't miss out on ${name}, our latest limited release.`,
             url: `/beers/drop/${params.name}`,
             siteName: 'Amara Beer Lab',

@@ -202,7 +202,7 @@ export default function BubbleMenu({
         <div className="bubble bubble-logo logo-bubble" aria-label="Logo">
           <span className="logo-content">
             <Link href="/" onClick={forceMenuClose()}>
-              {typeof logo === 'string' ? <Image width={80} height={80} src={logo} alt="Logo" className="bubble-logo" /> : logo}
+              {typeof logo === 'string' ? <Image width={80} height={80} src={logo} alt="Logo" className="bubble-logo" priority={true} /> : logo}
             </Link>
           </span>
         </div>

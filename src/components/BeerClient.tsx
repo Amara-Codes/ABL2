@@ -7,12 +7,15 @@ import { useState, useEffect } from "react";
 import { View, OrbitControls, Environment, PerspectiveCamera } from "@react-three/drei";
 import * as THREE from 'three';
 import BackButton from "@/components/BackButton";
+import DesktopOnly from "@/lib/util/DesktopOnly";
+import Image from "next/image";
 import { AnimatedBeerCan } from "@/components/3d/AnimatedBeerCan";
 import Link from "next/link";
 
 // Importa il carosello e i tipi necessari
 import Carousel from "@/components/content/Carousel";
-import type { CarouselSlideContent } from "@/types";
+import Cta from "./content/Cta";
+import type { CarouselSlideContent, CtaContent } from "@/types";
 
 type BeerApiResponse = {
     id: number;
@@ -25,12 +28,16 @@ type BeerApiResponse = {
         label: {
             data: { attributes: { url: string; }; };
         };
+        rendering: {
+            data: { attributes: { url: string; }; };
+        };
         category: {
             data: { attributes: { name: string; }; }
         };
         drop: {
             data: {
                 id: number;
+               attributes: { name: string   }
             };
         };
     };
@@ -41,26 +48,30 @@ const PLACEHOLDER_IMAGE = '/labels/placeholder.png';
 
 // ✅ 2. Hook per rilevare il Desktop (sopra il componente o in un file utils)
 const useIsDesktop = () => {
-  const [isDesktop, setIsDesktop] = useState(false);
+    const [isDesktop, setIsDesktop] = useState(false);
 
-  useEffect(() => {
-    // Usiamo 1024px (lg) perché il tuo layout passa da colonna a riga a quel punto
-    const media = window.matchMedia("(min-width: 1024px)");
-    const listener = () => setIsDesktop(media.matches);
-    
-    listener(); // Check iniziale
-    window.addEventListener("resize", listener);
-    return () => window.removeEventListener("resize", listener);
-  }, []);
+    useEffect(() => {
+        // Usiamo 1024px (lg) perché il tuo layout passa da colonna a riga a quel punto
+        const media = window.matchMedia("(min-width: 1024px)");
+        const listener = () => setIsDesktop(media.matches);
 
-  return isDesktop;
+        listener(); // Check iniziale
+        window.addEventListener("resize", listener);
+        return () => window.removeEventListener("resize", listener);
+    }, []);
+
+    return isDesktop;
 };
 
 export default function BeerClient({ beer }: { beer: BeerApiResponse }) {
+    console.log(beer)
     // ✅ Logica Immagini (Preservata)
     const labelUrl = beer.attributes.label?.data?.attributes?.url;
     const fullImageUrl = labelUrl ? labelUrl.startsWith("http") ? labelUrl : `${STRAPI_URL}${labelUrl}` : PLACEHOLDER_IMAGE;
 
+
+    const renderingImageUrl = beer.attributes.rendering?.data?.attributes?.url;
+    const fullRenderingImageUrl = renderingImageUrl ? (renderingImageUrl.startsWith("http") ? renderingImageUrl : `${STRAPI_URL}${renderingImageUrl}`) : null;
     // ✅ Logica Carosello (Preservata)
     const dropId = beer.attributes.drop?.data?.id;
     const CarouselContent: CarouselSlideContent = {
@@ -81,6 +92,34 @@ export default function BeerClient({ beer }: { beer: BeerApiResponse }) {
     // Mobile (6.0): Lontano per non riempire tutto lo schermo
     const cameraZ = isDesktop ? 3.5 : 4.5;
 
+    const CtaData: CtaContent = {
+        content: {
+            ctaClasses: "custom-cta-class bg-stone-900 text-white lg:py-12 pb:32 lg:pb-0",
+            titleClasses: "custom-title-class",
+            paragraphClasses: "custom-paragraph-class font-medium",
+
+            title: {
+                type: "heading2",
+                text: "Discover the other beers in this drop",
+                direction: "ltr",
+            },
+            paragraph: {
+                type: "paragraph",
+                text: "Explore the unique characteristics and stories behind each beer in this drop.",
+                direction: "ltr",
+            },
+            button: {
+                label: "See them all",
+                type: "int",
+                url: `/beers/drop/${beer.attributes.drop?.data?.attributes?.name.replace(/\s+/g, '-').toLowerCase() || ""}`,
+            },
+
+
+            layout: "imageLeft", // Options: 'centered', 'imageLeft', 'imageRight'
+        },
+    };
+
+
     return (
         <>
             <main className="min-h-screen bg-black text-white p-4 lg:p-8">
@@ -100,39 +139,49 @@ export default function BeerClient({ beer }: { beer: BeerApiResponse }) {
                     {/* CONTENT GRID */}
                     <div className="flex flex-col lg:flex-row">
 
-                        {/* 3D VIEW */}
-                        <View
-                            className="h-[50vh] w-full mt-12 pointer-events-none lg:pointer-events-auto"
-                            style={{ touchAction: 'pan-y' }}
-                        >
-                            {/* ✅ 4. Camera con posizione dinamica */}
-                            <PerspectiveCamera 
-                                makeDefault 
-                                position={[0, 0, cameraZ]} 
-                                fov={50} 
-                            />
+                        <DesktopOnly>
+                            {/* 3D VIEW */}
+                            <View
+                                className="h-[50vh] w-full mt-12 pointer-events-none lg:pointer-events-auto"
+                                style={{ touchAction: 'pan-y' }}
+                            >
+                                {/* ✅ 4. Camera con posizione dinamica */}
+                                <PerspectiveCamera
+                                    makeDefault
+                                    position={[0, 0, cameraZ]}
+                                    fov={50}
+                                />
 
-                            <AnimatedBeerCan
-                                imageUrl={fullImageUrl}
-                                isHovered={true}
-                            />
-                            
-                            <OrbitControls
-                                makeDefault
-                                enablePan={false}
-                                enableZoom={true}
-                                enableRotate={true}
-                                touches={{
-                                    TWO: THREE.TOUCH.DOLLY_ROTATE
-                                }}
-                                autoRotate
-                                autoRotateSpeed={2.5}
-                            />
-                            
-                            <Environment path='/hdr/' files="warehouse.hdr" />
-                            <directionalLight intensity={1} position={[3, 1, 1]} />
-                        </View>
+                                <AnimatedBeerCan
+                                    imageUrl={fullImageUrl}
+                                    isHovered={true}
+                                />
 
+                                <OrbitControls
+                                    makeDefault
+                                    enablePan={false}
+                                    enableZoom={true}
+                                    enableRotate={true}
+                                    touches={{
+                                        TWO: THREE.TOUCH.DOLLY_ROTATE
+                                    }}
+                                    autoRotate
+                                    autoRotateSpeed={2.5}
+                                />
+
+                                <Environment path='/hdr/' files="warehouse.hdr" />
+                                <directionalLight intensity={1} position={[3, 1, 1]} />
+                            </View>
+                        </DesktopOnly>
+                        <div className="lg:hidden">
+                            <Image
+                                src={fullRenderingImageUrl || "/images/placeholder-rendering.png"}
+                                alt={`3d rendering for ${beer.attributes?.name || "Unknown Beer"} beer`}
+                                width={400}
+                                height={400}
+                                className="mx-auto my-8 scale-150"
+                            />
+                        </div>
                         {/* DESCRIPTION TEXT */}
                         <div className="mt-12 w-full">
                             <div className="mb-4">
@@ -165,7 +214,14 @@ export default function BeerClient({ beer }: { beer: BeerApiResponse }) {
             {/* CAROUSEL */}
             {dropId && (
                 <section className="py-16">
-                    <Carousel content={CarouselContent.content} dropId={dropId} />
+                    <DesktopOnly>
+
+
+                        <Carousel content={CarouselContent.content} dropId={dropId} />
+                    </DesktopOnly>
+                        <div className="lg:hidden">
+                            <Cta content={CtaData.content} />
+                        </div>
                 </section>
             )}
         </>

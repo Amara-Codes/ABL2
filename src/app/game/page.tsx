@@ -20,9 +20,9 @@ const gridStyles = {
 // --- CONFIGURAZIONE PREMI ---
 // Tempi in secondi entro i quali il giocatore deve finire per ottenere il premio
 const REWARD_THRESHOLDS = {
-  easy: { gold: 10, silver: 12 },
-  medium: { gold: 20, silver: 24 },
-  hard: { gold: 40, silver: 50 },
+  easy: { gold: 9, silver: 10 },
+  medium: { gold: 18, silver: 22 },
+  hard: { gold: 36, silver: 45 },
 };
 
 type RewardType = "GOLD" | "SILVER" | "BRONZE" | null;

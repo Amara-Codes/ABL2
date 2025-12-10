@@ -18,12 +18,16 @@ type BeerApiResponse = {
         label: {
             data: { attributes: { url: string; }; };
         };
+        rendering: {
+            data: { attributes: { url: string; }; };
+        };
         category: {
             data: { attributes: { name: string; }; }
         };
         drop: { // <-- Assicurati che questo sia popolato!
             data: {
                 id: number;
+                attributes: { name: string }
             };
         };
     };

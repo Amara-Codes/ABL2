@@ -45,7 +45,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         description: description || `Discover our ${name} craft beers, brewed in Siem Reap using high quality ingredients.`,
         // Open Graph per social media (Facebook, WhatsApp, LinkedIn)
         openGraph: {
-            title: `${name} - Craft Beers by Amara`,
+            title: `${name} - Craft Beers by Amara Beer Lab, Craft Brewery in Siem Reap`,
             description: description || `Explore our selection of ${name}.`,
             url: `/beers/category/${params.name}`,
             siteName: 'Amara Beer Lab',

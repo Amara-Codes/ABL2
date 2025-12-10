@@ -20,7 +20,7 @@ async function getKhmerBeers() {
 
 // --- METADATA (Statici in questo caso) ---
 export const metadata: Metadata = {
-    title: "Khmer Ingredients Series | Amara Beer Lab",
+    title: "Khmer Ingredients Series | Craft Beer Brewery in Siem Reap - Amara Beer Lab",
     description: "Experience the authentic taste of Cambodia. Craft beers brewed with local Jasmine Rice, Kampot Pepper, Palm Sugar, and Lemongrass.",
     openGraph: {
         title: "Khmer Ingredients Series | Craft Beer Brewery in Siem Reap - Amara Beer Lab",

@@ -2,7 +2,9 @@ import { Metadata } from "next";
 
 import BigText from "@/components/content/BigText";
 import Carousel from "@/components/content/Carousel";
-import { CarouselSlideContent } from "@/types";
+import Cta from "@/components/content/Cta";
+import { CarouselSlideContent, CtaContent } from "@/types";
+import DesktopOnly from "@/lib/util/DesktopOnly";
 
 
 
@@ -37,6 +39,33 @@ const CarouselData: CarouselSlideContent = {
   }
 }
 
+    const CtaData: CtaContent = {
+        content: {
+            ctaClasses: "custom-cta-class bg-cyan-950 text-white lg:py-12 pb:32 lg:pb-0",
+            titleClasses: "custom-title-class",
+            paragraphClasses: "custom-paragraph-class font-medium",
+
+            title: {
+                type: "heading2",
+                text: "Discover Our Khmer Ingredients Series",
+                direction: "ltr",
+            },
+            paragraph: {
+                type: "paragraph",
+                text: "Experience the authentic taste of Cambodia with our Khmer Ingredients Series",
+                direction: "ltr",
+            },
+            button: {
+                label: "See them all",
+                type: "int",
+                url: `/beers/khmer-ingredients`,
+            },
+
+
+            layout: "imageLeft", // Options: 'centered', 'imageLeft', 'imageRight'
+        },
+    };
+
 
 
 export default function Brewery() {
@@ -62,7 +91,13 @@ export default function Brewery() {
           That&apos;s why you&apos;ll always find something unique on tap—whether it&apos;s a bold English-style ale, a classic Belgian creation, or a reimagined historical brew adapted to the warm climate of Siem Reap. Every beer reflects my dedication to blending the old and the new, crafting flavors that align with the vision of our brand and the unique setting we call home
         </p>
       </div>
-      <Carousel content={CarouselData.content} />
+      <DesktopOnly>
+
+        <Carousel content={CarouselData.content} />
+      </DesktopOnly>
+      <div className="lg:hidden">
+        <Cta content={CtaData.content} />
+      </div>
     </div>
   );
 }

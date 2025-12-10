@@ -5,6 +5,7 @@ import Hero from "@/components/content/Hero";
 import SkyDive from "@/components/content/SkyDive";
 import BigText from "@/components/content/BigText";
 import Cta from "@/components/content/Cta";
+import DesktopOnly from "@/lib/util/DesktopOnly";
 
 
 export const metadata: Metadata = {
@@ -132,7 +133,10 @@ export default async function Index() {
   return (
     <div className="abl">
       <Hero content={HeroData.content} />
-      <SkyDive content={SkyDivingData.content} />
+      <DesktopOnly>
+
+        <SkyDive content={SkyDivingData.content} />
+      </DesktopOnly>
       <div className="flex flex-col">
         <BigText content={BigTextData.content} />
         <Cta content={CtaData.content} />
