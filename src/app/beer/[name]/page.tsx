@@ -2,36 +2,13 @@
 
 import { Metadata } from "next";
 import BeerClient from "@/components/BeerClient";
+import type { BeerApiResponse } from "@/types";
 // We will create this component shortly
 
 const STRAPI_URL = process.env.NEXT_PUBLIC_AMARA_STRAPI_URL || "http://127.0.0.1:1337";
 
 // Define the API response type (you already have this)
-type BeerApiResponse = {
-    id: number;
-    attributes: {
-        name: string;
-        description: string;
-        hops: string;
-        specialIngredients: string;
-        abv: number;
-        label: {
-            data: { attributes: { url: string; }; };
-        };
-        rendering: {
-            data: { attributes: { url: string; }; };
-        };
-        category: {
-            data: { attributes: { name: string; }; }
-        };
-        drop: { // <-- Assicurati che questo sia popolato!
-            data: {
-                id: number;
-                attributes: { name: string }
-            };
-        };
-    };
-};
+
 
 const PLACEHOLDER_IMAGE = "/labels/placeholder.png";
 

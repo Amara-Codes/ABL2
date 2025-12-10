@@ -9,8 +9,6 @@ const BASE_URL =
 // Funzione helper per fetchare i dati da Strapi (meglio se la metti in un file separato)
 async function fetchStrapiData(endpoint: string) {
   const fetchUrl = `${BASE_URL}/api/${endpoint}`;
-
-  console.log("url fetch sitemap:", fetchUrl);
   // Assicurati di gestire il token API se Strapi non è pubblico
   const res = await fetch(fetchUrl, {
     next: { revalidate: 60 }, // Opzionale: revalida i dati della sitemap ogni 60 sec
@@ -22,7 +20,6 @@ async function fetchStrapiData(endpoint: string) {
 
   const json = await res.json();
   const data = json.data;
-  console.log("data fetch sitemap:", data);
   return json.data; // Strapi V4 di solito wrappa i dati in .data
 }
 

@@ -1,14 +1,14 @@
 // Defines the structure for a rich text node (e.g., heading, paragraph).
 export interface RichTextNode {
-  type: 'heading1' | 'heading2' | 'paragraph';
+  type: "heading1" | "heading2" | "paragraph";
   text: string;
-  direction?: 'ltr' | 'rtl';
+  direction?: "ltr" | "rtl";
 }
 
 // Defines the structure for a link field.
 export interface LinkField {
   label: string;
-  type: 'int' | 'ext' | string;
+  type: "int" | "ext" | string;
   url: string;
   classes?: string;
 }
@@ -26,64 +26,64 @@ export interface ImageField {
 
 // Defines the structure for the content of a Hero.
 export interface HeroContent {
-    content: {
-        heading: RichTextNode[];
-        subheading: RichTextNode[];
-        body: RichTextNode[];
-        button: LinkField;
-        cans_image: ImageField;
-        second_heading: RichTextNode[];
-        second_body: RichTextNode[];
-    }
+  content: {
+    heading: RichTextNode[];
+    subheading: RichTextNode[];
+    body: RichTextNode[];
+    button: LinkField;
+    cans_image: ImageField;
+    second_heading: RichTextNode[];
+    second_body: RichTextNode[];
+  };
 }
 
 export interface SkyDivingContent {
-    content: {
-        sentence: RichTextNode[];
-    }
+  content: {
+    sentence: RichTextNode[];
+  };
 }
 
 export interface CarouselSlideElement {
-        textureUrl: ImageField;
-        flavour: RichTextNode[];
-        name: string;
-        link: string;
-        description: string;
-        bgColor: string;
-        textColor: string;
-        khmerIngredients: boolean;
-        category: string;
+  textureUrl: ImageField;
+  flavour: RichTextNode[];
+  name: string;
+  link: string;
+  description: string;
+  bgColor: string;
+  textColor: string;
+  khmerIngredients: boolean;
+  category: string;
 }
 
 export interface CarouselSlideContent {
-  content : {
+  content: {
     title?: RichTextNode[];
-  }
+  };
 }
 
 export interface BigTextContent {
-  content : {
+  content: {
     bgColorClass: string;
     textColorClass: string;
     sentence: string;
-    maxWidth: number,
-    factor: number
-  }
+    maxWidth: number;
+    factor: number;
+  };
 }
 
 export interface CtaContent {
-    content: {
-      ctaClasses?: string;
-      titleClasses?: string;
-      bgColorClass?: string;
-      paragraphClasses?: string;
-        title: RichTextNode;
-        paragraph: RichTextNode;
-        button: LinkField;
-        background_image?: ImageField;
-        image?: ImageField;
-        layout: 'centered' | 'imageLeft' | 'imageRight';
-    }
+  content: {
+    ctaClasses?: string;
+    titleClasses?: string;
+    bgColorClass?: string;
+    paragraphClasses?: string;
+    title: RichTextNode;
+    paragraph: RichTextNode;
+    button: LinkField;
+    background_image?: ImageField;
+    image?: ImageField;
+    layout: "centered" | "imageLeft" | "imageRight";
+  };
 }
 
 export type RegionID = `KH${number}`;
@@ -96,23 +96,56 @@ export interface RegionInfo {
 }
 
 export interface InteractiveCambodianMapContent {
-    content: {
-        title: RichTextNode[];
-        paragraph: RichTextNode[];
-        regionData: Record<RegionID, RegionInfo>;
-    }
+  content: {
+    title: RichTextNode[];
+    paragraph: RichTextNode[];
+    regionData: Record<RegionID, RegionInfo>;
+  };
 }
 
 export type IconProps = {
-  color?: string
-  size?: string | number
-} & React.SVGAttributes<SVGElement>
+  color?: string;
+  size?: string | number;
+} & React.SVGAttributes<SVGElement>;
 
 export type GenericWrapperProps = {
-  contentType: 'blog' | 'news' | 'activities'
-  articlesPerPage: number
-} 
+  contentType: "blog" | "news" | "activities";
+  articlesPerPage: number;
+};
 
+export type BeerApiResponse = {
+  id: number;
+  attributes: {
+    name: string;
+    description: string;
+    hops: string;
+    specialIngredients: string;
+    isKhmerIngredients: boolean;
+    abv: number;
+    createdAt: Date;
+    updatedAt: Date;
+    publishedAt: Date;
+    label: {
+      data: { attributes: { url: string } };
+    };
+    rendering: {
+      data: { attributes: { url: string } };
+    };
+
+    drop: {
+      data: {
+        id: number;
+        attributes: { name: string, description: string};
+      };
+    };
+    category: {
+      data: {
+        id: number;
+        attributes: { name: string, description: string};
+      };
+    };
+  };
+};
 
 export type BeerData = {
   id: number;
@@ -130,50 +163,49 @@ export type DropData = {
 };
 
 export interface BlogPostButtonElement {
-    ButtonLabel?: string;
-    ButtonCssClasses?: string;
-    ButtonLink?: string;
-    ButtonType?: string;
-  }
+  ButtonLabel?: string;
+  ButtonCssClasses?: string;
+  ButtonLink?: string;
+  ButtonType?: string;
+}
 
-  export interface BlogPostCarouselElement {
-    CarouselTitle?: string;
-    CarouselSubtitle?: string;
-    CarouselCssClasses?: string;
-    CarouselImgs?: string[];
-  }
+export interface BlogPostCarouselElement {
+  CarouselTitle?: string;
+  CarouselSubtitle?: string;
+  CarouselCssClasses?: string;
+  CarouselImgs?: string[];
+}
 
-  export interface BlogPostCtaElement {
-    CtaTitle?: string;
-    CtaCaption?: string;
-    CtaCssClasses?: string;
-    CtaType?: string;
-    CtaButton?: BlogPostButtonElement;
-    CtaBgImg?: string;
-  }
+export interface BlogPostCtaElement {
+  CtaTitle?: string;
+  CtaCaption?: string;
+  CtaCssClasses?: string;
+  CtaType?: string;
+  CtaButton?: BlogPostButtonElement;
+  CtaBgImg?: string;
+}
 
-  export interface BlogPostHeroElement {
-    HeroTitle?: string;
-    HeroSubtitle?: string;
-    HeroCssClasses?: string;
-    HeroButton?: BlogPostButtonElement;
-    HeroBgImg?: string;
-    HeroWrapperCssClasses?: string;
-    HeroWrapperBgImg?: string;
-  }
+export interface BlogPostHeroElement {
+  HeroTitle?: string;
+  HeroSubtitle?: string;
+  HeroCssClasses?: string;
+  HeroButton?: BlogPostButtonElement;
+  HeroBgImg?: string;
+  HeroWrapperCssClasses?: string;
+  HeroWrapperBgImg?: string;
+}
 
-  export interface BlogPostParagraphElement {
-    ParagraphContent: string; 
-    ParagraphCssClasses?: string; 
-    ParagraphImg?: string;
-    ParagraphImgPosition ?: string;
-  }
-  
-  export interface BlogPostQuoteElement {
-    QuoteContent?: string;
-    QuoteAuthor?: string;
-    QuoteCssClasses?: string;
-    QuoteAuthorDates?: string;
-    QuoteAuthorInfo?: string;
-  }
-  
+export interface BlogPostParagraphElement {
+  ParagraphContent: string;
+  ParagraphCssClasses?: string;
+  ParagraphImg?: string;
+  ParagraphImgPosition?: string;
+}
+
+export interface BlogPostQuoteElement {
+  QuoteContent?: string;
+  QuoteAuthor?: string;
+  QuoteCssClasses?: string;
+  QuoteAuthorDates?: string;
+  QuoteAuthorInfo?: string;
+}

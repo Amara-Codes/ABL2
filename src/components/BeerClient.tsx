@@ -64,7 +64,6 @@ const useIsDesktop = () => {
 };
 
 export default function BeerClient({ beer }: { beer: BeerApiResponse }) {
-    console.log(beer)
     // ✅ Logica Immagini (Preservata)
     const labelUrl = beer.attributes.label?.data?.attributes?.url;
     const fullImageUrl = labelUrl ? labelUrl.startsWith("http") ? labelUrl : `${STRAPI_URL}${labelUrl}` : PLACEHOLDER_IMAGE;

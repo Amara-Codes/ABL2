@@ -95,8 +95,6 @@ async function getArticles(
   }
 
   const data = await res.json();
-
-  console.log(JSON.stringify(data));
   return transformData(data);
 }
 interface ArticlesFetcherProps {

@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import type { Metadata, ResolvingMetadata } from "next"; // ✅ 1. Importiamo i tipi
+import type { Metadata } from "next"; // ✅ 1. Importiamo i tipi
 import BeerGrid from "@/components/BeerGrid";
 import BeerGridSkeleton from "@/components/skeletons/templates/skeleton-beer-grid";
 

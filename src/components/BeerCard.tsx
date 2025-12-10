@@ -14,16 +14,12 @@ type BeerCardProps = {
 
 export default function BeerCard({ name, category, abv, imageUrl, slug, isKhmer }: BeerCardProps) {
   // Formattiamo il link (es. spazi -> trattini)
-  const href = `/beer/${slug.replace(/\s+/g, '-').toLowerCase()}`;
-
   return (
-    <Link href={href} className="group block">
+    <Link href={slug} className="group block">
       <div className="bg-gray-900 rounded-xl overflow-hidden border border-gray-800 transition-all duration-300 hover:border-secondary hover:shadow-[0_0_20px_rgba(255,255,255,0.1)]">
-
         {/* Contenitore Immagine */}
         {/* 'relative' è fondamentale per usare layout='fill' (o prop fill) su Next/Image */}
         <div className="aspect-square w-full relative overflow-hidden">
-          
           <Image
             src={imageUrl}
             alt={name}
@@ -35,13 +31,11 @@ export default function BeerCard({ name, category, abv, imageUrl, slug, isKhmer 
             priority={false}
              // Mettilo a true solo se questa card è "Above the fold" (visibile subito senza scrollare)
           />
-
           {/* Badge ABV in sovraimpressione */}
           {/* Z-index implicito superiore perché nel DOM viene dopo l'immagine */}
           <div className="absolute top-2 right-2 bg-black/70 backdrop-blur-sm text-white text-xs font-bold px-2 py-1 rounded-full border border-gray-600 z-10">
             {abv}% ABV
           </div>
-          
           {isKhmer && (
             <div className="absolute bottom-2 right-2 bg-blue-500/90 px-1 py-1 rounded-full border-red-600 border-4 z-10">
               {/* SVG Angkor Wat Style */}

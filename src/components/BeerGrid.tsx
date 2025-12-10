@@ -3,29 +3,15 @@
 import { useState, useMemo } from "react";
 import BeerCard from "@/components/BeerCard"; // Assicurati che il path sia corretto
 import { Filter, ArrowUpDown, X, Check, Leaf } from "lucide-react";
-
+import { BeerApiResponse } from "@/types";
 // --- TIPI ---
-type Category = { id: number; attributes: { name: string } };
-type Drop = { id: number; attributes: { name: string } };
+type Category = BeerApiResponse["attributes"]["category"]["data"];
+type Drop = BeerApiResponse["attributes"]["drop"]["data"];
 
-type Beer = {
-  id: number;
-  attributes: {
-    name: string;
-    abv: number;
-    createdAt: string;
-    category: { data: Category | null }; // Può essere null
-    drop: { data: Drop | null };         // Può essere null
-    // Label e Rendering sono opzionali/nullabili in Strapi spesso
-    label?: { data?: { attributes: { url: string } } };
-    rendering?: { data?: { attributes: { url: string } } };
-    isKhmerIngredients: boolean;
-    slug?: string; // È meglio avere uno slug reale, altrimenti usiamo il nome
-  };
-};
+
 
 type Props = {
-  beers: Beer[];
+  beers:  BeerApiResponse[];
   categories?: Category[];
   drops?: Drop[];
   hideFilters?: boolean; // Se true, nasconde il bottone filtri ma mantiene il sort
@@ -256,7 +242,7 @@ export default function BeerGrid({
                         abv={beer.attributes.abv}
                         imageUrl={fullImageUrl}
                         // Uso lo slug se c'è, altrimenti fallback sul nome pulito
-                        slug={beer.attributes.slug || beer.attributes.name} 
+                        slug={beer.attributes.name.replace(/\s+/g, '-').toLowerCase()} 
                         isKhmer={beer.attributes.isKhmerIngredients}
                     />
                 );

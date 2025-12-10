@@ -1,5 +1,4 @@
 // app/layout.tsx
-
 "use client"; // <-- 1. Add this to use hooks
 
 import localFont from "next/font/local";
@@ -9,6 +8,7 @@ import "./app.css";
 import Header from "@/components/layout/Header";
 import ViewCanvas from "@/components/layout/ViewCanvas";
 import Footer from "@/components/layout/Footer";
+import DesktopOnly from "@/lib/util/DesktopOnly";
 
 const alpino = localFont({
   src: "../../public/fonts/Alpino-Variable.woff2",
@@ -36,11 +36,11 @@ export default function RootLayout({
         {/* 3. Attach the ref to your <main> element */}
         <main className="mt-36" ref={mainRef}>
           {children}
-          
-          {/* 4. Pass the ref to ViewCanvas as the 'eventSource' */}
+          <DesktopOnly>
+
           <ViewCanvas eventSource={mainRef} />
+          </DesktopOnly>
         </main>
-        
         <Footer />
       </body>
     </html>
