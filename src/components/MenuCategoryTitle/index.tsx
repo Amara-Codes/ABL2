@@ -44,7 +44,7 @@ export default function MenuCategoryTitle({
         {title.split('').map((char, index) => (
           <span 
             key={index} 
-            className="uppercase font-bold text-8xl leading-none"
+            className="uppercase font-bold text-6xl md:text-8xl leading-none"
           >
             {char}
           </span>

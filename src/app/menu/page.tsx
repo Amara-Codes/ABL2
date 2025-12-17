@@ -4,7 +4,7 @@ import SkeletonMenu from '@/components/skeletons/components/skeleton-menu';
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Craft Beer Brewery in Siem Reap - Amara Beer Lab | The Beer Lab",
+  title: "Craft Beer Brewery in Siem Reap - Amara Beer Lab | Our Menu",
   description: "Explore our Menu at The Taproom, featuring craft beers, cocktails, probiotics, snacks, and liquors made with local Khmer ingredients in Siem Reap.",
 };
 

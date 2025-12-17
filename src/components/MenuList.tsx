@@ -1,16 +1,12 @@
 import qs from 'qs';
 import MenuCategoryTitle from '@/components/MenuCategoryTitle';
-import AutoScroller from '@/components/AutoScroller'; // Assicurati di importarlo
+import AutoScroller from '@/components/AutoScroller';
 
 const TARGET_CATEGORIES = ['Beer', 'Cocktail', 'Probiotic', 'Snack', 'Liquor'];
 const STRAPI_URL = process.env.NEXT_PUBLIC_CASHIER_STRAPI_URL || 'http://localhost:1337';
 
-// --- CONFIGURAZIONE VELOCITÀ ---
-// Secondi per completare un giro. 
-// Aumenta questo numero per rallentare, diminuisci per velocizzare.
 const SCROLL_DURATION = 100;
 
-// --- Helper Component Aggiornato ---
 const CategoryContent = ({
     data,
     theme = 'dark',
@@ -29,8 +25,7 @@ const CategoryContent = ({
 
     return (
         <div className={`h-full overflow-hidden ${isVertical ? 'flex flex-row gap-6' : 'flex flex-col'}`}>
-
-            {/* Titolo (Fisso, non scrolla) */}
+            {/* Titolo */}
             <div className={`z-10 bg-inherit ${isVertical ? 'flex-shrink-0 pt-2' : 'pb-2'}`}>
                 <MenuCategoryTitle
                     title={data.name}
@@ -40,11 +35,10 @@ const CategoryContent = ({
                 />
             </div>
 
-            {/* Lista Prodotti con AUTO-SCROLL */}
-            {/* Il div flex-1 occupa tutto lo spazio rimanente, e AutoScroller gestisce il movimento interno */}
+            {/* Lista Prodotti */}
             <div className="flex-1 overflow-hidden relative mask-gradient">
                 <AutoScroller duration={SCROLL_DURATION}>
-                    <ul className="space-y-3 pb-3"> {/* Aggiunto padding bottom per staccare la copia duplicata */}
+                    <ul className="space-y-3 pb-3">
                         {products.map((prod: any) => (
                             <li key={prod.id} className={`border-b pb-2 ${theme === 'dark' ? 'border-white/20' : 'border-gray-200'}`}>
                                 <div className="flex justify-between items-baseline">
@@ -71,7 +65,6 @@ const CategoryContent = ({
     );
 };
 
-// ... (Il resto del file: getCategoriesData e MenuList rimangono INVARIATI) ...
 async function getCategoriesData() {
     const query = qs.stringify({
         filters: { name: { $in: TARGET_CATEGORIES } },
@@ -99,23 +92,36 @@ export default async function MenuList() {
     }, {});
 
     return (
-        <div className="h-screen bg-cream p-4">
-            <div className="grid grid-cols-3 grid-rows-5 gap-4 h-full">
+        // CAMBIAMENTO 1: min-h-screen su mobile, h-screen su desktop (lg)
+        // overflow-y-auto su mobile (per scorrere la pagina), hidden su desktop
+        <div className="min-h-screen lg:h-screen bg-cream p-4 overflow-y-auto lg:overflow-hidden">
+            
+            {/* CAMBIAMENTO 2: Struttura Flex su Mobile -> Grid su Desktop
+               Su mobile gli elementi stanno uno sotto l'altro (flex-col).
+               Da 'lg' in su (laptop/desktop) diventano la griglia 3x5 che avevi.
+            */}
+            <div className="flex flex-col gap-4 lg:grid lg:grid-cols-3 lg:grid-rows-5 h-auto lg:h-full">
+                
                 {/* 1. BEER */}
-                <div className="col-span-2 row-span-3 bg-white rounded-lg shadow-md p-6 overflow-hidden">
+                {/* Su mobile diamo un'altezza fissa (es. h-[600px]) per permettere lo scroll interno */}
+                <div className="h-[600px] lg:h-auto lg:col-span-2 lg:row-span-3 bg-white rounded-lg shadow-md p-6 overflow-hidden">
+                    {/* Nota: Su mobile il titolo verticale potrebbe occupare troppo spazio, potresti volerlo condizionale, ma per ora lo lasciamo così */}
                     <CategoryContent data={catMap['Beer']} theme="light" titleOptions={{ displayType: 'vertical' }} />
                 </div>
+
                 {/* 2. LIQUORS */}
-                <div className="bg-gray-800 row-span-2 rounded-lg shadow-md p-4 overflow-hidden">
+                <div className="h-[400px] lg:h-auto lg:row-span-2 bg-gray-800 rounded-lg shadow-md p-4 overflow-hidden">
                     <CategoryContent data={catMap['Liquor']} theme="dark" titleOptions={{ displayType: 'horizontal', textAlign: 'center' }} />
                 </div>
 
                 {/* 4. SNACKS */}
-                <div className="bg-white row-span-3 rounded-lg shadow-md p-4 overflow-hidden">
+                {/* Ordine: In flex mobile appare qui. In Grid desktop viene posizionato dal row-span/col-span implicito */}
+                <div className="h-[500px] lg:h-auto lg:row-span-3 bg-white rounded-lg shadow-md p-4 overflow-hidden">
                     <CategoryContent data={catMap['Snack']} theme="light" titleOptions={{ displayType: 'horizontal', textAlign: 'center' }} />
                 </div>
+
                 {/* 5. COCKTAILS */}
-                <div className="bg-gray-600 col-span-2 row-span-2 rounded-lg shadow-md p-4 overflow-hidden">
+                <div className="h-[500px] lg:h-auto lg:col-span-2 lg:row-span-2 bg-gray-600 rounded-lg shadow-md p-4 overflow-hidden">
                     <CategoryContent data={catMap['Cocktail']} theme="dark" titleOptions={{ displayType: 'horizontal', textAlign: 'left' }} />
                 </div>
             </div>
