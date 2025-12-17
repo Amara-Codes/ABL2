@@ -15,7 +15,7 @@ type BeerCardProps = {
 export default function BeerCard({ name, category, abv, imageUrl, slug, isKhmer }: BeerCardProps) {
   // Formattiamo il link (es. spazi -> trattini)
   return (
-    <Link href={slug} className="group block">
+    <Link href={`/beer/${slug}`} className="group block">
       <div className="bg-gray-900 rounded-xl overflow-hidden border border-gray-800 transition-all duration-300 hover:border-secondary hover:shadow-[0_0_20px_rgba(255,255,255,0.1)]">
         {/* Contenitore Immagine */}
         {/* 'relative' è fondamentale per usare layout='fill' (o prop fill) su Next/Image */}

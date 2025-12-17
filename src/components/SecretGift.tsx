@@ -102,7 +102,7 @@ const SecretGiftClient = () => {
                     </div>
                     <div className="flex lg:mx-12 justify-center">
                         <div className="w-full">
-                            <p className="text-white text-2xl lg:text-4xl mb-4"> Generate your QR Code </p>
+                            <p className="text-secondary text-2xl lg:text-4xl mt-8 mb-4"> Generate your QR Code </p>
                             <form onSubmit={handleSubmit} className="flex items-center w-full gap-x-4">
                                 <input
                                     type="text"
@@ -110,7 +110,7 @@ const SecretGiftClient = () => {
                                     name="GiftOwnerName"
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
-                                    className="h-full w-full p-3  border rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary"
+                                    className="h-full w-full p-3  text-black border rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary"
                                 />
                                 <button type="submit" className={`py-2 px-4 rounded text-white font-bold border-2 transition ${name.trim() ? "bg-primary hover:bg-secondary cursor-pointer border-primary hover:border-secondary" : "bg-gray-300 cursor-not-allowed opacity-50 border-gray-500"}`} disabled={!name.trim()}>
                                     Generate

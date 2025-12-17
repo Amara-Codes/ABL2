@@ -1,47 +1,23 @@
-// app/layout.tsx
-"use client"; // <-- 1. Add this to use hooks
+import './app.css';
+import type { Metadata } from 'next';
 
-import localFont from "next/font/local";
-import { useRef } from "react"; // <-- Import useRef
+export const metadata: Metadata = {
+  title: "Craft Beer Brewery in Siem Reap - Amara Beer Lab | Craft Beers, Sustainability and Community Impact",
+  description:
+    "Discover Amara Beer Lab, a craft brewery based in Siem Reap, Cambodia, dedicated to sustainability and supporting local communities. With high-quality beers crafted using technical excellence and modern methods to offer carefully designed, contemporary flavors, Amara Beer Lab blends authentic taste with social responsibility.",
+}
 
-import "./app.css";
-import Header from "@/components/layout/Header";
-import ViewCanvas from "@/components/layout/ViewCanvas";
-import Footer from "@/components/layout/Footer";
-import DesktopOnly from "@/lib/util/DesktopOnly";
-
-const alpino = localFont({
-  src: "../../public/fonts/Alpino-Variable.woff2",
-  display: "swap",
-  weight: "100 900",
-  variable: "--font-alpino",
-});
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
-  // 2. Create a ref for your main scrollable element
-  const mainRef = useRef<HTMLElement>(null);
-
+}) {
   return (
-    <html lang="en" className={alpino.variable}>
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </head>
-      <body className="overflow-x-hidden bg-black">
-        <Header />
-        
-        {/* 3. Attach the ref to your <main> element */}
-        <main className="mt-36" ref={mainRef}>
-          {children}
-          <DesktopOnly>
-
-          <ViewCanvas eventSource={mainRef} />
-          </DesktopOnly>
-        </main>
-        <Footer />
+    <html lang="en">
+      <body className="bg-black text-white">
+        {/* NESSUN HEADER O FOOTER QUI, SOLO IL CONTENITORE */}
+        {children}
       </body>
     </html>
   );
