@@ -63,7 +63,7 @@ export default function MenuCategoryTitle({
   return (
     <h2 
       // 3. Aggiungiamo fontClass anche qui
-      className={`${fontClass} text-4xl font-bold uppercase mb-4 ${alignmentClasses[textAlign]} ${color} ${className}`}
+      className={`${fontClass} text-6xl font-bold uppercase mb-4 ${alignmentClasses[textAlign]} ${color} ${className}`}
     >
       {title}
     </h2>

@@ -11,7 +11,10 @@ export default function Footer({ }: Props) {
     <footer className="bg-black h-screen lg:h-auto">
       <div className="relative mx-auto flex flex-col w-full max-w-6xl justify-center px-4 pt-8 pb-4 h-full">
         <div className="w-full grid md:grid-cols-2 lg:grid-cols-3">
-          <ABLLogo />
+          <Link href="/menu" className="flex items-center mb-8 lg:mb-0">
+
+            <ABLLogo />
+          </Link>
           <div className="flex flex-col items-center p-4 mt-32 lg:mt-8">
             <Link href="/" className="text-center text-lg font-fatboy hover:underline text-primary hover:text-white transition-colors duration-700">
               Home
