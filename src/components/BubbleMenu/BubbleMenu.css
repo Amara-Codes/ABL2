@@ -43,6 +43,7 @@
   border-radius: 50%;
   background-color: #000000;
   border: 2px solid #FF850E;
+  overflow: hidden;
 }
 
 .bubble-menu .toggle-bubble {
@@ -77,8 +78,10 @@
 .bubble-menu .logo-content > .bubble-logo,
 .bubble-menu .logo-content > img,
 .bubble-menu .logo-content > svg {
-  max-height: var(--logo-max-height);
-  max-width: var(--logo-max-width);
+  max-height: 100%;
+  max-width: 100%;
+  width: auto;
+  height: auto;
 }
 
 .bubble-menu .menu-btn {
@@ -123,7 +126,7 @@
   }
 
   .bubble-menu .logo-bubble {
-    padding: 0 16px;
+    padding: 5px;
   }
 }
 
